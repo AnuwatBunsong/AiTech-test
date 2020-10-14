@@ -44,7 +44,36 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/images/logo.png
     - assets/images/splash_screen.jpg
+
+  fonts:
+    - family: SukhumvitBold
+      fonts:
+        - asset: assets/fonts/SukhumvitSet-Bold.ttf
+          weight: 400
+    - family: SukhumvitLight
+      fonts:
+        - asset: assets/fonts/SukhumvitSet-Light.ttf
+          weight: 400
+    - family: SukhumvitMedium
+      fonts:
+        - asset: assets/fonts/SukhumvitSet-Medium.ttf
+          weight: 400
+    - family: SukhumvitSemiBold
+      fonts:
+        - asset: assets/fonts/SukhumvitSet-SemiBold.ttf
+          weight: 400
+    - family: SukhumvitText
+      fonts:
+        - asset: assets/fonts/SukhumvitSet-Text.ttf
+          weight: 400
+    
+    - family: SukhumvitThin
+      fonts:
+        - asset: assets/fonts/SukhumvitSet-Thin.ttf
+          weight: 400
+    
 
   # To add assets to your application, add an assets section, like this:
   # assets:

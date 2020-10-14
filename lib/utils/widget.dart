@@ -1,5 +1,2 @@
 import 'dart:async';
-
-class NewsModel {
-  
-}
+import 'package:flutter/material.dart';

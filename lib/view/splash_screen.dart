@@ -13,21 +13,46 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 5),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => HomePage(title: 'Flutter Demo Home Page'))));
+        Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Image.asset('assets/images/splash_screen.jpg',width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,fit: BoxFit.fitWidth),
-      ),
-    );
+        body: Center(
+            child: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/splash_screen.jpg"),
+                        fit: BoxFit.cover)),
+                child: Center(
+                  child: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            child: Column(children: [
+                          Image.asset('assets/images/logo.png'),
+                        ])),
+                        Text('สำนักงานการณาปนกิจสงเคราะห์',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'SukhumvitText',
+                              fontSize: 24,
+                            )),
+                        Text('กระทรวงสาธารณสุข',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'SukhumvitText',
+                              fontSize: 24,
+                            ))
+                      ],
+                    ),
+                  ),
+                ))));
   }
 }
