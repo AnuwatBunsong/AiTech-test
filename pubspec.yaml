@@ -46,6 +46,8 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/splash_screen.jpg
+    - assets/icons/user.png
+    - assets/icons/key.png
 
   fonts:
     - family: SukhumvitBold
