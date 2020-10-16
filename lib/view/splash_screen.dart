@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:cremation/view/home.dart';
-import 'package:cremation/view/login.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,10 +10,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
+    Timer(Duration(seconds: 3), () => Navigator.pushNamed(context, '/login'));
   }
 
   @override

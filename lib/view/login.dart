@@ -1,4 +1,6 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+//import 'package:cremation/presenter/loginPresenter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                         padding: const EdgeInsets.only(top: 40.0),
                         child: Column(children: [
-                          Image.asset('assets/images/logo.png'),
+                          Image.asset('assets/images/logo_120x120.png'),
                         ])),
                     Text('สำนักงานการณาปนกิจสงเคราะห์',
                         style: TextStyle(
@@ -88,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                             enabled: true,
                             style: TextStyle(
                                 fontSize: 15.0,
-                                height: 1,
+                                height: 0.8,
                                 color: Color(0xFF000000)))),
                     Container(
                         alignment: Alignment.topLeft,
@@ -103,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: (MediaQuery.of(context).size.width),
                         height: (45.0),
                         margin: const EdgeInsets.only(bottom: 15.0),
+                        alignment: Alignment.centerLeft,
                         child: new TextField(
                             decoration: new InputDecoration(
                               prefixIcon:
@@ -122,12 +125,71 @@ class _LoginPageState extends State<LoginPage> {
                                     color: Color(0xFF1EFA746), width: 1.0),
                               ),
                             ),
-                            enabled: true,
+                            obscureText: true,
+                            obscuringCharacter: "*",
                             style: TextStyle(
                                 fontSize: 15.0,
-                                height: 1,
+                                height: 0.8,
                                 color: Color(0xFF000000)))),
+                    Container(
+                        alignment: Alignment.topRight,
+                        margin: const EdgeInsets.only(bottom: 20.0),
+                        child: Text('ลืมรหัสผ่าน?',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Color(0xFF000000),
+                              fontFamily: 'SukhumvitText',
+                              fontSize: 15,
+                            ))),
+                    Container(
+                        height: 50.0,
+                        margin: const EdgeInsets.only(bottom: 15.0),
+                        child: RaisedButton(
+                            onPressed: () {},
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            padding: EdgeInsets.all(0.0),
+                            child: Ink(
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEFA746),
+                                        Color(0xFFF0C984)
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                child: Container(
+                                    constraints:
+                                        BoxConstraints(minHeight: 50.0),
+                                    alignment: Alignment.center,
+                                    child: Text("เข้าสู่ระบบ",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontFamily: 'SukhumvitText',
+                                          fontSize: 20,
+                                        )))))),
+                    Container(
+                        alignment: Alignment.center,
+                        child: Text('ติดต่อผู้ดูแลระบบผ่าน Line',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Color(0xFF626262),
+                              fontFamily: 'SukhumvitText',
+                              fontSize: 14,
+                            ))),
                   ])),
+              Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(top: 30.0),
+                  child: Text('เข้าสู่ระบบสมาชิกใหม่',
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: 'SukhumvitText',
+                        fontSize: 20,
+                      ))),
             ]))));
   }
 }
