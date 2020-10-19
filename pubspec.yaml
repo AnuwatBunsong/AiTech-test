@@ -44,11 +44,16 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/images/mockup1.png
+    - assets/images/mockup2.png
     - assets/images/logo.png
     - assets/images/logo_120x120.png
     - assets/images/splash_screen.jpg
     - assets/icons/user.png
     - assets/icons/key.png
+    - assets/icons/news.png
+    - assets/icons/member.png
+    - assets/icons/setting.png
 
   fonts:
     - family: SukhumvitBold
