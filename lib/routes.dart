@@ -4,6 +4,7 @@ import 'package:cremation/view/login.dart';
 import 'package:cremation/view/home.dart';
 import 'package:cremation/view/notification.dart';
 import 'package:cremation/view/menu.dart';
+import 'package:cremation/view/news_detail.dart';
 
 final routes = {
   '/': (BuildContext context) => new SplashScreen(),
@@ -11,4 +12,5 @@ final routes = {
   '/home': (BuildContext context) => new HomePage(),
   '/notification': (BuildContext context) => new NotificationPage(),
   '/menu': (BuildContext context) => new Menu(),
+  '/news_detail': (BuildContext context) => new NewsDetailPage(),
 };

@@ -11,6 +11,7 @@ class _MenuState extends State<Menu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: appBarTitle('อื่นๆ'),
         flexibleSpace: appBarBackground(),
       ),

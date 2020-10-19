@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
+          centerTitle: true,
           title: appBarTitle('หน้าแรก'),
           flexibleSpace: appBarBackground()),
       backgroundColor: Color(0xFFFFFFFF),
@@ -166,6 +167,10 @@ class _HomePageState extends State<HomePage> {
                     width: 1.0,
                   ),
                 ),
+                child: GestureDetector(
+                onTap: () {
+                   Navigator.pushNamed(context, '/news_detail');
+                },
                 child: Row(children: [
                   Expanded(
                       flex: 6,
@@ -205,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                                         fontFamily: 'SukhumvitText',
                                         fontSize: 12))
                               ])))
-                ])))
+                ]))))
             .toList());
   }
 }
