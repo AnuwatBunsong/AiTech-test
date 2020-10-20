@@ -78,14 +78,14 @@ class _NotificationPageState extends State<NotificationPage> {
             child: Column(children: [
           Container(
               padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: _NotificationList())
+              child: notificationList())
         ]))
       ]),
       bottomNavigationBar: navigationBottomBar(context),
     );
   }
 
-  Widget _NotificationList() {
+  Widget notificationList() {
     return Column(
         children: NotificationData.map((item) => Card(
             elevation: 0,

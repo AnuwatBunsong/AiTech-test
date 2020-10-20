@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 
-class HomePage extends StatefulWidget {
+class BillingHistoryPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _BillingHistoryPageState createState() => _BillingHistoryPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _BillingHistoryPageState extends State<BillingHistoryPage> {
   List newsData = [
     {
       'image': 'assets/images/mockup1.png',
@@ -62,108 +62,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: appBarTitle('หน้าแรก'),
-          flexibleSpace: appBarBackground()),
-      backgroundColor: Color(0xFFFFFFFF),
-      body: ListView(children: [
-        Container(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
-            decoration: BoxDecoration(
-              color: Color(0xFFFE5E5E5),
-            ),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/profile');
-                },
-                child: Container(
-                    padding: EdgeInsets.only(
-                        top: 28, left: 11, right: 11, bottom: 28),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        color: Colors.white),
-                    child: Row(children: <Widget>[
-                      Container(
-                          margin: EdgeInsets.only(right: 13),
-                          width: 60.0,
-                          height: 60.0,
-                          decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new AssetImage(
-                                      "assets/images/mockup2.png")))),
-                      Expanded(
-                          child: new Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                            Text('สวัสดี',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w800,
-                                    color: Color(0xFFEFA746),
-                                    fontFamily: 'SukhumvitText',
-                                    fontSize: 18,
-                                    height: 1.4)),
-                            Text('คุณ สมชาย',
-                                style: TextStyle(
-                                    color: Color(0xFF000000),
-                                    fontFamily: 'SukhumvitText',
-                                    fontSize: 18,
-                                    height: 1)),
-                            Text('เลขสมาชิก : 1124112567357',
-                                style: TextStyle(
-                                    color: Color(0xFFACB3BF),
-                                    fontFamily: 'SukhumvitText',
-                                    fontSize: 12,
-                                    height: 1.3))
-                          ])),
-                      Container(
-                          child: Icon(
-                        Icons.navigate_next,
-                        color: Color(0xFFC4C4C4),
-                        size: 35.0,
-                        semanticLabel:
-                            'Text to announce in accessibility modes',
-                      ))
-                    ])))),
-        Container(
-            child: Container(
-                padding:
-                    EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
-                child: Column(children: [
-                  Container(
-                      margin: EdgeInsets.only(bottom: 15),
-                      child: Row(children: <Widget>[
-                        Expanded(
-                            child: Text('ข่าวสารและกิจกรรม',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFEFA746),
-                                    fontFamily: 'SukhumvitText',
-                                    fontSize: 16))),
-                        Container(
-                            child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/news');
-                                },
-                                child: Text('ดูข่าวสารทั้งหมด >',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFFACB3BF),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 12))))
-                      ])),
-                  Container(child: newsList())
-                ])))
-      ]),
-      bottomNavigationBar: navigationBottomBar(context),
-    );
+        appBar: AppBar(
+            centerTitle: true,
+            title: appBarTitle('ดูรายการที่ผ่านมา'),
+            flexibleSpace: appBarBackground()),
+        backgroundColor: Color(0xFFFFFFFF),
+        body: ListView(children: [
+          Container(
+              child: Container(
+                  padding:
+                      EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
+                  child: Column(
+                      children: [Container(child: billingHistoryList())])))
+        ]));
   }
 
-  Widget newsList() {
+  Widget billingHistoryList() {
     return Column(
         children: newsData
             .map((item) => Card(

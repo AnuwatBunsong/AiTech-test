@@ -33,7 +33,7 @@ Widget navigationBottomBar(BuildContext context) {
         break;
       case 1:
         {
-          Navigator.pushNamed(context, '/login');
+          Navigator.pushNamed(context, '/billing');
         }
         break;
       case 2:
@@ -57,11 +57,7 @@ Widget navigationBottomBar(BuildContext context) {
 
   List menu = [
     {'icon': Icons.home_outlined, 'title': "หน้าแรก", 'route': "/home"},
-    {
-      'icon': Icons.wysiwyg,
-      'title': "เงินสงเคราะห์สะสม",
-      'route': "/notification"
-    },
+    {'icon': Icons.wysiwyg, 'title': "เงินสงเคราะห์สะสม", 'route': "/billing"},
     {
       'icon': Icons.notifications,
       'title': "การแจ้งเตือน",
@@ -116,12 +112,12 @@ Widget navigationBottomBar(BuildContext context) {
                         BottomNavigationBarItem(
                             icon: Icon(Icons.wysiwyg,
                                 size: 31.0,
-                                color: currentPage == '/bill'
+                                color: currentPage == '/billing'
                                     ? Color(activePage)
                                     : Color(inActivePage)),
                             title: new Text("เงินสงเคราะห์สะสม",
                                 style: TextStyle(
-                                    color: currentPage == '/bill'
+                                    color: currentPage == '/billing'
                                         ? Color(activePage)
                                         : Color(inActivePage),
                                     fontFamily: 'SukhumvitText',
@@ -153,4 +149,20 @@ Widget navigationBottomBar(BuildContext context) {
                                     fontFamily: 'SukhumvitText',
                                     fontSize: 12.0)))
                       ])))));
+}
+
+Widget dotWidget(double totalWidth, double dashWidth, double emptyWidth,
+    double dashHeight, color) {
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: List.generate(
+      totalWidth ~/ (dashWidth + emptyWidth),
+      (_) => Container(
+        width: dashWidth,
+        height: dashHeight,
+        color: Color(color),
+        margin: EdgeInsets.only(left: emptyWidth / 2, right: emptyWidth / 2),
+      ),
+    ),
+  );
 }
