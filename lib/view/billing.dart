@@ -61,21 +61,14 @@ class _BillingPageState extends State<BillingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: appBarTitle('การเรียกเก็บเงินสงเคราะห์'),
-          flexibleSpace: appBarBackground()),
-      backgroundColor: Color(0xFFFFFFFF),
-      body: ListView(children: [
+    return ListView(
+      children: [
         Container(
             child: Container(
                 padding:
                     EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
                 child: Column(children: [Container(child: newsList())])))
-      ]),
-      bottomNavigationBar: navigationBottomBar(context),
+      ],
     );
   }
 

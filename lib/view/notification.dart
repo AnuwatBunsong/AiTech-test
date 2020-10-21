@@ -7,8 +7,6 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  final activeDelete = false;
-
   List NotificationData = [
     {
       'id': '1',
@@ -56,33 +54,14 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: appBarTitle('การแจ้งเตือน'),
-        flexibleSpace: appBarBackground(),
-        actions: <Widget>[
-          if (!activeDelete)
-            IconButton(
-              icon: new Icon(
-                Icons.delete_outline,
-              ),
-              tooltip: 'Delete',
-              onPressed: () {},
-            )
-        ],
-      ),
-      backgroundColor: Color(0xFFFFFFFF),
-      body: ListView(children: [
+    return ListView(children: [
+      Container(
+          child: Column(children: [
         Container(
-            child: Column(children: [
-          Container(
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
-              child: notificationList())
-        ]))
-      ]),
-      bottomNavigationBar: navigationBottomBar(context),
-    );
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+            child: notificationList())
+      ]))
+    ]);
   }
 
   Widget notificationList() {

@@ -1,5 +1,7 @@
+import 'package:cremation/presenter/home_presenter.dart';
 import 'package:flutter/material.dart';
-import 'package:cremation/utils/widget.dart';
+import 'package:cremation/service/api_service.dart';
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,6 +9,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // with AutomaticKeepAliveClientMixin<HomePage> {
+  //HomePresenter _presenter;
+  //List newsData = [];
+  bool isLoading = true;
+
+  ApiService api = ApiService();
+
+  Future fetchPost() async {
+    print('a');
+    try {
+      var response = await api.getNews(10);
+
+      if (response.statusCode == 200) {
+        var jsonResponse = json.decode(response.body);
+
+        setState(() {
+          isLoading = false;
+          newsData = jsonResponse['data'];
+          //print(items);
+        });
+      }
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      print(error);
+    }
+  }
+
+  //bool get wantKeepAlive => true;
+
   List newsData = [
     {
       'image': 'assets/images/mockup1.png',
@@ -60,15 +93,15 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    //_presenter = new HomePresenter();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: appBarTitle('หน้าแรก'),
-          flexibleSpace: appBarBackground()),
-      backgroundColor: Color(0xFFFFFFFF),
-      body: ListView(children: [
+    return ListView(
+      children: [
         Container(
             padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
             decoration: BoxDecoration(
@@ -158,8 +191,8 @@ class _HomePageState extends State<HomePage> {
                       ])),
                   Container(child: newsList())
                 ])))
-      ]),
-      bottomNavigationBar: navigationBottomBar(context),
+      ],
+      //bottomNavigationBar: navigationBottomBar(context),
     );
   }
 
