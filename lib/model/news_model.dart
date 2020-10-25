@@ -1,10 +1,38 @@
-class News {
-  final double id;
+/*class News {
   final String title;
+  final String shortDescription;
 
-  const News({this.id, this.title});
+  const News({this.title, this.shortDescription});
 
   News.fromMap(Map<String, dynamic> map)
-      : id = map['id'],
-        title = map['title'];
+      : title = map['title'],
+        shortDescription = map['short_description'];
+}*/
+import 'dart:async';
+
+class News {
+  final String title;
+  final String shortDescription;
+  final String date;
+
+  const News({this.title, this.shortDescription, this.date});
+
+  News.fromMap(Map<String, dynamic> map)
+      : title = map['title'],
+        shortDescription = map['short_description'],
+        date = map['created_at'];
+}
+
+abstract class NewsRepository {
+  Future<List<News>> fetch();
+}
+
+class FetchDataException implements Exception {
+  String _message;
+
+  FetchDataException(this._message);
+
+  String toString() {
+    return "Exception: $_message";
+  }
 }

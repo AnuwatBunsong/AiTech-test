@@ -9,54 +9,41 @@ class BillingHistoryPage extends StatefulWidget {
 class _BillingHistoryPageState extends State<BillingHistoryPage> {
   List newsData = [
     {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 24 มิ.ย.63",
-      'date': "24 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      'title': "ชำระเงินสงเคราะห์",
+      'date': "31 พ. ค. 2563",
+      'time': '13:21',
+      'price': '2,000.00',
     },
     {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 23 มิ.ย.63",
-      'date': "23 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      'title': "ชำระเงินสงเคราะห์",
+      'date': "30 เม. ย. 2563",
+      'time': '12:44',
+      'price': '2,000.00',
     },
     {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 22 มิ.ย.63",
-      'date': "22 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      'title': "ชำระเงินสงเคราะห์",
+      'date': "30 มี. ค. 2563",
+      'time': '09:44',
+      'price': '2,000.00',
     },
     {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 21 มิ.ย.63",
-      'date': "21 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      'title': "ชำระเงินสงเคราะห์",
+      'date': "28 ก. พ. 2563",
+      'time': '12:44',
+      'price': '2,000.00',
     },
     {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 20 มิ.ย.63",
-      'date': "20 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      'title': "ชำระเงินสงเคราะห์",
+      'date': "30 ม. ค. 2563",
+      'time': '12:12',
+      'price': '2,000.00',
     },
     {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 19 มิ.ย.63",
-      'date': "19 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      'title': "ชำระเงินสงเคราะห์",
+      'date': "30 ธ. ค. 2562",
+      'time': '11:12',
+      'price': '2,000.00',
     },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 18 มิ.ย.63",
-      'date': "18 มิ.ย. 63, 00:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }
   ];
 
   @override
@@ -64,14 +51,50 @@ class _BillingHistoryPageState extends State<BillingHistoryPage> {
     return Scaffold(
         appBar: AppBar(
             centerTitle: true,
+            elevation: 0,
             title: appBarTitle('ดูรายการที่ผ่านมา'),
             flexibleSpace: appBarBackground()),
         backgroundColor: Color(0xFFFFFFFF),
         body: ListView(children: [
           Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                      colors: <Color>[Color(0xFFEFA746), Color(0xFFF0C984)])),
+              child: Row(children: [
+                Container(
+                    child: Icon(Icons.description,
+                        size: 20, color: Color(0xFFFFFFFF))),
+                Expanded(
+                    child: Text('Share Document',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFFFFFFFF),
+                            fontFamily: 'SukhumvitText',
+                            fontSize: 14))),
+                Container(
+                    padding:
+                        EdgeInsets.only(left: 10, right: 5, top: 2, bottom: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: Colors.white,
+                    ),
+                    child: Row(children: [
+                      Container(
+                          child: Icon(Icons.sort,
+                              size: 20, color: Color(0xFFEFA746))),
+                      Text('Filter',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFFEFA746),
+                              fontFamily: 'SukhumvitText',
+                              fontSize: 14)),
+                    ])),
+              ])),
+          Container(
               child: Container(
-                  padding:
-                      EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
                   child: Column(
                       children: [Container(child: billingHistoryList())])))
         ]));
@@ -80,60 +103,63 @@ class _BillingHistoryPageState extends State<BillingHistoryPage> {
   Widget billingHistoryList() {
     return Column(
         children: newsData
-            .map((item) => Card(
-                elevation: 4,
-                margin: EdgeInsets.only(bottom: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  side: BorderSide(
-                    color: Color(0xFFEFEFEF),
-                    width: 1.0,
+            .map((item) => Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 2.0, color: Color(0xFFEFA746)),
                   ),
                 ),
+                padding:
+                    EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 15),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/news_detail');
+                      Navigator.pushNamed(context, '/billing_detail');
                     },
-                    child: Row(children: [
-                      Expanded(
-                          flex: 6,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5),
-                                  bottomLeft: Radius.circular(5)),
-                              child: Image.asset(
-                                item['image'],
-                                width: (MediaQuery.of(context).size.width),
-                                fit: BoxFit.fill,
-                              ))),
-                      Expanded(
-                          flex: 4,
-                          child: Container(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(item['title'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF000000),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 16)),
-                                    Text(item['date'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xFFEFA746),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 10)),
-                                    Text(item['shortDescripton'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xFF626262),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 12))
-                                  ])))
-                    ]))))
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                              child: Container(
+                                  padding: EdgeInsets.only(left: 5),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(item['date'].toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xFF000000),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 18)),
+                                        Text(item['title'].toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0xFF50555C),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 18)),
+                                        Text(item['time'].toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0xFF50555C),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 14))
+                                      ]))),
+                          Container(
+                              child: Row(children: [
+                            Text(item['price'].toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFFEFA746),
+                                    fontFamily: 'SukhumvitText',
+                                    fontSize: 18)),
+                            Container(
+                                child: Icon(Icons.keyboard_arrow_right,
+                                    size: 30, color: Color(0xFFC4C4C4))),
+                          ]))
+                        ]))))
             .toList());
   }
 }

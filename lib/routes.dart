@@ -7,6 +7,8 @@ import 'package:cremation/view/news_detail.dart';
 import 'package:cremation/view/profile.dart';
 import 'package:cremation/view/billing_history.dart';
 import 'package:cremation/view/billing_detail.dart';
+import 'package:cremation/view/payment.dart';
+import 'package:cremation/view/payment_success.dart';
 
 final routes = {
   '/': (BuildContext context) => new SplashScreen(),
@@ -17,4 +19,6 @@ final routes = {
   '/profile': (BuildContext context) => new ProfilePage(),
   '/billing_history': (BuildContext context) => new BillingHistoryPage(),
   '/billing_detail': (BuildContext context) => new BillingDetailPage(),
+  '/payment': (BuildContext context) => new PaymentPage(),
+  '/payment_success': (BuildContext context) => new PaymentSuccessPage(),
 };

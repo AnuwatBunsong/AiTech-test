@@ -54,6 +54,7 @@ flutter:
     - assets/icons/news.png
     - assets/icons/member.png
     - assets/icons/setting.png
+    - assets/images/no_image_01.png
 
   fonts:
     - family: SukhumvitBold

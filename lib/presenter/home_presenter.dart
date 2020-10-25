@@ -1,30 +1,34 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:cremation/model/news_model.dart';
+import 'package:cremation/utils/exception.dart';
+import 'package:cremation/data/news_data.dart';
+import 'package:cremation/injection/injector.dart';
 import 'package:http/http.dart';
-import '../model/news_model.dart';
-import '../utils/exception.dart';
-import '../view/home.dart';
 
-class HomePresenter<T> {
-  T view;
+abstract class HomeListViewContract {
+  void onLoadNewsComplete(List<News> items);
+  void onLoadNewsError();
+}
 
-  final JsonDecoder _decoder = new JsonDecoder();
-  //NewsModel _newsModel;
+class HomePresenter {
+  HomeListViewContract _view;
+  NewsRepository _repository;
 
-  /*void newsList() {
-    _newsModel.getNews().then((Response response) {
-      final String jsonBody = response.body;
-      final statusCode = response.statusCode;
+  HomePresenter(this._view) {
+    _repository = Injector().newsRepository;
+  }
 
-      if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
-        throw FetchDataException(
-            "Error while getting contacts [StatusCode:$statusCode, Error:${response.reasonPhrase}]");
-      }
+  void loadNews(int size) {
+    assert(_view != null);
 
-      final userContainer = _decoder.convert(jsonBody);
-      final List items = userContainer['results'];
-
-      return items;
+    _repository
+        .fetch()
+        .then((data) => _view.onLoadNewsComplete(data))
+        .catchError((onError) {
+      print('error:' + onError);
+      _view.onLoadNewsError();
     });
-  }*/
+  }
 }
