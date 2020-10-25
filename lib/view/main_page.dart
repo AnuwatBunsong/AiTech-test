@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage>
         'pageTitle': 'การเรียกเก็บเงินสงเคราะห์',
         'icon': false,
         'backPage': false,
-        'backgroundColor': 0xFFFFFFFF
+        'backgroundColor': 0xFFE5E5E5
       },
       {
         'pageTitle': 'การแจ้งเตือน',
