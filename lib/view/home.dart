@@ -15,7 +15,59 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
 
   HomePresenter _presenter;
 
-  List<News> newsData;
+  //List<News> newsData;
+
+  List newsData = [
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 24 มิ.ย.63",
+      'date': "24 มิ.ย. 63, 13:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 23 มิ.ย.63",
+      'date': "23 มิ.ย. 63, 13:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 22 มิ.ย.63",
+      'date': "22 มิ.ย. 63, 13:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 21 มิ.ย.63",
+      'date': "21 มิ.ย. 63, 13:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 20 มิ.ย.63",
+      'date': "20 มิ.ย. 63, 13:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 19 มิ.ย.63",
+      'date': "19 มิ.ย. 63, 13:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      'image': 'assets/images/mockup1.png',
+      'title': "ข่าวสารประจำวันที่ 18 มิ.ย.63",
+      'date': "18 มิ.ย. 63, 00:00",
+      'shortDescripton':
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    }
+  ];
 
   _HomePageState() {
     _presenter = HomePresenter(this);
@@ -31,7 +83,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
   void onLoadNewsComplete(List<News> items) {
     setState(() {
       _isLoading = false;
-      newsData = items;
+      //newsData = items;
     });
   }
 
@@ -159,7 +211,10 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
                 ),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/news_detail');
+                      Navigator.pushNamed(
+                        context,
+                        '/news_detail',
+                      );
                     },
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
