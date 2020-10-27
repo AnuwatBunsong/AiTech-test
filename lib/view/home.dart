@@ -15,9 +15,9 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
 
   HomePresenter _presenter;
 
-  //List<News> newsData;
+  List<News> newsData;
 
-  List newsData = [
+  /*List newsData = [
     {
       'image': 'assets/images/mockup1.png',
       'title': "ข่าวสารประจำวันที่ 24 มิ.ย.63",
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
       'shortDescripton':
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     }
-  ];
+  ];*/
 
   _HomePageState() {
     _presenter = HomePresenter(this);
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
   void onLoadNewsComplete(List<News> items) {
     setState(() {
       _isLoading = false;
-      //newsData = items;
+      newsData = items;
     });
   }
 
