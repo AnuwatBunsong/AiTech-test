@@ -15,13 +15,20 @@ class _MainPageState extends State<MainPage>
   TabController controller;
   List<Widget> tabBarViews;
   List tabBar;
-  final activeDelete = false;
+  final _activeDelete = false;
+
+  Map<String, dynamic> data;
 
   @override
   void initState() {
     controller = new TabController(vsync: this, length: 4);
     controller.index = 0;
-    tabBarViews = [HomePage(), BillingPage(), NotificationPage(), Menu()];
+    tabBarViews = [
+      HomePage(),
+      BillingPage(),
+      NotificationPage(data: data),
+      Menu()
+    ];
     tabBar = [
       {
         'pageTitle': 'หน้าแรก',
@@ -60,7 +67,7 @@ class _MainPageState extends State<MainPage>
         title: appBarTitle(tabBar[controller.index]['pageTitle']),
         flexibleSpace: appBarBackground(),
         actions: <Widget>[
-          if (!activeDelete && controller.index == 2)
+          if (!_activeDelete && controller.index == 2)
             IconButton(
               icon: new Icon(
                 Icons.delete_outline,
