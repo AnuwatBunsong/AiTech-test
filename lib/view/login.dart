@@ -183,8 +183,8 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
                         Container(
                             height: 50.0,
                             margin: const EdgeInsets.only(bottom: 15.0),
-                            child: RaisedButton(
-                                onPressed: () {},
+                            child: /*_isLoading ? new CircularProgressIndicator() :*/ RaisedButton(
+                                onPressed: _submit,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0)),
                                 padding: EdgeInsets.all(0.0),
@@ -200,8 +200,7 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(30.0)),
-                                    child: /*_isLoading ? new CircularProgressIndicator() :*/ RaisedButton(
-                                        onPressed: _submit,
+                                    
                                         child: Container(
                                             constraints:
                                                 BoxConstraints(minHeight: 50.0),
@@ -212,7 +211,7 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
                                                   color: Color(0xFFFFFFFF),
                                                   fontFamily: 'SukhumvitText',
                                                   fontSize: 20,
-                                                ))))))),
+                                                )))))),
                         Container(
                             alignment: Alignment.center,
                             child: Text('ติดต่อผู้ดูแลระบบผ่าน Line',

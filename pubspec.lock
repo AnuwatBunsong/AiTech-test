@@ -136,16 +136,6 @@ packages:
     source: hosted
     version: "0.12.2"
   http_parser:
-<<<<<<< HEAD
-=======
-    dependency: transitive
-    description:
-      name: http_parser
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.1.4"
-  js:
->>>>>>> 1d3bb5b65ddedf1a43cdb78c339f308a940235da
     dependency: transitive
     description:
       name: http_parser
