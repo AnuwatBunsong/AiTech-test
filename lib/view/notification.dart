@@ -3,15 +3,20 @@ import 'package:cremation/utils/widget.dart';
 import 'package:cremation/view/main_page.dart';
 
 class NotificationPage extends StatefulWidget {
-  final Map<String, dynamic> data;
-
-  NotificationPage({Key key, this.data}) : super(key: key);
+  List<dynamic> data;
+  NotificationPage({this.data});
 
   @override
   _NotificationPageState createState() => _NotificationPageState();
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool _isShowDelete = false;
   List NotificationData = [
     {
       'id': '1',

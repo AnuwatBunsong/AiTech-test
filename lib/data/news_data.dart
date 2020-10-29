@@ -7,7 +7,8 @@ class NewsListRepository implements NewsRepository {
   final JsonDecoder _decoder = new JsonDecoder();
 
   Future<List<News>> fetch() async {
-    final response = await http.get('https://dcat.karpools.co/api/v1/news');
+    final response =
+        await http.get('https://chapanakij.karpools.co/api/v1/news');
     final jsonBody = response.body;
     final statusCode = response.statusCode;
 

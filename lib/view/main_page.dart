@@ -16,19 +16,14 @@ class _MainPageState extends State<MainPage>
   List<Widget> tabBarViews;
   List tabBar;
   final _activeDelete = false;
-
-  Map<String, dynamic> data;
+  bool _isShowDelete = false;
 
   @override
   void initState() {
     controller = new TabController(vsync: this, length: 4);
     controller.index = 0;
-    tabBarViews = [
-      HomePage(),
-      BillingPage(),
-      NotificationPage(data: data),
-      Menu()
-    ];
+    _isShowDelete = false;
+    tabBarViews = [HomePage(), BillingPage(), NotificationPage(), Menu()];
     tabBar = [
       {
         'pageTitle': 'หน้าแรก',
@@ -58,6 +53,12 @@ class _MainPageState extends State<MainPage>
     super.initState();
   }
 
+  void _onShowDelete() {
+    setState(() {
+      _isShowDelete = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +74,9 @@ class _MainPageState extends State<MainPage>
                 Icons.delete_outline,
               ),
               tooltip: 'Delete',
-              onPressed: () {},
+              onPressed: () {
+                _onShowDelete();
+              },
             )
         ],
       ),
