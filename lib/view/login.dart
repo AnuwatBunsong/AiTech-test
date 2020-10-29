@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cremation/presenter/login_presenter.dart';
 import 'package:cremation/model/user_model.dart';
 
@@ -10,12 +11,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> implements LoginContract {
   BuildContext _ctx;
-
-  bool _isLoading = false;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password;
-
+  bool _isLoading = false;
   LoginPresenter _presenter;
 
   _LoginPageState() {
@@ -24,7 +23,6 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
 
   void _submit() {
     final form = formKey.currentState;
-    print(form);
     if (form.validate()) {
       setState(() => _isLoading = true);
       form.save();
@@ -202,22 +200,19 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(30.0)),
-                                    child: _isLoading
-                                        ? new CircularProgressIndicator()
-                                        : RaisedButton(
-                                            onPressed: _submit,
-                                            child: Container(
-                                                constraints: BoxConstraints(
-                                                    minHeight: 50.0),
-                                                alignment: Alignment.center,
-                                                child: Text("เข้าสู่ระบบ",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      color: Color(0xFFFFFFFF),
-                                                      fontFamily:
-                                                          'SukhumvitText',
-                                                      fontSize: 20,
-                                                    ))))))),
+                                    child: /*_isLoading ? new CircularProgressIndicator() :*/ RaisedButton(
+                                        onPressed: _submit,
+                                        child: Container(
+                                            constraints:
+                                                BoxConstraints(minHeight: 50.0),
+                                            alignment: Alignment.center,
+                                            child: Text("เข้าสู่ระบบ",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xFFFFFFFF),
+                                                  fontFamily: 'SukhumvitText',
+                                                  fontSize: 20,
+                                                ))))))),
                         Container(
                             alignment: Alignment.center,
                             child: Text('ติดต่อผู้ดูแลระบบผ่าน Line',
@@ -242,17 +237,35 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
 
   @override
   void onLoginError(String errorTxt) {
-    _showSnackBar(errorTxt);
+    //_showSnackBar(errorTxt);
     setState(() => _isLoading = false);
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "username หรือ password ไม่ถูกต้อง",
+      style: AlertStyle(
+          titleStyle: TextStyle(
+              color: Colors.red, fontSize: 20, fontFamily: 'SukhumvitText')),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "ตกลง",
+            style: TextStyle(
+                color: Colors.white, fontSize: 20, fontFamily: 'SukhumvitText'),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
   }
 
   @override
   void onLoginSuccess(User user) async {
-    print(user);
-    return;
-    _showSnackBar(user.toString());
+    //_showSnackBar(user.toString());
     setState(() => _isLoading = false);
     //var authStateProvider = new AuthStateProvider();
     //authStateProvider.notify(AuthState.LOGGED_IN);
+    Navigator.pushNamed(context, '/main_page');
   }
 }

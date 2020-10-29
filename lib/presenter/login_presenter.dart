@@ -1,4 +1,3 @@
-import 'package:cremation/model/network_status.dart';
 import 'package:cremation/data/user_data.dart';
 import 'package:cremation/model/user_model.dart';
 
@@ -15,6 +14,8 @@ class LoginPresenter {
   doLogin(String username, String password) {
     api.login(username, password).then((User user) {
       _view.onLoginSuccess(user);
-    }).catchError((Exception error) => _view.onLoginError(error.toString()));
+    }).catchError((e) {
+      _view.onLoginError('error');
+    });
   }
 }
