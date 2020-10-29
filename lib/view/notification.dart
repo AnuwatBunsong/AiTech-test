@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:cremation/view/main_page.dart';
 
 class NotificationPage extends StatefulWidget {
+  List<dynamic> data;
+  NotificationPage({this.data});
+
   @override
   _NotificationPageState createState() => _NotificationPageState();
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool _isShowDelete = false;
   List NotificationData = [
     {
       'id': '1',
@@ -54,31 +64,49 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      Container(
-          child: Column(children: [
-        Container(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
-            child: notificationList())
-      ]))
-    ]);
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(children: [
+          if (_isShowDelete)
+            Container(
+                child: Card(
+                    elevation: 0,
+                    shape: Border(bottom: BorderSide(color: Color(0xFFACB3BF))),
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Row(children: [
+                          Container(
+                              margin: EdgeInsets.only(right: 10),
+                              child: Icon(Icons.check_circle_sharp,
+                                  color: Color(0xFF27AE60))),
+                          Text('เลือกทั้งหมด',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                  fontFamily: 'SukhumvitText',
+                                  fontSize: 16))
+                        ])))),
+          Expanded(
+              child: ListView(children: [
+            Container(
+                child: Column(children: [Container(child: notificationList())]))
+          ]))
+        ]));
   }
 
   Widget notificationList() {
     return Column(
         children: NotificationData.map((item) => Card(
             elevation: 0,
-            color: Color(0xFFFFFFFF),
-            shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: Color(0xFFFFFFFF),
-                    width: 1.0,
-                  ),
-                ) +
-                Border(bottom: BorderSide(color: Color(0xFFACB3BF))),
+            shape: Border(bottom: BorderSide(color: Color(0xFFACB3BF))),
             child: Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 20),
                 child: Row(children: [
+                  if (_isShowDelete)
+                    Container(
+                        margin: EdgeInsets.only(right: 10),
+                        child: Icon(Icons.radio_button_unchecked,
+                            color: Color(0xFFACB3BF))),
                   Container(
                       margin: EdgeInsets.only(right: 18, left: 2),
                       width: 50.0,

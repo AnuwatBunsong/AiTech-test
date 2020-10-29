@@ -1,18 +1,21 @@
-import 'package:cremation/model/user.dart';
+import 'package:cremation/data/user_data.dart';
+import 'package:cremation/model/user_model.dart';
 
-abstract class LoginPresenter {
+abstract class LoginContract {
   void onLoginSuccess(User user);
   void onLoginError(String errorTxt);
 }
 
-class _LoginPresenter {
-  LoginPresenter _view;
-  //RestDatasource api = new RestDatasource();
-  _LoginPresenter(this._view);
+class LoginPresenter {
+  LoginContract _view;
+  UserLogin api = new UserLogin();
+  LoginPresenter(this._view);
 
   doLogin(String username, String password) {
-    /*api.login(username, password).then((User user) {
+    api.login(username, password).then((User user) {
       _view.onLoginSuccess(user);
-    }).catchError((Exception error) => _view.onLoginError(error.toString()));*/
+    }).catchError((e) {
+      _view.onLoginError('error');
+    });
   }
 }

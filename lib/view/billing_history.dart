@@ -50,49 +50,47 @@ class _BillingHistoryPageState extends State<BillingHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            centerTitle: true,
-            elevation: 0,
-            title: appBarTitle('ดูรายการที่ผ่านมา'),
-            flexibleSpace: appBarBackground()),
+          centerTitle: true,
+          elevation: 0,
+          title: appBarTitle('ดูรายการที่ผ่านมา'),
+          flexibleSpace: appBarBackground(),
+          bottom: PreferredSize(
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+                  child: Row(children: [
+                    Container(
+                        child: Icon(Icons.description,
+                            size: 20, color: Color(0xFFFFFFFF))),
+                    Expanded(
+                        child: Text('Share Document',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFFFFFFF),
+                                fontFamily: 'SukhumvitText',
+                                fontSize: 14))),
+                    Container(
+                        padding: EdgeInsets.only(
+                            left: 10, right: 5, top: 2, bottom: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.white,
+                        ),
+                        child: Row(children: [
+                          Container(
+                              child: Icon(Icons.sort,
+                                  size: 20, color: Color(0xFFEFA746))),
+                          Text('Filter',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFFEFA746),
+                                  fontFamily: 'SukhumvitText',
+                                  fontSize: 14)),
+                        ])),
+                  ])),
+              preferredSize: Size.fromHeight(30.0)),
+        ),
         backgroundColor: Color(0xFFFFFFFF),
         body: ListView(children: [
-          Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
-                      colors: <Color>[Color(0xFFEFA746), Color(0xFFF0C984)])),
-              child: Row(children: [
-                Container(
-                    child: Icon(Icons.description,
-                        size: 20, color: Color(0xFFFFFFFF))),
-                Expanded(
-                    child: Text('Share Document',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFFFFFFFF),
-                            fontFamily: 'SukhumvitText',
-                            fontSize: 14))),
-                Container(
-                    padding:
-                        EdgeInsets.only(left: 10, right: 5, top: 2, bottom: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Colors.white,
-                    ),
-                    child: Row(children: [
-                      Container(
-                          child: Icon(Icons.sort,
-                              size: 20, color: Color(0xFFEFA746))),
-                      Text('Filter',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFFEFA746),
-                              fontFamily: 'SukhumvitText',
-                              fontSize: 14)),
-                    ])),
-              ])),
           Container(
               child: Container(
                   child: Column(
