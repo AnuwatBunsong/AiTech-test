@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cremation/utils/widget.dart';
 import 'package:cremation/view/home.dart';
 import 'package:cremation/view/billing.dart';
 import 'package:cremation/view/notification.dart';
@@ -10,81 +9,44 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
-  TabController controller;
-  List<Widget> tabBarViews;
-  List tabBar;
-  final _activeDelete = false;
-  bool _isShowDelete = false;
+class _MainPageState extends State<MainPage> {
+  int _selectedIndex = 0;
+  PageController _pageController;
 
   @override
   void initState() {
-    controller = new TabController(vsync: this, length: 4);
-    controller.index = 0;
-    _isShowDelete = false;
-    tabBarViews = [HomePage(), BillingPage(), NotificationPage(), Menu()];
-    tabBar = [
-      {
-        'pageTitle': 'หน้าแรก',
-        'icon': false,
-        'backPage': false,
-        'backgroundColor': 0xFFFFFFFF
-      },
-      {
-        'pageTitle': 'การเรียกเก็บเงินสงเคราะห์',
-        'icon': false,
-        'backPage': false,
-        'backgroundColor': 0xFFE5E5E5
-      },
-      {
-        'pageTitle': 'การแจ้งเตือน',
-        'icon': true,
-        'backPage': false,
-        'backgroundColor': 0xFFFFFFFF
-      },
-      {
-        'pageTitle': 'อื่นๆ',
-        'icon': false,
-        'backPage': false,
-        'backgroundColor': 0xFFE5E5E5
-      }
-    ];
+    _pageController = PageController();
     super.initState();
   }
 
-  void _onShowDelete() {
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onItemTapped(int index) {
     setState(() {
-      _isShowDelete = true;
+      _selectedIndex = index;
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 1), curve: Curves.easeOut);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: tabBar[controller.index]['backPage'],
-        centerTitle: true,
-        title: appBarTitle(tabBar[controller.index]['pageTitle']),
-        flexibleSpace: appBarBackground(),
-        actions: <Widget>[
-          if (!_activeDelete && controller.index == 2)
-            IconButton(
-              icon: new Icon(
-                Icons.delete_outline,
-              ),
-              tooltip: 'Delete',
-              onPressed: () {
-                _onShowDelete();
-              },
-            )
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() => _selectedIndex = index);
+        },
+        children: <Widget>[
+          HomePage(),
+          BillingPage(),
+          NotificationPage(),
+          Menu(),
         ],
-      ),
-      backgroundColor: Color(tabBar[controller.index]['backgroundColor']),
-      body: TabBarView(
-        children: tabBarViews,
-        controller: controller,
-        physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: navigationBottomBarTab(context),
     );
@@ -120,11 +82,8 @@ class _MainPageState extends State<MainPage>
                 child: Container(
                     padding: EdgeInsets.only(top: 5, left: 2.5, right: 2.5),
                     child: BottomNavigationBar(
-                        onTap: (index) {
-                          setState(() {
-                            controller.index = index;
-                          });
-                        },
+                        currentIndex: _selectedIndex,
+                        onTap: _onItemTapped,
                         backgroundColor: Colors.white,
                         type: BottomNavigationBarType.fixed,
                         elevation: 0,
@@ -132,12 +91,12 @@ class _MainPageState extends State<MainPage>
                           BottomNavigationBarItem(
                               icon: Icon(Icons.home_outlined,
                                   size: 31.0,
-                                  color: controller.index == 0
+                                  color: _selectedIndex == 0
                                       ? Color(activePage)
                                       : Color(inActivePage)),
                               title: new Text("หน้าแรก",
                                   style: TextStyle(
-                                      color: controller.index == 0
+                                      color: _selectedIndex == 0
                                           ? Color(activePage)
                                           : Color(inActivePage),
                                       fontFamily: 'SukhumvitText',
@@ -145,12 +104,12 @@ class _MainPageState extends State<MainPage>
                           BottomNavigationBarItem(
                               icon: Icon(Icons.wysiwyg,
                                   size: 31.0,
-                                  color: controller.index == 1
+                                  color: _selectedIndex == 1
                                       ? Color(activePage)
                                       : Color(inActivePage)),
                               title: new Text("เงินสงเคราะห์สะสม",
                                   style: TextStyle(
-                                      color: controller.index == 1
+                                      color: _selectedIndex == 1
                                           ? Color(activePage)
                                           : Color(inActivePage),
                                       fontFamily: 'SukhumvitText',
@@ -158,12 +117,12 @@ class _MainPageState extends State<MainPage>
                           BottomNavigationBarItem(
                               icon: Icon(Icons.notifications,
                                   size: 31.0,
-                                  color: controller.index == 2
+                                  color: _selectedIndex == 2
                                       ? Color(activePage)
                                       : Color(inActivePage)),
                               title: new Text("การแจ้งเตือน",
                                   style: TextStyle(
-                                      color: controller.index == 2
+                                      color: _selectedIndex == 2
                                           ? Color(activePage)
                                           : Color(inActivePage),
                                       fontFamily: 'SukhumvitText',
@@ -171,12 +130,12 @@ class _MainPageState extends State<MainPage>
                           BottomNavigationBarItem(
                               icon: Icon(Icons.menu,
                                   size: 31.0,
-                                  color: controller.index == 3
+                                  color: _selectedIndex == 3
                                       ? Color(activePage)
                                       : Color(inActivePage)),
                               title: new Text("อื่นๆ",
                                   style: TextStyle(
-                                      color: controller.index == 3
+                                      color: _selectedIndex == 3
                                           ? Color(activePage)
                                           : Color(inActivePage),
                                       fontFamily: 'SukhumvitText',

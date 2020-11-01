@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
-import 'package:cremation/view/main_page.dart';
 
 class NotificationPage extends StatefulWidget {
   List<dynamic> data;
@@ -62,36 +61,59 @@ class _NotificationPageState extends State<NotificationPage> {
     }
   ];
 
+  void _onShowDelete() {}
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(children: [
-          if (_isShowDelete)
-            Container(
-                child: Card(
-                    elevation: 0,
-                    shape: Border(bottom: BorderSide(color: Color(0xFFACB3BF))),
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Row(children: [
-                          Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: Icon(Icons.check_circle_sharp,
-                                  color: Color(0xFF27AE60))),
-                          Text('เลือกทั้งหมด',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF000000),
-                                  fontFamily: 'SukhumvitText',
-                                  fontSize: 16))
-                        ])))),
-          Expanded(
-              child: ListView(children: [
-            Container(
-                child: Column(children: [Container(child: notificationList())]))
-          ]))
-        ]));
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: appBarTitle('การแจ้งเตือน'),
+          flexibleSpace: appBarBackground(),
+          actions: <Widget>[
+            IconButton(
+              icon: new Icon(
+                Icons.delete_outline,
+              ),
+              tooltip: 'Delete',
+              onPressed: () {
+                _onShowDelete();
+              },
+            )
+          ],
+        ),
+        backgroundColor: Color(0xFFFFFFFF),
+        body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(children: [
+              if (_isShowDelete)
+                Container(
+                    child: Card(
+                        elevation: 0,
+                        shape: Border(
+                            bottom: BorderSide(color: Color(0xFFACB3BF))),
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: Row(children: [
+                              Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: Icon(Icons.check_circle_sharp,
+                                      color: Color(0xFF27AE60))),
+                              Text('เลือกทั้งหมด',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF000000),
+                                      fontFamily: 'SukhumvitText',
+                                      fontSize: 16))
+                            ])))),
+              Expanded(
+                  child: ListView(children: [
+                Container(
+                    child: Column(
+                        children: [Container(child: notificationList())]))
+              ]))
+            ])));
   }
 
   Widget notificationList() {

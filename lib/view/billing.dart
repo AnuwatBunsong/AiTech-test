@@ -27,149 +27,119 @@ class _BillingPageState extends State<BillingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-          padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
-          decoration: BoxDecoration(
-            gradient: new LinearGradient(
-                colors: [
-                  const Color(0xFFFFFFFF),
-                  const Color(0xFFE5E5E5),
-                ],
-                begin: const FractionalOffset(0.0, 0.5),
-                end: const FractionalOffset(0.0, 1.0),
-                stops: [0.5, 1.0],
-                tileMode: TileMode.clamp),
-          ),
-          child: Column(children: [
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: appBarTitle('การเรียกเก็บเงินสงเคราะห์'),
+          flexibleSpace: appBarBackground(),
+        ),
+        backgroundColor: Color(0xFFE5E5E5),
+        body: ListView(
+          children: [
             Container(
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                    child: Column(children: [
-                      Container(
-                          padding:
-                              EdgeInsets.only(left: 11, right: 11, bottom: 20),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              color: Colors.white),
-                          child: Row(children: <Widget>[
-                            Container(
-                                margin: EdgeInsets.only(right: 13),
-                                width: 60.0,
-                                height: 60.0,
-                                decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: new DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: new AssetImage(
-                                            "assets/images/mockup2.png")))),
-                            Expanded(
-                                child: new Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                  Text('สวัสดี',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          color: Color(0xFFEFA746),
-                                          fontFamily: 'SukhumvitText',
-                                          fontSize: 18,
-                                          height: 1.4)),
-                                  Text('คุณ สมชาย',
-                                      style: TextStyle(
-                                          color: Color(0xFF000000),
-                                          fontFamily: 'SukhumvitText',
-                                          fontSize: 18,
-                                          height: 1)),
-                                  Text('เลขสมาชิก : 1124112567357',
-                                      style: TextStyle(
-                                          color: Color(0xFFACB3BF),
-                                          fontFamily: 'SukhumvitText',
-                                          fontSize: 12,
-                                          height: 1.3))
-                                ])),
-                            Container(
-                                child: Icon(
-                              Icons.navigate_next,
-                              color: Color(0xFFC4C4C4),
-                              size: 35.0,
-                              semanticLabel:
-                                  'Text to announce in accessibility modes',
-                            ))
-                          ]))
-                    ]))),
-            Container(
-                margin: EdgeInsets.only(bottom: 5),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text('ยอดเรียกเก็บรายเดือน',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFFEFA746),
-                          fontFamily: 'SukhumvitText',
-                          fontSize: 16)),
-                )),
-            Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border:
-                        Border.all(width: 2.0, color: const Color(0xFFEFA746)),
-                    borderRadius: new BorderRadius.all(
-                      Radius.circular(10.0),
-                    )),
-                child: Column(children: [
-                  Container(
-                      child: Row(children: [
-                    Container(
-                        child: IconButton(
-                      icon: new Icon(
-                        Icons.wysiwyg,
-                        color: Color(0xFFEFA746),
-                      ),
-                    )),
-                    Container(
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/billing_history');
-                            },
-                            child: Text('ปี 2563 คงเหลือ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF50555C),
-                                    fontFamily: 'SukhumvitText',
-                                    fontSize: 18))))
-                  ])),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: dotWidget((MediaQuery.of(context).size.width - 60),
-                        10, 5, 2, 0xFFACB3BF),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(top: 40),
-                      alignment: Alignment.topRight,
-                      child: Text('424 บาท',
+              padding:
+                  EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
+              decoration: BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [
+                      const Color(0xFFFFFFFF),
+                      const Color(0xFFE5E5E5),
+                    ],
+                    begin: const FractionalOffset(0.0, 0.5),
+                    end: const FractionalOffset(0.0, 1.0),
+                    stops: [0.5, 1.0],
+                    tileMode: TileMode.clamp),
+              ),
+              child: Column(children: [
+                Container(
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                        child: Column(children: [
+                          Container(
+                              padding: EdgeInsets.only(
+                                  left: 11, right: 11, bottom: 20),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  color: Colors.white),
+                              child: Row(children: <Widget>[
+                                Container(
+                                    margin: EdgeInsets.only(right: 13),
+                                    width: 60.0,
+                                    height: 60.0,
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: new AssetImage(
+                                                "assets/images/mockup2.png")))),
+                                Expanded(
+                                    child: new Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                      Text('สวัสดี',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              color: Color(0xFFEFA746),
+                                              fontFamily: 'SukhumvitText',
+                                              fontSize: 18,
+                                              height: 1.4)),
+                                      Text('คุณ สมชาย',
+                                          style: TextStyle(
+                                              color: Color(0xFF000000),
+                                              fontFamily: 'SukhumvitText',
+                                              fontSize: 18,
+                                              height: 1)),
+                                      Text('เลขสมาชิก : 1124112567357',
+                                          style: TextStyle(
+                                              color: Color(0xFFACB3BF),
+                                              fontFamily: 'SukhumvitText',
+                                              fontSize: 12,
+                                              height: 1.3))
+                                    ])),
+                                Container(
+                                    child: Icon(
+                                  Icons.navigate_next,
+                                  color: Color(0xFFC4C4C4),
+                                  size: 35.0,
+                                  semanticLabel:
+                                      'Text to announce in accessibility modes',
+                                ))
+                              ]))
+                        ]))),
+                Container(
+                    margin: EdgeInsets.only(bottom: 5),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text('ยอดเรียกเก็บรายเดือน',
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF000000),
+                              color: Color(0xFFEFA746),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 34,
-                              height: 0.1))),
-                  Container(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
+                              fontSize: 16)),
+                    )),
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            width: 2.0, color: const Color(0xFFEFA746)),
+                        borderRadius: new BorderRadius.all(
+                          Radius.circular(10.0),
+                        )),
+                    child: Column(children: [
+                      Container(
+                          child: Row(children: [
                         Container(
                             child: IconButton(
                           icon: new Icon(
-                            Icons.update,
-                            size: 16,
+                            Icons.wysiwyg,
                             color: Color(0xFFEFA746),
                           ),
                         )),
@@ -179,39 +149,83 @@ class _BillingPageState extends State<BillingPage> {
                                   Navigator.pushNamed(
                                       context, '/billing_history');
                                 },
-                                child: Text('ดูรายการที่ผ่านมา',
+                                child: Text('ปี 2563 คงเหลือ',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        color: Color(0xFFACB3BF),
+                                        color: Color(0xFF50555C),
                                         fontFamily: 'SukhumvitText',
-                                        fontSize: 14,
-                                        height: 1))))
-                      ]))
-                ]))
-          ]),
-        ),
-        Container(
-            child: Container(
-                padding:
-                    EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                                        fontSize: 18))))
+                      ])),
                       Container(
-                          margin: EdgeInsets.only(bottom: 15),
-                          child: Container(
-                            child: Text('ยอดค้างชำระ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFFEFA746),
-                                    fontFamily: 'SukhumvitText',
-                                    fontSize: 16)),
-                          )),
-                      Container(child: cardList())
-                    ])))
-      ],
-      //bottomNavigationBar: navigationBottomBar(context),
-    );
+                        margin: EdgeInsets.only(top: 10),
+                        child: dotWidget(
+                            (MediaQuery.of(context).size.width - 60),
+                            10,
+                            5,
+                            2,
+                            0xFFACB3BF),
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(top: 40),
+                          alignment: Alignment.topRight,
+                          child: Text('424 บาท',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF000000),
+                                  fontFamily: 'SukhumvitText',
+                                  fontSize: 34,
+                                  height: 0.1))),
+                      Container(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                            Container(
+                                child: IconButton(
+                              icon: new Icon(
+                                Icons.update,
+                                size: 16,
+                                color: Color(0xFFEFA746),
+                              ),
+                            )),
+                            Container(
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, '/billing_history');
+                                    },
+                                    child: Text('ดูรายการที่ผ่านมา',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFFACB3BF),
+                                            fontFamily: 'SukhumvitText',
+                                            fontSize: 14,
+                                            height: 1))))
+                          ]))
+                    ]))
+              ]),
+            ),
+            Container(
+                child: Container(
+                    padding: EdgeInsets.only(
+                        top: 20, left: 15, right: 15, bottom: 10),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: Container(
+                                child: Text('ยอดค้างชำระ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xFFEFA746),
+                                        fontFamily: 'SukhumvitText',
+                                        fontSize: 16)),
+                              )),
+                          Container(child: cardList())
+                        ])))
+          ],
+          //bottomNavigationBar: navigationBottomBar(context),
+        ));
   }
 
   Widget cardList() {
