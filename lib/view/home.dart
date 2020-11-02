@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
   @override
   void initState() {
     super.initState();
-    _presenter.loadNews(30);
+    _presenter.newsList();
   }
 
   @override

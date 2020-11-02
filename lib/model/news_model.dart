@@ -1,13 +1,3 @@
-/*class News {
-  final String title;
-  final String shortDescription;
-
-  const News({this.title, this.shortDescription});
-
-  News.fromMap(Map<String, dynamic> map)
-      : title = map['title'],
-        shortDescription = map['short_description'];
-}*/
 import 'dart:async';
 
 class News {

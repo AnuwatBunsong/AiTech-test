@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cremation/model/news_model.dart';
 
-class NewsListRepository implements NewsRepository {
+class NewsListRepository {
   final JsonDecoder _decoder = new JsonDecoder();
 
-  Future<List<News>> fetch() async {
+  Future<List<News>> fetch(int size) async {
     final response =
-        await http.get('https://chapanakij.karpools.co/api/v1/news');
+        await http.get('https://chapanakij.karpools.co/api/v1/news?size=$size');
     final jsonBody = response.body;
     final statusCode = response.statusCode;
 
