@@ -61,7 +61,17 @@ class _NotificationPageState extends State<NotificationPage> {
     }
   ];
 
-  void _onShowDelete() {}
+  void _onShowDelete() {
+    setState(() {
+      _isShowDelete = true;
+    });
+  }
+
+  void _isDelete() {
+    setState(() {
+      _isShowDelete = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +82,28 @@ class _NotificationPageState extends State<NotificationPage> {
           title: appBarTitle('การแจ้งเตือน'),
           flexibleSpace: appBarBackground(),
           actions: <Widget>[
-            IconButton(
-              icon: new Icon(
-                Icons.delete_outline,
-              ),
-              tooltip: 'Delete',
-              onPressed: () {
-                _onShowDelete();
-              },
-            )
+            if (!_isShowDelete)
+              IconButton(
+                  icon: new Icon(
+                    Icons.delete_outline,
+                  ),
+                  tooltip: 'Delete',
+                  onPressed: () {
+                    _onShowDelete();
+                  })
+            else
+              Container(
+                  padding: EdgeInsets.only(right: 15, top: 15),
+                  child: GestureDetector(
+                      onTap: () {
+                        _isDelete();
+                      },
+                      child: Text('Delete',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFFFFFFFF),
+                              fontFamily: 'SukhumvitText',
+                              fontSize: 16))))
           ],
         ),
         backgroundColor: Color(0xFFFFFFFF),
