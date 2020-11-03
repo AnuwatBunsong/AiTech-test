@@ -1,28 +1,21 @@
-import 'dart:convert';
-import '../model/news_model.dart';
-import '../utils/exception.dart';
-import 'package:http/http.dart';
+import 'package:cremation/model/news_model.dart';
+import 'package:cremation/data/news_data.dart';
 
-abstract class NewsPresenterD {}
+abstract class NewsListViewContract {
+  void onLoadNewsComplete(List<News> items);
+  void onLoadNewsError();
+}
 
 class NewsPresenter {
-  final JsonDecoder _decoder = new JsonDecoder();
-  NewsModel _newsModel;
+  NewsListViewContract _view;
+  NewsListRepository api = new NewsListRepository();
+  NewsPresenter(this._view);
 
-  void newsList() {
-    _newsModel.getNews().then((Response response) {
-      final String jsonBody = response.body;
-      final statusCode = response.statusCode;
-
-      if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
-        throw FetchDataException(
-            "Error while getting contacts [StatusCode:$statusCode, Error:${response.reasonPhrase}]");
-      }
-
-      final userContainer = _decoder.convert(jsonBody);
-      final List items = userContainer['results'];
-
-      return items;
+  void newsList(int size) {
+    api.fetch(size).then((data) {
+      _view.onLoadNewsComplete(data);
+    }).catchError((e) {
+      _view.onLoadNewsError();
     });
   }
 }

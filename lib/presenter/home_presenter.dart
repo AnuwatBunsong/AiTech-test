@@ -9,7 +9,6 @@ abstract class HomeListViewContract {
 class HomePresenter {
   HomeListViewContract _view;
   NewsListRepository api = new NewsListRepository();
-
   HomePresenter(this._view);
 
   void newsList() {
@@ -20,4 +19,3 @@ class HomePresenter {
     });
   }
 }
-

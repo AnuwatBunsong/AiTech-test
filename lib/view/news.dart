@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:cremation/presenter/news_presenter.dart';
 
 class NewsPage extends StatefulWidget {
   @override

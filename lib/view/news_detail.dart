@@ -3,11 +3,29 @@ import 'package:cremation/utils/widget.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class NewsDetailPage extends StatefulWidget {
+  final dynamic item;
+
+  // In the constructor, require a RecordObject.
+  NewsDetailPage({Key key, @required this.item}) : super(key: key);
+
   @override
   _NewsDetailPageState createState() => _NewsDetailPageState();
 }
 
 class _NewsDetailPageState extends State<NewsDetailPage> {
+  String _date;
+  String _thumbnail;
+  String _content;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _date = widget.item.date;
+    _thumbnail = widget.item.thumbnail;
+    _content = widget.item.content;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +37,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
               child: Column(children: [
                 Container(
                     alignment: Alignment.topLeft,
-                    child: Text('ข่าวสารประจำวันที่ 24 มิ.ย.63',
+                    child: Text('ข่าวสารประจำวันที่ $_date',
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontFamily: 'SukhumvitText',
@@ -40,21 +58,16 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 ),*/
                 Container(
                     child: FittedBox(
-                  child: Image.asset('assets/images/mockup1.png'),
+                  child: Image.network(_thumbnail,
+                      width: (MediaQuery.of(context).size.width),
+                      fit: BoxFit.fill),
                   fit: BoxFit.fitWidth,
                 )),
-                Html(data: """
-                  <div>
-                    <h1>Test Html Editor</h1>
-                    <p>This Tag P !</p>
-                    <h3>Features</h3>
-                    <ul>
-                      <li>It actually works</li>
-                      <li>It exists</li>
-                      <li>It doesn't cost much!</li>
-                    </ul>
-                    <!--You can pretty much put any html in here!-->
-                  </div>
+                Html(
+                    data: """
+                  """ +
+                        _content +
+                        """
                 """),
               ]))
         ]));

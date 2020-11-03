@@ -5,14 +5,24 @@ class News {
   final String shortDescription;
   final String date;
   final String thumbnail;
+  final String slug;
+  final String content;
 
-  const News({this.title, this.shortDescription, this.date, this.thumbnail});
+  const News(
+      {this.title,
+      this.shortDescription,
+      this.date,
+      this.thumbnail,
+      this.content,
+      this.slug});
 
   News.fromMap(Map<String, dynamic> map)
       : title = map['title'],
         shortDescription = map['short_description'],
         date = map['created_at'],
-        thumbnail = map['image']['thumbnail_url'];
+        thumbnail = map['image']['thumbnail_url'],
+        slug = map['slug'],
+        content = map['content'];
 }
 
 abstract class NewsRepository {

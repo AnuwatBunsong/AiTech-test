@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
-import 'package:cremation/model/news_model.dart';
 import 'package:cremation/presenter/home_presenter.dart';
+import 'package:cremation/model/news_model.dart';
+import 'package:cremation/view/news_detail.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -169,10 +169,11 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
                 ),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/news_detail',
-                      );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  NewsDetailPage(item: item)));
                     },
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
