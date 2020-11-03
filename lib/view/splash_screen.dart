@@ -11,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        Duration(seconds: 3), () => Navigator.pushNamed(context, '/main_page'));
+        Duration(seconds: 3), () => Navigator.pushNamed(context, '/login'));
   }
 
   @override

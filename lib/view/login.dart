@@ -39,11 +39,15 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
   Widget build(BuildContext context) {
     _ctx = context;
     return Scaffold(
-        body: Container(
-            decoration: BoxDecoration(
+        body: ListView(
+          children: [
+            ConstrainedBox(
+              constraints: new BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height),
+            child: new DecoratedBox(decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/splash_screen.jpg"),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.cover,
                     alignment: Alignment.topCenter)),
             child: Align(
                 child: Column(children: <Widget>[
@@ -231,7 +235,8 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
                         fontFamily: 'SukhumvitText',
                         fontSize: 20,
                       ))),
-            ]))));
+            ])))
+    )]));
   }
 
   @override
