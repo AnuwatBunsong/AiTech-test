@@ -46,7 +46,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 Container(
                     margin: EdgeInsets.only(bottom: 13),
                     alignment: Alignment.topLeft,
-                    child: Text('24 มิ.ย. 63, 13:00',
+                    child: Text(_date,
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontFamily: 'SukhumvitText',

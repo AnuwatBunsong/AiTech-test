@@ -91,25 +91,12 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                Text('สวัสดี',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        color: Color(0xFFEFA746),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 18,
-                                        height: 1.4)),
-                                Text('คุณ สมชาย',
-                                    style: TextStyle(
-                                        color: Color(0xFF000000),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 18,
-                                        height: 1)),
-                                Text('เลขสมาชิก : 1124112567357',
-                                    style: TextStyle(
-                                        color: Color(0xFFACB3BF),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 12,
-                                        height: 1.3))
+                                textWidget('สวัสดี', 18.0, 0xFFEFA746, 1.4,
+                                    FontWeight.w800),
+                                textWidget('คุณ xxx', 18.0, 0xFF000000, 1.0,
+                                    FontWeight.w400),
+                                textWidget('เลขสมาชิก : 1124112567357', 12.0,
+                                    0xFFACB3BF, 1.3, FontWeight.w400),
                               ])),
                           Container(
                               child: Icon(
@@ -129,23 +116,15 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
                           margin: EdgeInsets.only(bottom: 15),
                           child: Row(children: <Widget>[
                             Expanded(
-                                child: Text('ข่าวสารและกิจกรรม',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xFFEFA746),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 16))),
+                                child: textWidget('ข่าวสารและกิจกรรม', 16.0,
+                                    0xFFEFA746, 0, FontWeight.w700)),
                             Container(
                                 child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(context, '/news');
                                     },
-                                    child: Text('ดูข่าวสารทั้งหมด >',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xFFACB3BF),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 12))))
+                                    child: textWidget('ดูข่าวสารทั้งหมด >',
+                                        12.0, 0xFFACB3BF, 0, FontWeight.w400)))
                           ])),
                       Container(child: newsList())
                     ])))
@@ -199,24 +178,16 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(item.title.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                color: Color(0xFF000000),
-                                                fontFamily: 'SukhumvitText',
-                                                fontSize: 16)),
-                                        Text(item.date.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: Color(0xFFEFA746),
-                                                fontFamily: 'SukhumvitText',
-                                                fontSize: 10)),
-                                        Text(item.shortDescription.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                color: Color(0xFF626262),
-                                                fontFamily: 'SukhumvitText',
-                                                fontSize: 12))
+                                        textWidget(item.title.toString(), 16.0,
+                                            0xFF000000, 0, FontWeight.w700),
+                                        textWidget(item.date.toString(), 10.0,
+                                            0xFFEFA746, 0, FontWeight.w500),
+                                        textWidget(
+                                            item.shortDescription.toString(),
+                                            12.0,
+                                            0xFF626262,
+                                            0,
+                                            FontWeight.w400),
                                       ])))
                         ]))))
             .toList());

@@ -34,3 +34,13 @@ Widget dotWidget(double totalWidth, double dashWidth, double emptyWidth,
     ),
   );
 }
+
+Widget textWidget(String value, double size, color, double height, fontWeight) {
+  return Text(value,
+      style: TextStyle(
+          color: Color(color),
+          fontFamily: 'SukhumvitText',
+          fontSize: size,
+          fontWeight: fontWeight,
+          height: (height > 0) ? height : null));
+}
