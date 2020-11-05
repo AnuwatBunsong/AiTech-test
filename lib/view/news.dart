@@ -1,64 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/news_presenter.dart';
+import 'package:cremation/model/news_model.dart';
+import 'package:cremation/view/news_detail.dart';
 
 class NewsPage extends StatefulWidget {
   @override
   _NewsPageState createState() => _NewsPageState();
 }
 
-class _NewsPageState extends State<NewsPage> {
-  List newsData = [
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 24 มิ.ย.63",
-      'date': "24 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 23 มิ.ย.63",
-      'date': "23 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 22 มิ.ย.63",
-      'date': "22 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 21 มิ.ย.63",
-      'date': "21 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 20 มิ.ย.63",
-      'date': "20 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 19 มิ.ย.63",
-      'date': "19 มิ.ย. 63, 13:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    },
-    {
-      'image': 'assets/images/mockup1.png',
-      'title': "ข่าวสารประจำวันที่ 18 มิ.ย.63",
-      'date': "18 มิ.ย. 63, 00:00",
-      'shortDescripton':
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    }
-  ];
+class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
+  NewsPresenter _presenter;
+  bool _isLoading = false;
+  int page = 1;
+  int size = 1;
+  List<News> newsData;
+
+  _NewsPageState() {
+    _presenter = NewsPresenter(this);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _presenter.newsList(page, size);
+  }
+
+  @override
+  void onLoadNewsComplete(List<News> items) {
+    setState(() {
+      _isLoading = false;
+      newsData = items;
+    });
+  }
+
+  @override
+  void onLoadNewsError() {
+    // TODO: implement
+  }
+
+  Future _loadData() async {
+    await new Future.delayed(new Duration(seconds: 2));
+    page++;
+
+    setState(() {
+      _isLoading = false;
+      _presenter.newsList(page, size);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,72 +57,88 @@ class _NewsPageState extends State<NewsPage> {
             title: appBarTitle('ข่าวสารทั้งหมด'),
             flexibleSpace: appBarBackground()),
         backgroundColor: Color(0xFFFFFFFF),
-        body: ListView(children: [
-          Container(
-              child: Container(
-                  padding:
-                      EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
-                  child: Column(children: [Container(child: newsList())])))
-        ]));
+        body: Container(
+            padding: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
+            child: Column(children: [
+              Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (!_isLoading &&
+                      scrollInfo.metrics.pixels ==
+                          scrollInfo.metrics.maxScrollExtent) {
+                    _loadData();
+                    setState(() {
+                      _isLoading = true;
+                    });
+                  }
+                },
+                child: ListView.builder(
+                  itemCount: newsData == null ? 0 : newsData.length,
+                  itemBuilder: (context, index) {
+                    return newsList(newsData[index]);
+                  },
+                ),
+              )
+                  //child: Column(children: [Container(child: newsList())]))),
+                  ),
+              Container(
+                height: _isLoading ? 50.0 : 0,
+                color: Colors.transparent,
+                child: Center(
+                  child: new CircularProgressIndicator(),
+                ),
+              ),
+            ])));
   }
 
-  Widget newsList() {
-    return Column(
-        children: newsData
-            .map((item) => Card(
-                elevation: 4,
-                margin: EdgeInsets.only(bottom: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  side: BorderSide(
-                    color: Color(0xFFEFEFEF),
-                    width: 1.0,
-                  ),
-                ),
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/news_detail');
-                    },
-                    child: Row(children: [
-                      Expanded(
-                          flex: 6,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5),
-                                  bottomLeft: Radius.circular(5)),
-                              child: Image.asset(
-                                item['image'],
-                                width: (MediaQuery.of(context).size.width),
-                                fit: BoxFit.fill,
-                              ))),
-                      Expanded(
-                          flex: 4,
-                          child: Container(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(item['title'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xFF000000),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 16)),
-                                    Text(item['date'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xFFEFA746),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 10)),
-                                    Text(item['shortDescripton'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xFF626262),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 12))
-                                  ])))
-                    ]))))
-            .toList());
+  Widget newsList(item) {
+    return Card(
+        elevation: 4,
+        margin: EdgeInsets.only(bottom: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          side: BorderSide(
+            color: Color(0xFFEFEFEF),
+            width: 1.0,
+          ),
+        ),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NewsDetailPage(item: item)));
+            },
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                      flex: 6,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5),
+                              bottomLeft: Radius.circular(5)),
+                          child: Image.network(
+                            item.thumbnail,
+                            width: (MediaQuery.of(context).size.width),
+                            fit: BoxFit.fill,
+                          ))),
+                  Expanded(
+                      flex: 4,
+                      child: Container(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                textWidget(item.title.toString(), 16.0,
+                                    0xFF000000, 0, FontWeight.w700),
+                                textWidget(item.date.toString(), 10.0,
+                                    0xFFEFA746, 0, FontWeight.w500),
+                                textWidget(item.shortDescription.toString(),
+                                    12.0, 0xFF626262, 0, FontWeight.w400),
+                              ])))
+                ])));
   }
 }

@@ -11,10 +11,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> implements HomeListViewContract {
   // with AutomaticKeepAliveClientMixin<HomePage> {
-  bool _isLoading = true;
-
   HomePresenter _presenter;
-
+  bool _isLoading = true;
   List<News> newsData;
 
   _HomePageState() {
@@ -42,95 +40,91 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
 
   @override
   Widget build(BuildContext context) {
-    var widget;
-    if (_isLoading) {
-      widget = Center(
-          child: Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: CircularProgressIndicator()));
-    } else {
-      widget = Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-            title: appBarTitle('หน้าแรก'),
-            flexibleSpace: appBarBackground(),
-          ),
-          backgroundColor: Color(0xFFFFFFFF),
-          body: ListView(children: [
-            Container(
-                padding:
-                    EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFE5E5E5),
-                ),
-                child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                    child: Container(
-                        padding: EdgeInsets.only(
-                            top: 28, left: 11, right: 11, bottom: 28),
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            color: Colors.white),
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: appBarTitle('หน้าแรก'),
+          flexibleSpace: appBarBackground(),
+        ),
+        backgroundColor: Color(0xFFFFFFFF),
+        body: ListView(children: [
+          Container(
+              padding:
+                  EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
+              decoration: BoxDecoration(
+                color: Color(0xFFFE5E5E5),
+              ),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  child: Container(
+                      padding: EdgeInsets.only(
+                          top: 28, left: 11, right: 11, bottom: 28),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          color: Colors.white),
+                      child: Row(children: <Widget>[
+                        Container(
+                            margin: EdgeInsets.only(right: 13),
+                            width: 60.0,
+                            height: 60.0,
+                            decoration: new BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: new DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: new AssetImage(
+                                        "assets/images/mockup2.png")))),
+                        Expanded(
+                            child: new Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                              textWidget('สวัสดี', 18.0, 0xFFEFA746, 1.4,
+                                  FontWeight.w800),
+                              textWidget('คุณ xxx', 18.0, 0xFF000000, 1.0,
+                                  FontWeight.w400),
+                              textWidget('เลขสมาชิก : 1124112567357', 12.0,
+                                  0xFFACB3BF, 1.3, FontWeight.w400),
+                            ])),
+                        Container(
+                            child: Icon(
+                          Icons.navigate_next,
+                          color: Color(0xFFC4C4C4),
+                          size: 35.0,
+                          semanticLabel:
+                              'Text to announce in accessibility modes',
+                        ))
+                      ])))),
+          Container(
+              child: Container(
+                  padding:
+                      EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 10),
+                  child: Column(children: [
+                    Container(
+                        margin: EdgeInsets.only(bottom: 15),
                         child: Row(children: <Widget>[
-                          Container(
-                              margin: EdgeInsets.only(right: 13),
-                              width: 60.0,
-                              height: 60.0,
-                              decoration: new BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: new DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: new AssetImage(
-                                          "assets/images/mockup2.png")))),
                           Expanded(
-                              child: new Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                textWidget('สวัสดี', 18.0, 0xFFEFA746, 1.4,
-                                    FontWeight.w800),
-                                textWidget('คุณ xxx', 18.0, 0xFF000000, 1.0,
-                                    FontWeight.w400),
-                                textWidget('เลขสมาชิก : 1124112567357', 12.0,
-                                    0xFFACB3BF, 1.3, FontWeight.w400),
-                              ])),
+                              child: textWidget('ข่าวสารและกิจกรรม', 16.0,
+                                  0xFFEFA746, 0, FontWeight.w700)),
                           Container(
-                              child: Icon(
-                            Icons.navigate_next,
-                            color: Color(0xFFC4C4C4),
-                            size: 35.0,
-                            semanticLabel:
-                                'Text to announce in accessibility modes',
-                          ))
-                        ])))),
-            Container(
-                child: Container(
-                    padding: EdgeInsets.only(
-                        top: 20, left: 15, right: 15, bottom: 10),
-                    child: Column(children: [
-                      Container(
-                          margin: EdgeInsets.only(bottom: 15),
-                          child: Row(children: <Widget>[
-                            Expanded(
-                                child: textWidget('ข่าวสารและกิจกรรม', 16.0,
-                                    0xFFEFA746, 0, FontWeight.w700)),
-                            Container(
-                                child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/news');
-                                    },
-                                    child: textWidget('ดูข่าวสารทั้งหมด >',
-                                        12.0, 0xFFACB3BF, 0, FontWeight.w400)))
-                          ])),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, '/news');
+                                  },
+                                  child: textWidget('ดูข่าวสารทั้งหมด >', 12.0,
+                                      0xFFACB3BF, 0, FontWeight.w400)))
+                        ])),
+                    if (_isLoading)
+                      Center(
+                          child: Padding(
+                              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                              child: CircularProgressIndicator()))
+                    else
                       Container(child: newsList())
-                    ])))
-          ]));
-    }
-    return widget;
+                  ])))
+        ]));
   }
 
   Widget newsList() {

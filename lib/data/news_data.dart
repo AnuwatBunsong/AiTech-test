@@ -5,10 +5,11 @@ import 'package:cremation/model/news_model.dart';
 
 class NewsListRepository {
   final JsonDecoder _decoder = new JsonDecoder();
+  List data;
 
-  Future<List<News>> fetch(int size) async {
-    final response =
-        await http.get('https://chapanakij.karpools.co/api/v1/news?size=$size');
+  Future<List<News>> fetch(int page, int size) async {
+    final response = await http.get(
+        'https://chapanakij.karpools.co/api/v1/news?size=$size&page=$page');
     final jsonBody = response.body;
     final statusCode = response.statusCode;
 
@@ -19,6 +20,12 @@ class NewsListRepository {
 
     final contactsContainer = _decoder.convert(jsonBody);
     final List contactItems = contactsContainer['entities'];
-    return contactItems.map((contactRaw) => News.fromMap(contactRaw)).toList();
+
+    if (data == null) {
+      data = contactItems;
+    } else {
+      data.addAll(contactItems);
+    }
+    return data.map((contactRaw) => News.fromMap(contactRaw)).toList();
   }
 }

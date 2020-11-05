@@ -11,8 +11,11 @@ class HomePresenter {
   NewsListRepository api = new NewsListRepository();
   HomePresenter(this._view);
 
+  int _page = 1;
+  int _size = 2;
+
   void newsList() {
-    api.fetch(2).then((data) {
+    api.fetch(_page, _size).then((data) {
       _view.onLoadNewsComplete(data);
     }).catchError((e) {
       _view.onLoadNewsError();
