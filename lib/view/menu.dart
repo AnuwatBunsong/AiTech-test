@@ -25,12 +25,15 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon:
+                              Container(
+                                padding: EdgeInsets.only(right: 20),
+                                child:
                                     new Image.asset('assets/icons/member.png'),
                               ),
                               Text("ข้อมูลส่วนตัวสมาชิก",
@@ -45,12 +48,15 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/news');
+                        },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon: new Image.asset('assets/icons/news.png'),
+                              Container(
+                                padding: EdgeInsets.only(right: 20),
+                                child: new Image.asset('assets/icons/news.png'),
                               ),
                               Text("ข่าวสารและกิจกรรม",
                                   style: TextStyle(
@@ -68,8 +74,9 @@ class _MenuState extends State<Menu> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon:
+                              Container(
+                                padding: EdgeInsets.only(right: 20),
+                                child:
                                     new Image.asset('assets/icons/setting.png'),
                               ),
                               Text("ตั้งค่า",

@@ -34,6 +34,6 @@ class UserLogin {
     }
 
     final object = _decoder.convert(jsonBody);
-    return User.token(object);
+    return User.fromMap(object);
   }
 }

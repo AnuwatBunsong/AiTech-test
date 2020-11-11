@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cremation/presenter/login_presenter.dart';
 import 'package:cremation/model/user_model.dart';
@@ -16,6 +17,21 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
   String _username, _password;
   bool _isLoading = false;
   LoginPresenter _presenter;
+
+  @override
+  void initState() {
+    super.initState();
+    autoLogIn();
+  }
+
+  void autoLogIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
+
+    if (token != null) {
+      Navigator.pushNamed(context, '/main_page');
+    }
+  }
 
   _LoginPageState() {
     _presenter = new LoginPresenter(this);
@@ -272,6 +288,8 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
   void onLoginSuccess(User user) async {
     //_showSnackBar(user.toString());
     setState(() => _isLoading = false);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', user.token);
     //var authStateProvider = new AuthStateProvider();
     //authStateProvider.notify(AuthState.LOGGED_IN);
     Navigator.pushNamed(context, '/main_page');
