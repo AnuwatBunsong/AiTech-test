@@ -137,12 +137,11 @@ class _BillingPageState extends State<BillingPage> {
                       Container(
                           child: Row(children: [
                         Container(
-                            child: IconButton(
-                          icon: new Icon(
-                            Icons.wysiwyg,
-                            color: Color(0xFFEFA746),
-                          ),
-                        )),
+                            margin: EdgeInsets.only(left: 5, right: 10),
+                            child: Icon(
+                              Icons.wysiwyg,
+                              color: Color(0xFFEFA746),
+                            )),
                         Container(
                             child: GestureDetector(
                                 onTap: () {
@@ -176,31 +175,31 @@ class _BillingPageState extends State<BillingPage> {
                                   fontSize: 34,
                                   height: 0.1))),
                       Container(
+                          margin: EdgeInsets.only(top: 25),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                            Container(
-                                child: IconButton(
-                              icon: new Icon(
-                                Icons.update,
-                                size: 16,
-                                color: Color(0xFFEFA746),
-                              ),
-                            )),
-                            Container(
-                                child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, '/billing_history');
-                                    },
-                                    child: Text('ดูรายการที่ผ่านมา',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xFFACB3BF),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 14,
-                                            height: 1))))
-                          ]))
+                                Container(
+                                    margin: EdgeInsets.only(right: 3),
+                                    child: Icon(
+                                      Icons.update,
+                                      size: 16,
+                                      color: Color(0xFFACB3BF),
+                                    )),
+                                Container(
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/billing_history');
+                                        },
+                                        child: Text('ดูรายการที่ผ่านมา',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: Color(0xFFACB3BF),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 14,
+                                                height: 1))))
+                              ]))
                     ]))
               ]),
             ),
@@ -247,13 +246,12 @@ class _BillingPageState extends State<BillingPage> {
                                     color: Color(0xFFFF0000), width: 10))),
                         child: Row(children: [
                           Container(
-                            child: IconButton(
-                                icon: new Icon(
-                              Icons.error_outline,
-                              size: 20,
-                              color: Color(0xFFEFA746),
-                            )),
-                          ),
+                              margin: EdgeInsets.only(left: 13, right: 8),
+                              child: Icon(
+                                Icons.error_outline,
+                                size: 20,
+                                color: Color(0xFFACB3BF),
+                              )),
                           Expanded(
                               child: Container(
                                   padding: EdgeInsets.only(left: 5),

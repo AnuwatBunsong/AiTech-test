@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class PaymentSuccessPage extends StatefulWidget {
   @override

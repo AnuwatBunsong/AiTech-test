@@ -35,9 +35,7 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
   }
 
   @override
-  void onLoadNewsError() {
-    // TODO: implement
-  }
+  void onLoadNewsError() {}
 
   Future _loadData() async {
     await new Future.delayed(new Duration(seconds: 2));

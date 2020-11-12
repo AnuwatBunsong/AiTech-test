@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 
 class NotificationPage extends StatefulWidget {
-  List<dynamic> data;
-  NotificationPage({this.data});
-
   @override
   _NotificationPageState createState() => _NotificationPageState();
 }
@@ -16,7 +13,7 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   bool _isShowDelete = false;
-  List NotificationData = [
+  List notificationData = [
     {
       'id': '1',
       'title': "คุณมียอดค้างชำระเดือน มิ.ย. 63",
@@ -141,64 +138,66 @@ class _NotificationPageState extends State<NotificationPage> {
 
   Widget notificationList() {
     return Column(
-        children: NotificationData.map((item) => Card(
-            elevation: 0,
-            shape: Border(bottom: BorderSide(color: Color(0xFFACB3BF))),
-            child: Padding(
-                padding: EdgeInsets.only(top: 15, bottom: 20),
-                child: Row(children: [
-                  if (_isShowDelete)
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: Icon(Icons.radio_button_unchecked,
-                            color: Color(0xFFACB3BF))),
-                  Container(
-                      margin: EdgeInsets.only(right: 18, left: 2),
-                      width: 50.0,
-                      height: 50.0,
-                      decoration: new BoxDecoration(
-                        color: Color(0xFFEFA746),
-                        shape: BoxShape.circle,
-                      ),
-                      child: new Stack(children: <Widget>[
-                        new Positioned(
-                            left: 13,
-                            top: 13,
-                            child: Icon(Icons.mail_outline,
-                                color: Color(0xFFFFFFFF))),
-                        if (item['new'])
-                          new Positioned(
-                            right: 0.0,
-                            top: 0,
-                            child: Container(
-                                width: 16.0,
-                                height: 16.0,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFFF0000),
-                                  shape: BoxShape.circle,
-                                )),
+        children: notificationData
+            .map((item) => Card(
+                elevation: 0,
+                shape: Border(bottom: BorderSide(color: Color(0xFFACB3BF))),
+                child: Padding(
+                    padding: EdgeInsets.only(top: 15, bottom: 20),
+                    child: Row(children: [
+                      if (_isShowDelete)
+                        Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: Icon(Icons.radio_button_unchecked,
+                                color: Color(0xFFACB3BF))),
+                      Container(
+                          margin: EdgeInsets.only(right: 18, left: 2),
+                          width: 50.0,
+                          height: 50.0,
+                          decoration: new BoxDecoration(
+                            color: Color(0xFFEFA746),
+                            shape: BoxShape.circle,
                           ),
-                      ])),
-                  Expanded(
-                      child: Container(
-                          padding: EdgeInsets.only(left: 5),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(item['title'].toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xFF000000),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 16)),
-                                Text(item['date'].toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFF50555C),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 12))
-                              ])))
-                ])))).toList());
+                          child: new Stack(children: <Widget>[
+                            new Positioned(
+                                left: 13,
+                                top: 13,
+                                child: Icon(Icons.mail_outline,
+                                    color: Color(0xFFFFFFFF))),
+                            if (item['new'])
+                              new Positioned(
+                                right: 0.0,
+                                top: 0,
+                                child: Container(
+                                    width: 16.0,
+                                    height: 16.0,
+                                    decoration: new BoxDecoration(
+                                      color: Color(0xFFFF0000),
+                                      shape: BoxShape.circle,
+                                    )),
+                              ),
+                          ])),
+                      Expanded(
+                          child: Container(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(item['title'].toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF000000),
+                                            fontFamily: 'SukhumvitText',
+                                            fontSize: 16)),
+                                    Text(item['date'].toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xFF50555C),
+                                            fontFamily: 'SukhumvitText',
+                                            fontSize: 12))
+                                  ])))
+                    ]))))
+            .toList());
   }
 }

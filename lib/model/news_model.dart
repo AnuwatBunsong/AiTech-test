@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:intl/intl.dart';
 
 class News {
   final String title;
