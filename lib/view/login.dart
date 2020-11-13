@@ -11,11 +11,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> implements LoginContract {
-  BuildContext _ctx;
+  //BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password;
-  bool _isLoading = false;
+  //bool _isLoading = false;
   LoginPresenter _presenter;
 
   @override
@@ -40,20 +40,20 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
   void _submit() {
     final form = formKey.currentState;
     if (form.validate()) {
-      setState(() => _isLoading = true);
+      //setState(() => _isLoading = true);
       form.save();
       _presenter.doLogin(_username, _password);
     }
   }
 
-  void _showSnackBar(String text) {
+  /*void _showSnackBar(String text) {
     scaffoldKey.currentState
         .showSnackBar(new SnackBar(content: new Text(text)));
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    _ctx = context;
+    //_ctx = context;
     return Scaffold(
         body: Container(
             decoration: BoxDecoration(
@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
   @override
   void onLoginError(String errorTxt) {
     //_showSnackBar(errorTxt);
-    setState(() => _isLoading = false);
+    //setState(() => _isLoading = false);
     Alert(
       context: context,
       type: AlertType.error,
@@ -287,7 +287,7 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
   @override
   void onLoginSuccess(User user) async {
     //_showSnackBar(user.toString());
-    setState(() => _isLoading = false);
+    //setState(() => _isLoading = false);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', user.token);
     //var authStateProvider = new AuthStateProvider();

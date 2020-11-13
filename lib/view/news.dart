@@ -37,6 +37,13 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
   @override
   void onLoadNewsError() {}
 
+  _onEndScroll(ScrollMetrics metrics) {
+    setState(() {
+      _isLoading = true;
+    });
+    _loadData();
+  }
+
   Future _loadData() async {
     await new Future.delayed(new Duration(seconds: 2));
     page++;
@@ -60,14 +67,12 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
             child: Column(children: [
               Expanded(
                   child: NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollInfo) {
-                  if (!_isLoading &&
-                      scrollInfo.metrics.pixels ==
-                          scrollInfo.metrics.maxScrollExtent) {
-                    _loadData();
-                    setState(() {
-                      _isLoading = true;
-                    });
+                // ignore: missing_return
+                onNotification: (scrollNotification) {
+                  if (scrollNotification is ScrollEndNotification &&
+                      scrollNotification.metrics.pixels ==
+                          scrollNotification.metrics.maxScrollExtent) {
+                    _onEndScroll(scrollNotification.metrics);
                   }
                 },
                 child: ListView.builder(
@@ -76,9 +81,7 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
                     return newsList(newsData[index]);
                   },
                 ),
-              )
-                  //child: Column(children: [Container(child: newsList())]))),
-                  ),
+              )),
               Container(
                 height: _isLoading ? 50.0 : 0,
                 color: Colors.transparent,

@@ -84,62 +84,48 @@ class _MainPageState extends State<MainPage> {
                     child: BottomNavigationBar(
                         currentIndex: _selectedIndex,
                         onTap: _onItemTapped,
+                        selectedItemColor: Color(0xFFEFA746),
+                        unselectedItemColor: Color(0xFFACB3BF),
                         backgroundColor: Colors.white,
                         type: BottomNavigationBarType.fixed,
+                        selectedLabelStyle: TextStyle(
+                            fontFamily: 'SukhumvitText', fontSize: 12.0),
+                        unselectedLabelStyle: TextStyle(
+                            fontFamily: 'SukhumvitText', fontSize: 12.0),
                         elevation: 0,
                         items: <BottomNavigationBarItem>[
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.home_outlined,
-                                  size: 31.0,
-                                  color: _selectedIndex == 0
-                                      ? Color(activePage)
-                                      : Color(inActivePage)),
-                              title: new Text("หน้าแรก",
-                                  style: TextStyle(
-                                      color: _selectedIndex == 0
-                                          ? Color(activePage)
-                                          : Color(inActivePage),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 12.0))),
+                            icon: Icon(Icons.home_outlined,
+                                size: 31.0,
+                                color: _selectedIndex == 0
+                                    ? Color(activePage)
+                                    : Color(inActivePage)),
+                            label: 'หน้าแรก',
+                          ),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.wysiwyg,
-                                  size: 31.0,
-                                  color: _selectedIndex == 1
-                                      ? Color(activePage)
-                                      : Color(inActivePage)),
-                              title: new Text("เงินสงเคราะห์สะสม",
-                                  style: TextStyle(
-                                      color: _selectedIndex == 1
-                                          ? Color(activePage)
-                                          : Color(inActivePage),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 12.0))),
+                            icon: Icon(Icons.wysiwyg,
+                                size: 31.0,
+                                color: _selectedIndex == 1
+                                    ? Color(activePage)
+                                    : Color(inActivePage)),
+                            label: 'เงินสงเคราะห์สะสม',
+                          ),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.notifications,
-                                  size: 31.0,
-                                  color: _selectedIndex == 2
-                                      ? Color(activePage)
-                                      : Color(inActivePage)),
-                              title: new Text("การแจ้งเตือน",
-                                  style: TextStyle(
-                                      color: _selectedIndex == 2
-                                          ? Color(activePage)
-                                          : Color(inActivePage),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 12.0))),
+                            icon: Icon(Icons.notifications,
+                                size: 31.0,
+                                color: _selectedIndex == 2
+                                    ? Color(activePage)
+                                    : Color(inActivePage)),
+                            label: 'การแจ้งเตือน',
+                          ),
                           BottomNavigationBarItem(
-                              icon: Icon(Icons.menu,
-                                  size: 31.0,
-                                  color: _selectedIndex == 3
-                                      ? Color(activePage)
-                                      : Color(inActivePage)),
-                              title: new Text("อื่นๆ",
-                                  style: TextStyle(
-                                      color: _selectedIndex == 3
-                                          ? Color(activePage)
-                                          : Color(inActivePage),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 12.0)))
+                            icon: Icon(Icons.menu,
+                                size: 31.0,
+                                color: _selectedIndex == 3
+                                    ? Color(activePage)
+                                    : Color(inActivePage)),
+                            label: 'อื่นๆ',
+                          )
                         ])))));
   }
 }
