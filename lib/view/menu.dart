@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cremation/utils/widget.dart';
 
 class Menu extends StatefulWidget {
@@ -7,6 +8,18 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+
+    Navigator.pushNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +105,7 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: () {},
+                        onPressed: _logout,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
