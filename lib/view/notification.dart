@@ -7,11 +7,6 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   bool _isShowDelete = false;
   List notificationData = [
     {
@@ -57,6 +52,11 @@ class _NotificationPageState extends State<NotificationPage> {
       'new': false
     }
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _onShowDelete() {
     setState(() {
