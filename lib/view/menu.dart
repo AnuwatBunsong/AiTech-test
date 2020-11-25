@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cremation/utils/widget.dart';
 
 class Menu extends StatefulWidget {
@@ -7,6 +8,18 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+
+    Navigator.pushNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +38,17 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon:
-                                    new Image.asset('assets/icons/member.png'),
-                              ),
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.person,
+                                      size: 30, color: Color(0xFFEFA746))),
                               Text("ข้อมูลส่วนตัวสมาชิก",
                                   style: TextStyle(
                                     color: Color(0xFF50555C),
@@ -45,13 +61,17 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/news');
+                        },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon: new Image.asset('assets/icons/news.png'),
-                              ),
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.menu_book,
+                                      size: 30, color: Color(0xFFEFA746))),
                               Text("ข่าวสารและกิจกรรม",
                                   style: TextStyle(
                                     color: Color(0xFF50555C),
@@ -68,11 +88,33 @@ class _MenuState extends State<Menu> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              IconButton(
-                                icon:
-                                    new Image.asset('assets/icons/setting.png'),
-                              ),
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.settings,
+                                      size: 30, color: Color(0xFFEFA746))),
                               Text("ตั้งค่า",
+                                  style: TextStyle(
+                                    color: Color(0xFF50555C),
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'SukhumvitText',
+                                    fontSize: 16,
+                                  ))
+                            ]))),
+                Container(
+                    height: 65,
+                    child: RaisedButton(
+                        color: Color(0xFFFFFFFF),
+                        onPressed: _logout,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.input,
+                                      size: 30, color: Color(0xFFEFA746))),
+                              Text("ออกจากระบบ",
                                   style: TextStyle(
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,
@@ -103,10 +145,10 @@ class _MenuState extends State<Menu> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                IconButton(
-                                  icon: new Icon(Icons.phone,
-                                      color: Color(0xFFFFFFFF)),
-                                ),
+                                Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    child: Icon(Icons.phone,
+                                        color: Color(0xFFFFFFFF))),
                                 Text("ติดต่อ Call Center",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(

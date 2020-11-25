@@ -34,9 +34,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
   }
 
   @override
-  void onLoadNewsError() {
-    // TODO: implement
-  }
+  void onLoadNewsError() {}
 
   @override
   Widget build(BuildContext context) {

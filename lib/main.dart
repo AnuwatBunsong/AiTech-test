@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cremation/auth.dart';
 import 'package:cremation/routes.dart';
 
 void main() {
