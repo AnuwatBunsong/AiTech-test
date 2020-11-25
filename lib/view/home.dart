@@ -9,8 +9,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> implements HomeListViewContract {
-  // with AutomaticKeepAliveClientMixin<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<HomePage> implements HomeListViewContract {
   HomePresenter _presenter;
   bool _isLoading = true;
   List<News> newsData;
@@ -38,6 +37,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -184,4 +184,7 @@ class _HomePageState extends State<HomePage> implements HomeListViewContract {
                         ]))))
             .toList());
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
