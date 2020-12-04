@@ -1,12 +1,38 @@
+import 'package:cremation/model/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:cremation/presenter/profile_presenter.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage>  implements ProfileContract {
+
+  ProfilePresenter _presenter;
+  bool _isLoading = true;
+  var profileData = null;
+
+  _ProfilePageState() {
+    _presenter = ProfilePresenter(this);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void getProfileSuccess(Profile items) {
+    setState(() {
+      _isLoading = false;
+      profileData = items;
+    });
+  }
+
+  @override
+  void getProfileError(Error) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
