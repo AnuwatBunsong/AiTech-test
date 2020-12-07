@@ -7,6 +7,7 @@ import 'package:cremation/presenter/login_presenter.dart';
 import 'package:cremation/model/user_model.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
+import 'package:cremation/presenter/token_presenter.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage>
-    implements LoginContract, ProfileContract {
+    implements LoginContract, ProfileContract, TokenContract {
   //BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -22,7 +23,9 @@ class _LoginPageState extends State<LoginPage>
   //bool _isLoading = false;
   LoginPresenter _presenter;
   ProfilePresenter _profilePresenter;
+  TokenPresenter _tokenPresenter;
   var profileData;
+  
 
   @override
   void initState() {
@@ -30,18 +33,22 @@ class _LoginPageState extends State<LoginPage>
     autoLogIn();
   }
 
+  _LoginPageState() {
+    _presenter = new LoginPresenter(this);
+    _profilePresenter = new ProfilePresenter(this);
+    _tokenPresenter = new TokenPresenter(this);
+  }
+
   void autoLogIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
+    final String refreshToken = prefs.getString('refreshToken');
+
+    _tokenPresenter.requestToken(refreshToken);
 
     if (token != null) {
       Navigator.pushNamed(context, '/main_page');
     }
-  }
-
-  _LoginPageState() {
-    _presenter = new LoginPresenter(this);
-    _profilePresenter = new ProfilePresenter(this);
   }
 
   void _submit() {
@@ -57,6 +64,7 @@ class _LoginPageState extends State<LoginPage>
   void onLoginSuccess(User user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', user.token);
+    prefs.setString('refreshToken', user.refreshToken);
     getProfile();
     Navigator.pushNamed(context, '/main_page');
   }
