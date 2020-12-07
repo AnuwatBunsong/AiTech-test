@@ -1,17 +1,25 @@
 import 'dart:async';
 
 class Profile {
-  final String title;
+  final String firstName;
+  final String lastName;
+  final String empCode;
+  final int id;
+  final DateTime updatedAt;
 
   const Profile(
-      {this.title});
+      {this.firstName, this.lastName, this.empCode, this.id, this.updatedAt});
 
   Profile.fromMap(Map<String, dynamic> map)
-      : title = map['title'];
+      : firstName = map['first_name'],
+        lastName = map['last_name'],
+        empCode = map['emp_code'],
+        id = map['id'],
+        updatedAt = map['update_at'];
 }
 
 abstract class ProfileRepository {
-  Future<List<Profile>> fetch();
+  Future<Profile> fetch();
 }
 
 class FetchDataException implements Exception {

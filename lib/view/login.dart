@@ -1,22 +1,28 @@
 import 'dart:ui';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cremation/presenter/login_presenter.dart';
 import 'package:cremation/model/user_model.dart';
+import 'package:cremation/presenter/profile_presenter.dart';
+import 'package:cremation/model/profile_model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> implements LoginContract {
+class _LoginPageState extends State<LoginPage>
+    implements LoginContract, ProfileContract {
   //BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password;
   //bool _isLoading = false;
   LoginPresenter _presenter;
+  ProfilePresenter _profilePresenter;
+  var profileData;
 
   @override
   void initState() {
@@ -35,6 +41,7 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
 
   _LoginPageState() {
     _presenter = new LoginPresenter(this);
+    _profilePresenter = new ProfilePresenter(this);
   }
 
   void _submit() {
@@ -45,6 +52,34 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
       _presenter.doLogin(_username, _password);
     }
   }
+
+  @override
+  void onLoginSuccess(User user) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', user.token);
+    getProfile();
+    Navigator.pushNamed(context, '/main_page');
+  }
+
+  void getProfile() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
+
+    if (token != null) {
+      _profilePresenter.getProfile(token);
+    } else {
+      Navigator.pushNamed(context, '/login');
+    }
+  }
+
+  @override
+  void getProfileSuccess(Profile items) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userData', json.encode(items));
+  }
+
+  @override
+  void getProfileError(error) {}
 
   /*void _showSnackBar(String text) {
     scaffoldKey.currentState
@@ -282,16 +317,5 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
         )
       ],
     ).show();
-  }
-
-  @override
-  void onLoginSuccess(User user) async {
-    //_showSnackBar(user.toString());
-    //setState(() => _isLoading = false);
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', user.token);
-    //var authStateProvider = new AuthStateProvider();
-    //authStateProvider.notify(AuthState.LOGGED_IN);
-    Navigator.pushNamed(context, '/main_page');
   }
 }

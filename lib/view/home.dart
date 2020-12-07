@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/home_presenter.dart';
@@ -9,7 +11,9 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<HomePage> implements HomeListViewContract {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage>
+    implements HomeListViewContract {
   HomePresenter _presenter;
   bool _isLoading = true;
   List<News> newsData;

@@ -11,8 +11,8 @@ class ProfilePresenter {
   GetProfile api = new GetProfile();
   ProfilePresenter(this._view);
 
-  doLogin(String username, String password) {
-    api.login(username, password).then((Profile profile) {
+  getProfile(String token) {
+    api.getProfile(token).then((Profile profile) {
       _view.getProfileSuccess(profile);
     }).catchError((e) {
       _view.getProfileError('error');

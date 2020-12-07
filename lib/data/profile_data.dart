@@ -6,10 +6,14 @@ import 'package:cremation/model/profile_model.dart';
 class GetProfile {
   final JsonDecoder _decoder = new JsonDecoder();
 
-  Future<Profile> login(String username, String password) async {
-    final response = await http.post(
-        'https://chapanakij.karpools.co/api/v1/guest/login',
-        body: {"username": username, "password": password});
+  Future<Profile> getProfile(String token) async {
+    final response =
+        await http.get('https://chapanakij.karpools.co/api/v1/me', headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+
     final jsonBody = response.body;
     final statusCode = response.statusCode;
 
