@@ -8,6 +8,7 @@ import 'package:cremation/model/user_model.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
 import 'package:cremation/presenter/token_presenter.dart';
+import 'package:cremation/model/token_model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,17 +17,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage>
     implements LoginContract, ProfileContract, TokenContract {
-  //BuildContext _ctx;
+  LoginPresenter _presenter;
+  ProfilePresenter _profilePresenter;
+  TokenPresenter _tokenPresenter;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password;
   //bool _isLoading = false;
-  LoginPresenter _presenter;
-  ProfilePresenter _profilePresenter;
-  TokenPresenter _tokenPresenter;
   var profileData;
-  
-
   @override
   void initState() {
     super.initState();
@@ -44,10 +42,8 @@ class _LoginPageState extends State<LoginPage>
     final String token = prefs.getString('token');
     final String refreshToken = prefs.getString('refreshToken');
 
-    _tokenPresenter.requestToken(refreshToken);
-
     if (token != null) {
-      Navigator.pushNamed(context, '/main_page');
+      _tokenPresenter.requestToken(refreshToken);
     }
   }
 
@@ -88,6 +84,21 @@ class _LoginPageState extends State<LoginPage>
 
   @override
   void getProfileError(error) {}
+
+  @override
+  void requestTokenError(String errorTxt) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    prefs.remove('refreshToken');
+  }
+
+  @override
+  void requestTokenSuccess(RequestToken response) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', response.token);
+    prefs.setString('refreshToken', response.refreshToken);
+    Navigator.pushNamed(context, '/main_page');
+  }
 
   /*void _showSnackBar(String text) {
     scaffoldKey.currentState
@@ -292,12 +303,16 @@ class _LoginPageState extends State<LoginPage>
                     Container(
                         alignment: Alignment.center,
                         margin: const EdgeInsets.only(top: 30.0),
-                        child: Text('เข้าสู่ระบบสมาชิกใหม่',
-                            style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontFamily: 'SukhumvitText',
-                              fontSize: 20,
-                            ))),
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/payment');
+                            },
+                            child: Text('เข้าสู่ระบบสมาชิกใหม่',
+                                style: TextStyle(
+                                  color: Color(0xFFFFFFFF),
+                                  fontFamily: 'SukhumvitText',
+                                  fontSize: 20,
+                                )))),
                   ])))
             ])));
   }

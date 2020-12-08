@@ -1,7 +1,7 @@
 class RequestToken {
   final int id;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final String createdAt;
+  final String updatedAt;
   final String token;
   final String refreshToken;
   const RequestToken(
