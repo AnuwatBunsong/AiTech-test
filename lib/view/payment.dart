@@ -1,6 +1,7 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
-import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -9,6 +10,50 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
+  File _image;
+  final picker = ImagePicker();
+  StreamController _stream;
+  List _imageList = [];
+
+  @override
+  initState() {
+    super.initState();
+    _stream = new StreamController();
+  }
+
+  Future getCamera() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final bytes = await pickedFile.readAsBytes();
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        var object = {
+          'image': pickedFile.path.toString(),
+          'size': _image.readAsBytes()
+        };
+        print(_image.readAsBytes());
+        _imageList.add(object);
+        _stream.add(_imageList);
+        print(_stream);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,24 +114,30 @@ class _PaymentPageState extends State<PaymentPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   color: Color(0xFF2FB4FF),
                                 ),
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(right: 13),
-                                          child: Icon(Icons.camera_alt,
-                                              size: 20,
-                                              color: Color(0xFFFFFFFF))),
-                                      Text('OPEN CAMERA',
-                                          style: TextStyle(
-                                              color: Color(0xFFFFFFFF),
-                                              fontFamily: 'SukhumvitText',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600))
-                                    ]))),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      getCamera();
+                                    },
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 13),
+                                              child: Icon(Icons.camera_alt,
+                                                  size: 20,
+                                                  color: Color(0xFFFFFFFF))),
+                                          Text('OPEN CAMERA',
+                                              style: TextStyle(
+                                                  color: Color(0xFFFFFFFF),
+                                                  fontFamily: 'SukhumvitText',
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600))
+                                        ])))),
                         Expanded(
                             child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -95,24 +146,30 @@ class _PaymentPageState extends State<PaymentPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   color: Color(0xFFFFCC17),
                                 ),
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(right: 13),
-                                          child: Icon(Icons.image,
-                                              size: 20,
-                                              color: Color(0xFFFFFFFF))),
-                                      Text('OPEN GALLERY',
-                                          style: TextStyle(
-                                              color: Color(0xFFFFFFFF),
-                                              fontFamily: 'SukhumvitText',
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600))
-                                    ])))
+                                child: GestureDetector(
+                                    onTap: () {
+                                      getImage();
+                                    },
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 13),
+                                              child: Icon(Icons.image,
+                                                  size: 20,
+                                                  color: Color(0xFFFFFFFF))),
+                                          Text('OPEN GALLERY',
+                                              style: TextStyle(
+                                                  color: Color(0xFFFFFFFF),
+                                                  fontFamily: 'SukhumvitText',
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600))
+                                        ]))))
                       ]))
                     ])),
                 Container(
@@ -125,6 +182,28 @@ class _PaymentPageState extends State<PaymentPage> {
                             fontFamily: 'SukhumvitText',
                             fontSize: 18,
                             fontWeight: FontWeight.w500))),
+                StreamBuilder(
+                  stream: _stream.stream,
+                  builder: (BuildContext context, snapshot) {
+                    print(snapshot);
+                    if (snapshot.hasError)
+                      return new Text('Error: ${snapshot.error}');
+                    if (snapshot.data == null) {
+                      //return CircularProgressIndicator();
+                      return Text('No image selected.');
+                    }
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Text('Loading...');
+                        break;
+                      case ConnectionState.active:
+                        return const Text('New Image...');
+                        break;
+                      default:
+                        return Text('No image selected.');
+                    }
+                  },
+                ),
                 Container(
                     padding: EdgeInsets.only(left: 16, right: 7),
                     child: Column(children: [
