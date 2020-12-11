@@ -31,7 +31,7 @@ class Notifications {
     int month = dateParse.month;
     int id = 0;
 
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    /*const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'push_messages: 0',
       'push_messages: push_messages test timezone',
@@ -40,7 +40,7 @@ class Notifications {
       priority: Priority.high,
       showWhen: false,
       enableVibration: true,
-    );
+    );*/
 
     for (var i = year; i <= (year + 10); i++) {
       for (var t = month; t <= 12; t++) {

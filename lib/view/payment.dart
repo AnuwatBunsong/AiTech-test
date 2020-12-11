@@ -12,11 +12,10 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  File _image;
   final picker = ImagePicker();
   StreamController _stream;
   List _imageList = [];
-  int id = 0;
+  int imageId = 0;
 
   @override
   initState() {
@@ -29,11 +28,10 @@ class _PaymentPageState extends State<PaymentPage> {
 
     setState(() {
       if (pickedFile != null) {
-        id++;
-        _image = File(pickedFile.path);
+        imageId++;
         var object = {
-          'id' : id,
-          'image': pickedFile.path.toString(),
+          'id': imageId,
+          'image': File(pickedFile.path),
           'name': GetFileName(pickedFile.path),
           'size': GetFileSize(pickedFile.path)
         };
@@ -51,11 +49,10 @@ class _PaymentPageState extends State<PaymentPage> {
 
     setState(() {
       if (pickedFile != null) {
-        id++;
-        _image = File(pickedFile.path);
+        imageId++;
         var object = {
-          'id' : id,
-          'image': pickedFile.path.toString(),
+          'id': imageId,
+          'image': File(pickedFile.path),
           'name': GetFileName(pickedFile.path),
           'size': GetFileSize(pickedFile.path)
         };
@@ -68,9 +65,9 @@ class _PaymentPageState extends State<PaymentPage> {
     });
   }
 
-  void _deleteImage(int id) {
+  void _deleteImage(int imageId) {
     setState(() {
-      _imageList.removeWhere((item) => id == id);
+      _imageList.removeWhere((item) => item['id'] == imageId);
       _stream.add(_imageList);
     });
   }
@@ -96,7 +93,6 @@ class _PaymentPageState extends State<PaymentPage> {
       ],
     ).show();
   }
-  
 
   @override
   void dispose() {
@@ -235,16 +231,18 @@ class _PaymentPageState extends State<PaymentPage> {
                             fontWeight: FontWeight.w500))),
                 StreamBuilder(
                   stream: _stream.stream,
+                  // ignore: missing_return
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.hasError)
                       return new Text('Error: ${snapshot.error}');
-                    if (snapshot.data == null || snapshot.data.isEmpty ) {
+                    if (snapshot.data == null || snapshot.data.isEmpty) {
                       //return CircularProgressIndicator();
                       return Text('No image selected.');
                     }
                     if (snapshot.hasData) {
                       return ListView.builder(
                         shrinkWrap: true,
+                        primary: false,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           return _imageItem(snapshot.data[index]);
@@ -259,105 +257,100 @@ class _PaymentPageState extends State<PaymentPage> {
                 ),*/
               ]))
         ]),
-        bottomNavigationBar: (_imageList.length > 0) ? Container(
-            height: 50.0,
-            margin: const EdgeInsets.only(bottom: 15.0),
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child: RaisedButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFFEFA746), Color(0xFFF0C984)],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
+        bottomNavigationBar: (_imageList.length > 0)
+            ? Container(
+                height: 50.0,
+                margin: const EdgeInsets.only(bottom: 15.0),
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: RaisedButton(
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),
-                    child: Container(
-                        constraints: BoxConstraints(minHeight: 50.0),
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                                    onTap: () {
-                                      _submit();
-                                    },
-                        child: Text("อัพโหลด",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFFFFFFFF),
-                              fontFamily: 'SukhumvitText',
-                              fontSize: 20,
-                            ))))))): null);
+                    padding: EdgeInsets.all(0.0),
+                    child: Ink(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xFFEFA746), Color(0xFFF0C984)],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Container(
+                            constraints: BoxConstraints(minHeight: 50.0),
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                                onTap: () {
+                                  _submit();
+                                },
+                                child: Text("อัพโหลด",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFFFFFFF),
+                                      fontFamily: 'SukhumvitText',
+                                      fontSize: 20,
+                                    )))))))
+            : null);
   }
 
   Widget _imageItem(item) {
     return Container(
-      padding: EdgeInsets.only(left: 16, right: 7),
-      child: Column(children: [
-        Stack(children: [
-          Container(
-              padding: EdgeInsets.only(top: 10, right: 9),
-              margin: EdgeInsets.only(bottom: 10),
-              child: Card(
-                  elevation: 2,
-                  child: Container(
-                      padding: EdgeInsets.all(13),
-                      child: Container(
-                          child: Row(children: [
-                        Container(
-                            width: 50,
-                            height: 50,
-                            margin: EdgeInsets.only(right: 10),
-                            decoration: new BoxDecoration(
-                              color: Color(0xFFE9D9CE),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.camera_alt,
-                                size: 20,
-                                color: Color(0xFFFFFFFF))),
-                        Expanded(
-                            child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.start,
-                                children: [
-                              Text(item['name'],
-                                  style: TextStyle(
-                                      color: Color(0xFF000000),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 18,
-                                      fontWeight:
-                                          FontWeight.w500)),
-                              Text(item['size'].toString() + ' byte',
-                                  style: TextStyle(
-                                      color: Color(0xFFDADADA),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 16,
-                                      fontWeight:
-                                          FontWeight.w500))
-                            ])),
-                        Container(
-                            child: Icon(Icons.check,
-                                size: 30,
-                                color: Color(0xFF27AE60)))
-                      ]))))),
-          Positioned(
-              top: 0,
-              right: 0,
-              child: GestureDetector(
+        padding: EdgeInsets.only(left: 16, right: 7),
+        child: Column(children: [
+          Stack(children: [
+            Container(
+                padding: EdgeInsets.only(top: 10, right: 9),
+                margin: EdgeInsets.only(bottom: 10),
+                child: Card(
+                    elevation: 2,
+                    child: Container(
+                        padding: EdgeInsets.all(13),
+                        child: Container(
+                            child: Row(children: [
+                          Container(
+                              width: 50,
+                              height: 50,
+                              margin: EdgeInsets.only(right: 10),
+                              decoration: new BoxDecoration(
+                                color: Color(0xFFE9D9CE),
+                                shape: BoxShape.circle,
+                              ),
+                              child:
+                                  ClipOval(child: Image.file(item['image']))),
+                          Expanded(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                Text(item['name'],
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontFamily: 'SukhumvitText',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500)),
+                                Text(item['size'].toString() + ' byte',
+                                    style: TextStyle(
+                                        color: Color(0xFFDADADA),
+                                        fontFamily: 'SukhumvitText',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500))
+                              ])),
+                          Container(
+                              child: Icon(Icons.check,
+                                  size: 30, color: Color(0xFF27AE60)))
+                        ]))))),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: GestureDetector(
                     onTap: () {
                       _deleteImage(item['id']);
                     },
-              child: Container(
-                  
-                  color: Color(0xFFFFFFFF),
-                  child: Icon(Icons.cancel_outlined,
-                      size: 30, color: Color(0xFFEDEDED)))))
-        ])
-      ]));
+                    child: Container(
+                        color: Color(0xFFFFFFFF),
+                        child: Icon(Icons.cancel_outlined,
+                            size: 30, color: Color(0xFFEDEDED)))))
+          ])
+        ]));
   }
 }
