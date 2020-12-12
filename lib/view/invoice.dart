@@ -9,12 +9,15 @@ class InvoicePage extends StatefulWidget {
   _InvoicePageState createState() => _InvoicePageState();
 }
 
-class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
+class _InvoicePageState extends State<InvoicePage>
+    with AutomaticKeepAliveClientMixin<InvoicePage>
+    implements InvoiceContract {
   InvoicePresenter _presenter;
   List<Invoice> invoiceData;
-  bool _isLoading = false;
-  int page = 1;
-  int size = 1;
+  bool _isLoading = true;
+  int page = 0;
+  int size = 0;
+  int paidStatus = 2;
 
   List newsData = [
     {
@@ -44,14 +47,13 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
     _getInvoiceList();
   }
 
-  @override
   void _getInvoiceList() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
     if (token == null) {
       Navigator.pushNamed(context, '/login');
     }
-    _presenter.invoiceList(token, page, size);
+    _presenter.invoiceList(paidStatus, token, page, size);
   }
 
   @override
@@ -59,7 +61,6 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
     setState(() {
       _isLoading = false;
       invoiceData = items;
-      print(invoiceData);
     });
   }
 
@@ -68,6 +69,7 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -261,7 +263,14 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
                                         fontFamily: 'SukhumvitText',
                                         fontSize: 16)),
                               )),
-                          Container(child: cardList())
+                          if (_isLoading)
+                            Center(
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 16.0, right: 16.0),
+                                    child: CircularProgressIndicator()))
+                          else
+                            Container(child: cardList())
                         ])))
           ],
           //bottomNavigationBar: navigationBottomBar(context),
@@ -270,7 +279,7 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
 
   Widget cardList() {
     return Column(
-        children: newsData
+        children: invoiceData
             .map((item) => Card(
                 elevation: 4,
                 margin: EdgeInsets.only(bottom: 12),
@@ -301,13 +310,18 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(item['title'].toString(),
+                                        Text(
+                                            item.month.toString() +
+                                                ' ' +
+                                                item.year.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: Color(0xFF000000),
                                                 fontFamily: 'SukhumvitText',
                                                 fontSize: 18)),
-                                        Text(item['shortDescripton'].toString(),
+                                        Text(
+                                            'กรุณาชำระภายในวันที่ ' +
+                                                item.pay.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: Color(0xFF50555C),
@@ -322,7 +336,7 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(item['price'].toString() + ' บาท',
+                                        Text(item.amount.toString() + ' บาท',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: Color(0xFFFF0000),
@@ -332,4 +346,7 @@ class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
                         ])))))
             .toList());
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

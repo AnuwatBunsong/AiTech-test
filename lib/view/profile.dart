@@ -80,7 +80,8 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                                   fit: BoxFit.fill,
                                   image: new AssetImage(
                                       "assets/images/mockup2.png")))),
-                      profileDetail('เลขทะเบียน :', profileData.id.toString()),
+                      profileDetail(
+                          'เลขทะเบียน :', profileData.memberId.toString()),
                       profileDetail(
                           'ชื่อ-สกุล :',
                           profileData.firstName.toString() +

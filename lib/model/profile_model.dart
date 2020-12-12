@@ -1,20 +1,27 @@
 import 'dart:async';
 
 class Profile {
+  final int id;
+  final String memberId;
   final String firstName;
   final String lastName;
-  final String empCode;
-  final int id;
+  final String birthDate;
   final DateTime updatedAt;
 
   const Profile(
-      {this.firstName, this.lastName, this.empCode, this.id, this.updatedAt});
+      {this.id,
+      this.memberId,
+      this.firstName,
+      this.lastName,
+      this.birthDate,
+      this.updatedAt});
 
   Profile.fromMap(Map<String, dynamic> map)
-      : firstName = map['first_name'],
-        lastName = map['last_name'],
-        empCode = map['emp_code'],
-        id = map['id'],
+      : id = map['member']['id'],
+        memberId = map['member']['member_id'],
+        firstName = map['member']['first_name'],
+        lastName = map['member']['last_name'],
+        birthDate = convertDate(map['member']['birthdate']),
         updatedAt = map['update_at'];
 }
 
@@ -30,4 +37,10 @@ class FetchDataException implements Exception {
   String toString() {
     return "Exception: $_message";
   }
+}
+
+convertDate(date) {
+  var strToDateTime = DateTime.parse(date);
+  final convertLocal = strToDateTime.toLocal();
+  return convertLocal;
 }

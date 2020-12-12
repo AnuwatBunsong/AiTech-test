@@ -11,8 +11,8 @@ class InvoicePresenter {
   InvoiceListRepository api = new InvoiceListRepository();
   InvoicePresenter(this._view);
 
-  void invoiceList(token, page, size) {
-    api.fetch(token, page, size).then((data) {
+  void invoiceList(status, token, page, size) {
+    api.fetch(status, token, page, size).then((data) {
       _view.onLoadInvoiceComplete(data);
     }).catchError((e) {
       _view.onLoadInvoiceError();

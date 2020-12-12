@@ -7,9 +7,10 @@ class InvoiceListRepository {
   final JsonDecoder _decoder = new JsonDecoder();
   List data;
 
-  Future<List<Invoice>> fetch(String token, int page, int size) async {
+  Future<List<Invoice>> fetch(
+      int status, String token, int page, int size) async {
     final response = await http.get(
-        'https://chapanakij.karpools.co/api/v1/c/me/invoices?size=$size&page=$page',
+        'https://chapanakij.karpools.co/api/v1/c/me/invoices?size=$size&page=$page&paid_status=$status&reverse=true&sort=invmonyear',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -26,11 +27,8 @@ class InvoiceListRepository {
     final contactsContainer = _decoder.convert(jsonBody);
     final List contactItems = contactsContainer['entities'];
 
-    if (data == null) {
-      data = contactItems;
-    } else {
-      data.addAll(contactItems);
-    }
+    data = contactItems;
+
     return data.map((contactRaw) => Invoice.fromMap(contactRaw)).toList();
   }
 }

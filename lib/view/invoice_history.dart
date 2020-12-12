@@ -1,12 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:cremation/presenter/invoice_presenter.dart';
+import 'package:cremation/model/invoice_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InvoiceHistoryPage extends StatefulWidget {
   @override
   _InvoiceHistoryPageState createState() => _InvoiceHistoryPageState();
 }
 
-class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
+class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
+    implements InvoiceContract {
+  InvoicePresenter _presenter;
+  List<Invoice> invoiceData;
+  bool _isLoading = true;
+  int page = 0;
+  int size = 0;
+  int paidStatus = 2;
+  int selectYear = 0;
+  List<int> yearList;
+
   List newsData = [
     {
       'title': "ชำระเงินสงเคราะห์",
@@ -46,6 +60,79 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
     },
   ];
 
+  _InvoiceHistoryPageState() {
+    _presenter = InvoicePresenter(this);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DateTime now = new DateTime.now();
+    yearList = List<int>.generate(7, (i) => now.year - i);
+    _getInvoiceList();
+  }
+
+  void _getInvoiceList() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
+    if (token == null) {
+      Navigator.pushNamed(context, '/login');
+    }
+    _presenter.invoiceList(paidStatus, token, page, size);
+  }
+
+  @override
+  void onLoadInvoiceComplete(List<Invoice> items) {
+    setState(() {
+      _isLoading = false;
+      invoiceData = items;
+    });
+  }
+
+  @override
+  void onLoadInvoiceError() {}
+
+  void filter() {
+    Future<void> future = showModalBottomSheet<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return _buildYearPicker();
+      },
+    );
+
+    future.then((void value) => _closeFilter(value));
+  }
+
+  void _closeFilter(void value) {
+    setState(() {
+      _isLoading = true;
+      _getInvoiceList();
+    });
+  }
+
+  _buildYearPicker() {
+    return Container(
+        height: 250,
+        child: CupertinoPicker(
+          itemExtent: 60.0,
+          backgroundColor: CupertinoColors.white,
+          scrollController: FixedExtentScrollController(initialItem: 0),
+          onSelectedItemChanged: (index) {
+            setState(() {
+              selectYear = index;
+            });
+          },
+          children: new List<Widget>.generate(yearList.length, (index) {
+            return new Center(
+              child: Text(
+                yearList[index].toString(),
+                style: TextStyle(fontSize: 22.0),
+              ),
+            );
+          }),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,32 +162,42 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
                           borderRadius: BorderRadius.circular(4),
                           color: Colors.white,
                         ),
-                        child: Row(children: [
-                          Container(
-                              child: Icon(Icons.sort,
-                                  size: 20, color: Color(0xFFEFA746))),
-                          Text('Filter',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFFEFA746),
-                                  fontFamily: 'SukhumvitText',
-                                  fontSize: 14)),
-                        ])),
+                        child: GestureDetector(
+                            onTap: () {
+                              filter();
+                            },
+                            child: Row(children: [
+                              Container(
+                                  child: Icon(Icons.sort,
+                                      size: 20, color: Color(0xFFEFA746))),
+                              Text('Filter',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFFEFA746),
+                                      fontFamily: 'SukhumvitText',
+                                      fontSize: 14)),
+                            ]))),
                   ])),
               preferredSize: Size.fromHeight(30.0)),
         ),
         backgroundColor: Color(0xFFFFFFFF),
         body: ListView(children: [
-          Container(
-              child: Container(
-                  child: Column(
-                      children: [Container(child: billingHistoryList())])))
+          if (_isLoading)
+            Center(
+                child: Padding(
+                    padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: CircularProgressIndicator()))
+          else
+            Container(
+                child: Container(
+                    child: Column(
+                        children: [Container(child: invoiceHistoryList())])))
         ]));
   }
 
-  Widget billingHistoryList() {
+  Widget invoiceHistoryList() {
     return Column(
-        children: newsData
+        children: invoiceData
             .map((item) => Container(
                 decoration: const BoxDecoration(
                   border: Border(
@@ -126,28 +223,31 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Text(item['date'].toString(),
+                                        Text(
+                                            item.month.toString() +
+                                                ' ' +
+                                                item.year.toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 color: Color(0xFF000000),
                                                 fontFamily: 'SukhumvitText',
                                                 fontSize: 18)),
-                                        Text(item['title'].toString(),
+                                        Text('ชำระเงินสงเคราะห์',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: Color(0xFF50555C),
                                                 fontFamily: 'SukhumvitText',
                                                 fontSize: 18)),
-                                        Text(item['time'].toString(),
+                                        /*Text(item['time'].toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: Color(0xFF50555C),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 14))
+                                                fontSize: 14))*/
                                       ]))),
                           Container(
                               child: Row(children: [
-                            Text(item['price'].toString(),
+                            Text(item.amount.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFFEFA746),

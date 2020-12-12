@@ -1,28 +1,28 @@
 import 'dart:async';
 
 class Invoice {
-  final String title;
-  final String shortDescription;
-  final String date;
-  final String thumbnail;
-  final String slug;
-  final String content;
+  final String monthYear;
+  final int amount;
+  final String paidStatus;
+  final String month;
+  final String year;
+  final String pay;
 
   const Invoice(
-      {this.title,
-      this.shortDescription,
-      this.date,
-      this.thumbnail,
-      this.content,
-      this.slug});
+      {this.monthYear,
+      this.amount,
+      this.paidStatus,
+      this.month,
+      this.year,
+      this.pay});
 
   Invoice.fromMap(Map<String, dynamic> map)
-      : title = map['title'],
-        shortDescription = map['short_description'],
-        date = toDate(map['created_at']),
-        thumbnail = map['image']['thumbnail_url'],
-        slug = map['slug'],
-        content = map['content'];
+      : monthYear = map['monthyear'],
+        amount = map['amount'],
+        paidStatus = map['paid_status'],
+        month = getMonth(map['monthyear']),
+        year = yearThai(map['monthyear']),
+        pay = payWithInDay();
 }
 
 abstract class InvoiceRepository {
@@ -39,18 +39,25 @@ class FetchDataException implements Exception {
   }
 }
 
-toDate(date) {
-  var strToDateTime = DateTime.parse(date.toString());
-  final convertLocal = strToDateTime.toLocal();
-  //var newFormat = DateFormat("dd-MM-yyyy H:mm:ss");
-  //String updatedDt = newFormat.format(convertLocal);
-  final dateTime =
-      "${convertLocal.day.toString()} ${monthThai(convertLocal.month)} ${convertLocal.year + 543}, ${convertLocal.hour.toString()}:${convertLocal.minute.toString()}";
-  return dateTime;
+payWithInDay() {
+  DateTime now = new DateTime.now();
+  DateTime lastDayOfMonth = new DateTime(now.year, now.month + 1, 0);
+
+  return "${lastDayOfMonth.day} ${monthThai(lastDayOfMonth.month)} ${(now.year + 543)}";
 }
 
-monthThai($month) {
-  switch ($month) {
+getMonth(String monthYear) {
+  monthYear = monthYear.substring(0, 2);
+  var month = int.parse(monthYear);
+  return monthThai(month);
+}
+
+yearThai(String monthYear) {
+  return monthYear.substring(2, 6);
+}
+
+monthThai(int month) {
+  switch (month) {
     case 1:
       return 'ม.ค.';
       break;
