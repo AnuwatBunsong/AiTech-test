@@ -35,21 +35,23 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() => _selectedIndex = index);
-        },
-        children: <Widget>[
-          HomePage(),
-          InvoicePage(),
-          NotificationPage(),
-          Menu(),
-        ],
-      ),
-      bottomNavigationBar: navigationBottomBarTab(context),
-    );
+    return new WillPopScope(
+        onWillPop: () async => false,
+        child: new Scaffold(
+          body: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() => _selectedIndex = index);
+            },
+            children: <Widget>[
+              HomePage(),
+              InvoicePage(),
+              NotificationPage(),
+              Menu(),
+            ],
+          ),
+          bottomNavigationBar: navigationBottomBarTab(context),
+        ));
   }
 
   Widget navigationBottomBarTab(BuildContext context) {

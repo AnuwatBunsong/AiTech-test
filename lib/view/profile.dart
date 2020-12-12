@@ -88,12 +88,15 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                               ' ' +
                               profileData.lastName.toString()),
                       profileDetail('เลขบัตรประชาชน :', '0000000000000'),
-                      profileDetail('วันเกิด :', 'วว/ดด/ปป'),
+                      profileDetail(
+                          'วันเกิด :', profileData.birthDate.toString()),
                       profileDetail('ที่อยู่สำหรับติดต่อ :',
-                          '000 AAA AAA AAA AAAAAAAAAAAAAAAAA AAAAAAA00000'),
-                      profileDetail('เบอร์โทรศัพท์ :', '000-0000000'),
+                          profileData.address.toString()),
+                      profileDetail(
+                          'เบอร์โทรศัพท์ :', profileData.telephone.toString()),
                       profileDetail('สถานะสมาชิก :', 'เป็นสมาชิก'),
-                      profileDetail('เป็นสมาชิกตั้งแต่ :', 'วว/ดด/ปป'),
+                      profileDetail('เป็นสมาชิกตั้งแต่ :',
+                          profileData.approve.toString()),
                       profileDetail('วิธีชำระเงิน :', 'หน่วยงานต้นสังกัด'),
                       profileDetail(
                           'สถานที่เรียกเก็บเงิน :', 'รพร.สระบุรี (พิเศษ)'),
