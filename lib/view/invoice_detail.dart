@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 
-class BillingDetailPage extends StatefulWidget {
+class InvoiceDetailPage extends StatefulWidget {
   @override
-  _BillingDetailPageState createState() => _BillingDetailPageState();
+  _InvoiceDetailPageState createState() => _InvoiceDetailPageState();
 }
 
-class _BillingDetailPageState extends State<BillingDetailPage> {
+class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

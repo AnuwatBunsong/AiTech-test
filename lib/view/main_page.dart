@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/view/home.dart';
-import 'package:cremation/view/billing.dart';
+import 'package:cremation/view/invoice.dart';
 import 'package:cremation/view/notification.dart';
 import 'package:cremation/view/menu.dart';
 
@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
         },
         children: <Widget>[
           HomePage(),
-          BillingPage(),
+          InvoicePage(),
           NotificationPage(),
           Menu(),
         ],

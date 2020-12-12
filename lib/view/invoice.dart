@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:cremation/presenter/invoice_presenter.dart';
+import 'package:cremation/model/invoice_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class BillingPage extends StatefulWidget {
+class InvoicePage extends StatefulWidget {
   @override
-  _BillingPageState createState() => _BillingPageState();
+  _InvoicePageState createState() => _InvoicePageState();
 }
 
-class _BillingPageState extends State<BillingPage> {
+class _InvoicePageState extends State<InvoicePage> implements InvoiceContract {
+  InvoicePresenter _presenter;
+  List<Invoice> invoiceData;
+  bool _isLoading = false;
+  int page = 1;
+  int size = 1;
+
   List newsData = [
     {
       'title': "มิ.ย. 63",
@@ -24,6 +33,38 @@ class _BillingPageState extends State<BillingPage> {
       'price': '298',
     }
   ];
+
+  _InvoicePageState() {
+    _presenter = InvoicePresenter(this);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getInvoiceList();
+  }
+
+  @override
+  void _getInvoiceList() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
+    if (token == null) {
+      Navigator.pushNamed(context, '/login');
+    }
+    _presenter.invoiceList(token, page, size);
+  }
+
+  @override
+  void onLoadInvoiceComplete(List<Invoice> items) {
+    setState(() {
+      _isLoading = false;
+      invoiceData = items;
+      print(invoiceData);
+    });
+  }
+
+  @override
+  void onLoadInvoiceError() {}
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +187,7 @@ class _BillingPageState extends State<BillingPage> {
                             child: GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, '/billing_history');
+                                      context, '/invoice_history');
                                 },
                                 child: Text('ปี 2563 คงเหลือ',
                                     style: TextStyle(
@@ -190,7 +231,7 @@ class _BillingPageState extends State<BillingPage> {
                                     child: GestureDetector(
                                         onTap: () {
                                           Navigator.pushNamed(
-                                              context, '/billing_history');
+                                              context, '/invoice_history');
                                         },
                                         child: Text('ดูรายการที่ผ่านมา',
                                             style: TextStyle(

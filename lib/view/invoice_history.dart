@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 
-class BillingHistoryPage extends StatefulWidget {
+class InvoiceHistoryPage extends StatefulWidget {
   @override
-  _BillingHistoryPageState createState() => _BillingHistoryPageState();
+  _InvoiceHistoryPageState createState() => _InvoiceHistoryPageState();
 }
 
-class _BillingHistoryPageState extends State<BillingHistoryPage> {
+class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
   List newsData = [
     {
       'title': "ชำระเงินสงเคราะห์",
@@ -111,7 +111,7 @@ class _BillingHistoryPageState extends State<BillingHistoryPage> {
                     EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 15),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/billing_detail');
+                      Navigator.pushNamed(context, '/invoice_detail');
                     },
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
