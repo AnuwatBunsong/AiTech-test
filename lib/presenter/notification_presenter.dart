@@ -20,12 +20,9 @@ class NotificationPresenter {
   }
 
   void createNotification() {
-    var dateTime = new DateTime.now();
-
     dynamic item = {
       'title': 'ข่าวสารประจำวันที่ 24 ก.ค.63',
-      'short_description': '',
-      'create_date': 'datetime()'
+      'description': ''
     };
 
     dbNotification.insert(item).then((data) {
@@ -33,5 +30,9 @@ class NotificationPresenter {
     }).catchError((e) {
       print(e);
     });
+  }
+
+  void deleteNotification(int id) {
+
   }
 }

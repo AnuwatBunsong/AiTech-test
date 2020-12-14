@@ -16,11 +16,13 @@ class _NotificationPageState extends State<NotificationPage>
     _presenter = NotificationPresenter(this);
   }
 
+  bool _isLoading = false;
   bool _isShowDelete = false;
   bool _isSelectAll = false;
   List<int> selectedItems = List();
+  List<NotificationModel> notificationData;
 
-  List notificationData = [
+  /*List notificationData = [
     {
       'id': 1,
       'title': "คุณมียอดค้างชำระเดือน มิ.ย. 63",
@@ -63,7 +65,7 @@ class _NotificationPageState extends State<NotificationPage>
       'date': "24 มิ.ย. 63, 13:00",
       'new': false
     }
-  ];
+  ];*/
 
   @override
   void initState() {
@@ -78,7 +80,7 @@ class _NotificationPageState extends State<NotificationPage>
         selectedItems.clear();
       } else {
         _isSelectAll = true;
-        notificationData.forEach((item) => selectedItems.add(item['id']));
+        notificationData.forEach((item) => selectedItems.add(item.id));
       }
     });
   }
@@ -103,7 +105,7 @@ class _NotificationPageState extends State<NotificationPage>
   void _isDelete() {
     setState(() {
       for (int index in selectedItems) {
-        notificationData.removeWhere((item) => item['id'] == index);
+        notificationData.removeWhere((item) => item.id == index);
       }
       selectedItems.clear();
       _isShowDelete = false;
@@ -113,7 +115,10 @@ class _NotificationPageState extends State<NotificationPage>
 
   @override
   void onLoadNotificationComplete(List<NotificationModel> items) {
-    setState(() {});
+    setState(() {
+      _isLoading = false;
+      notificationData = items;
+    });
   }
 
   @override
@@ -185,11 +190,17 @@ class _NotificationPageState extends State<NotificationPage>
                                           fontFamily: 'SukhumvitText',
                                           fontSize: 16))
                                 ]))))),
+              if (_isLoading)
+                      Center(
+                          child: Padding(
+                              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                              child: CircularProgressIndicator()))
+                    else
               Expanded(
                   child: ListView.builder(
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: notificationData.length,
+                      itemCount: notificationData == null ? 0 : notificationData.length,
                       itemBuilder: (context, index) {
                         return notificationList(notificationData[index]);
                       }))
@@ -197,7 +208,7 @@ class _NotificationPageState extends State<NotificationPage>
   }
 
   Widget notificationList(item) {
-    bool check = selectedItems.contains(item['id']);
+    bool check = selectedItems.contains(item.id);
     return Column(children: [
       Card(
           elevation: 0,
@@ -210,7 +221,7 @@ class _NotificationPageState extends State<NotificationPage>
                       margin: EdgeInsets.only(right: 10),
                       child: GestureDetector(
                           onTap: () {
-                            _selectByItem(item['id']);
+                            _selectByItem(item.id);
                           },
                           child: Icon(
                               check
@@ -231,7 +242,7 @@ class _NotificationPageState extends State<NotificationPage>
                           top: 13,
                           child: Icon(Icons.mail_outline,
                               color: Color(0xFFFFFFFF))),
-                      if (item['new'])
+                      if (item.newItem)
                         new Positioned(
                           right: 0.0,
                           top: 0,
@@ -251,13 +262,13 @@ class _NotificationPageState extends State<NotificationPage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(item['title'].toString(),
+                              Text(item.title.toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       color: Color(0xFF000000),
                                       fontFamily: 'SukhumvitText',
                                       fontSize: 16)),
-                              Text(item['date'].toString(),
+                              Text(item.createDate.toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xFF50555C),

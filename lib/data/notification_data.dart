@@ -10,6 +10,7 @@ class NotificationDataRepository {
       new NotificationDataRepository.internal();
   factory NotificationDataRepository() => _instance;
   static Database _db;
+  var tableName = 'notification';
 
   Future<Database> get db async {
     if (_db != null) return _db;
@@ -22,6 +23,7 @@ class NotificationDataRepository {
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "cremation.db");
+    //await deleteDatabase(path);
     var myDb = await openDatabase(path, version: 1, onCreate: _onCreate);
     return myDb;
   }
@@ -29,13 +31,13 @@ class NotificationDataRepository {
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
     await db.execute(
-        "CREATE TABLE notification(id INTEGER PRIMARY KEY, title TEXT, short_description TEXT, create_date DATETIME)");
+        "CREATE TABLE "+tableName+"(id INTEGER PRIMARY KEY, title TEXT, description TEXT, created_date DATETIME DEFAULT CURRENT_TIMESTAMP)");
   }
 
   Future<List<NotificationModel>> getData() async {
     var dbClient = await db;
     List<Map> list = await dbClient
-        .rawQuery('SELECT * FROM notification order by create_date desc');
+        .rawQuery('SELECT * FROM '+tableName+' order by created_date desc');
     List<NotificationModel> notificationList = new List();
     notificationList = list
         .map((contactRaw) => NotificationModel.fromMap(contactRaw))
@@ -45,7 +47,7 @@ class NotificationDataRepository {
 
   Future<int> insert(notification) async {
     var dbClient = await db;
-    int res = await dbClient.insert("notification", notification);
+    int res = await dbClient.insert(tableName, notification);
     return res;
   }
 
@@ -53,14 +55,16 @@ class NotificationDataRepository {
     var dbClient = await db;
 
     int res = await dbClient
-        .rawDelete('DELETE FROM notification WHERE id = ?', [notification.id]);
+        .rawDelete('DELETE FROM '+tableName+' WHERE id = ?', [notification.id]);
     return res;
   }
 
   Future<bool> update(NotificationModel notification) async {
     var dbClient = await db;
-    int res = await dbClient.update("notification", notification.toMap(),
+    int res = await dbClient.update(tableName, notification.toMap(),
         where: "id = ?", whereArgs: <int>[notification.id]);
     return res > 0 ? true : false;
   }
+
+  Future close() async => _db.close();
 }

@@ -3,23 +3,24 @@ import 'dart:async';
 class NotificationModel {
   final int id;
   final String title;
-  final String shortDescription;
+  final String description;
+  final bool newItem;
   final String createDate;
 
   const NotificationModel(
-      {this.id, this.title, this.shortDescription, this.createDate});
+      {this.id, this.title, this.description, this.newItem, this.createDate});
 
   NotificationModel.fromMap(Map<String, dynamic> map)
       : id = map['id'],
         title = map['title'],
-        shortDescription = map['short_description'],
+        description = map['description'],
+        newItem = checkItem(map['created_date']),
         createDate = toDate(map['created_date']);
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    print(map);
     map["title"] = title;
-    map["short_description"] = shortDescription;
+    map["description"] = description;
     map["created_date"] = createDate;
     return map;
   }
@@ -37,6 +38,10 @@ class FetchDataException implements Exception {
   String toString() {
     return "Exception: $_message";
   }
+}
+
+checkItem(date) {
+  return true;
 }
 
 toDate(date) {
