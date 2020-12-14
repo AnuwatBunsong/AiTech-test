@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:cremation/presenter/notification_presenter.dart';
+import 'package:cremation/model/notification_model.dart';
 
 class NotificationPage extends StatefulWidget {
   @override
   _NotificationPageState createState() => _NotificationPageState();
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _NotificationPageState extends State<NotificationPage>
+    implements NotificationContract {
+  NotificationPresenter _presenter;
+
+  _NotificationPageState() {
+    _presenter = NotificationPresenter(this);
+  }
+
   bool _isShowDelete = false;
   bool _isSelectAll = false;
   List<int> selectedItems = List();
+
   List notificationData = [
     {
       'id': 1,
@@ -58,6 +68,7 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
     super.initState();
+    _presenter.notificationList();
   }
 
   void _selectAll() {
@@ -99,6 +110,14 @@ class _NotificationPageState extends State<NotificationPage> {
       _isSelectAll = false;
     });
   }
+
+  @override
+  void onLoadNotificationComplete(List<NotificationModel> items) {
+    setState(() {});
+  }
+
+  @override
+  void onLoadNotificationError() {}
 
   @override
   Widget build(BuildContext context) {
