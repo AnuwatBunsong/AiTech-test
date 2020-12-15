@@ -14,7 +14,7 @@ class NotificationModel {
       : id = map['id'],
         title = map['title'],
         description = map['description'],
-        newItem = checkItem(map['created_date']),
+        newItem = checkItemNew(map['created_date']),
         createDate = toDate(map['created_date']);
 
   Map<String, dynamic> toMap() {
@@ -40,15 +40,24 @@ class FetchDataException implements Exception {
   }
 }
 
-checkItem(date) {
-  return true;
+checkItemNew(date) {
+  var duration = new Duration(days: 1);
+  var strToDateTime =
+      DateTime.parse(date.toString()).add(duration).millisecondsSinceEpoch;
+
+  var dateNow = DateTime.now().millisecondsSinceEpoch;
+
+  if (strToDateTime > dateNow) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 toDate(date) {
   var strToDateTime = DateTime.parse(date.toString());
   final convertLocal = strToDateTime.toLocal();
-  //var newFormat = DateFormat("dd-MM-yyyy H:mm:ss");
-  //String updatedDt = newFormat.format(convertLocal);
+
   final dateTime =
       "${convertLocal.day.toString()} ${monthThai(convertLocal.month)} ${convertLocal.year + 543}, ${convertLocal.hour.toString()}:${convertLocal.minute.toString()}";
   return dateTime;

@@ -30,14 +30,15 @@ class NotificationDataRepository {
 
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
-    await db.execute(
-        "CREATE TABLE "+tableName+"(id INTEGER PRIMARY KEY, title TEXT, description TEXT, created_date DATETIME DEFAULT CURRENT_TIMESTAMP)");
+    await db.execute("CREATE TABLE " +
+        tableName +
+        "(id INTEGER PRIMARY KEY, title TEXT, description TEXT, created_date DATETIME DEFAULT CURRENT_TIMESTAMP)");
   }
 
   Future<List<NotificationModel>> getData() async {
     var dbClient = await db;
     List<Map> list = await dbClient
-        .rawQuery('SELECT * FROM '+tableName+' order by created_date desc');
+        .rawQuery('SELECT * FROM ' + tableName + ' order by created_date desc');
     List<NotificationModel> notificationList = new List();
     notificationList = list
         .map((contactRaw) => NotificationModel.fromMap(contactRaw))
@@ -51,11 +52,11 @@ class NotificationDataRepository {
     return res;
   }
 
-  Future<int> delete(NotificationModel notification) async {
+  Future<int> delete(id) async {
     var dbClient = await db;
 
     int res = await dbClient
-        .rawDelete('DELETE FROM '+tableName+' WHERE id = ?', [notification.id]);
+        .rawDelete('DELETE FROM ' + tableName + ' WHERE id = ?', [id]);
     return res;
   }
 

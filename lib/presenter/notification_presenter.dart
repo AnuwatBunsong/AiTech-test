@@ -1,5 +1,6 @@
 import 'package:cremation/data/notification_data.dart';
 import 'package:cremation/model/notification_model.dart';
+import 'package:intl/intl.dart';
 
 abstract class NotificationContract {
   void onLoadNotificationComplete(List<NotificationModel> items);
@@ -20,9 +21,13 @@ class NotificationPresenter {
   }
 
   void createNotification() {
+    final now = new DateTime.now();
+    String formatDate = DateFormat('y-M-d H:m:s').format(now);
+
     dynamic item = {
-      'title': 'ข่าวสารประจำวันที่ 24 ก.ค.63',
-      'description': ''
+      'title': 'คุณมียอดค้างชำระเดือน ธ.ค. 63',
+      'description': '',
+      'created_date': formatDate
     };
 
     dbNotification.insert(item).then((data) {
@@ -33,6 +38,10 @@ class NotificationPresenter {
   }
 
   void deleteNotification(int id) {
-
+    dbNotification.delete(id).then((data) {
+      ///print(data);
+    }).catchError((e) {
+      ///print(e);
+    });
   }
 }

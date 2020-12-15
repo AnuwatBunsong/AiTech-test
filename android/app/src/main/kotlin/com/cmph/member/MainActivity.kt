@@ -1,4 +1,4 @@
-package com.example.cremation
+package com.cmph.member
 
 import io.flutter.embedding.android.FlutterActivity
 

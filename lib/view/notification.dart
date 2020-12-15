@@ -22,51 +22,6 @@ class _NotificationPageState extends State<NotificationPage>
   List<int> selectedItems = List();
   List<NotificationModel> notificationData;
 
-  /*List notificationData = [
-    {
-      'id': 1,
-      'title': "คุณมียอดค้างชำระเดือน มิ.ย. 63",
-      'date': "30 มิ.ย. 63, 13:00",
-      'new': true
-    },
-    {
-      'id': 2,
-      'title': "กิจกรรมของสำนักงานการณาปนกิจสงเค...",
-      'date': "30 มิ.ย. 63, 12:00",
-      'new': true
-    },
-    {
-      'id': 3,
-      'title': "ข่าวสารประจำวันที่ 24 มิ.ย.63",
-      'date': "24 มิ.ย. 63, 13:00",
-      'new': false
-    },
-    {
-      'id': 4,
-      'title': "ผลการสอบคัดเลือกเพื่อจ้างเป็นพนักงาน...",
-      'date': "22 มิ.ย. 63, 13:00",
-      'new': false
-    },
-    {
-      'id': 5,
-      'title': "เรื่องน่ารู้จาก ฌกส. (12)",
-      'date': "21 มิ.ย. 63, 13:00",
-      'new': false
-    },
-    {
-      'id': 6,
-      'title': "คุณมียอดค้างชำระเดือน พ.ค. 63",
-      'date': "30 พ.ค. 63, 13:00",
-      'new': false
-    },
-    {
-      'id': 7,
-      'title': "ข่าวสารประจำวันที่ 24 พ.ค.63",
-      'date': "24 มิ.ย. 63, 13:00",
-      'new': false
-    }
-  ];*/
-
   @override
   void initState() {
     super.initState();
@@ -106,7 +61,9 @@ class _NotificationPageState extends State<NotificationPage>
     setState(() {
       for (int index in selectedItems) {
         notificationData.removeWhere((item) => item.id == index);
+        _presenter.deleteNotification(index);
       }
+
       selectedItems.clear();
       _isShowDelete = false;
       _isSelectAll = false;
@@ -191,19 +148,21 @@ class _NotificationPageState extends State<NotificationPage>
                                           fontSize: 16))
                                 ]))))),
               if (_isLoading)
-                      Center(
-                          child: Padding(
-                              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-                              child: CircularProgressIndicator()))
-                    else
-              Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: notificationData == null ? 0 : notificationData.length,
-                      itemBuilder: (context, index) {
-                        return notificationList(notificationData[index]);
-                      }))
+                Center(
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                        child: CircularProgressIndicator()))
+              else
+                Expanded(
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: notificationData == null
+                            ? 0
+                            : notificationData.length,
+                        itemBuilder: (context, index) {
+                          return notificationList(notificationData[index]);
+                        }))
             ])));
   }
 

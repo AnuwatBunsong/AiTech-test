@@ -176,12 +176,12 @@ class _HomePageState extends State<HomePage>
                                             0xFF000000, 0, FontWeight.w700),
                                         textWidget(item.date.toString(), 10.0,
                                             0xFFEFA746, 0, FontWeight.w500),
-                                        textWidget(
+                                        /*textWidget(
                                             item.shortDescription.toString(),
                                             12.0,
                                             0xFF626262,
                                             0,
-                                            FontWeight.w400),
+                                            FontWeight.w400),*/
                                       ])))
                         ]))))
             .toList());
