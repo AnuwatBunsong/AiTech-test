@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1054464645415",
-    "project_id": "cremation-ff02b",
-    "storage_bucket": "cremation-ff02b.appspot.com"
+    "project_number": "663337739716",
+    "project_id": "cremation-z",
+    "storage_bucket": "cremation-z.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1054464645415:android:fc3c6470f991ef3ecef102",
+        "mobilesdk_app_id": "1:663337739716:android:fe8dd1388f4934167db091",
         "android_client_info": {
           "package_name": "com.cmph.member"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1054464645415-p7drbd6uka7udlm4da6eud7fiibp1m5i.apps.googleusercontent.com",
+          "client_id": "663337739716-m8u7gqmtmjsthuhmnv6r28mn3uvombvd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCOSnYaVB4Cym5OemjGnZ9aE9FTdE3u90s"
+          "current_key": "AIzaSyCxXI4PlnT5QhWDP6NnRhqRwFPlQbGc-nk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1054464645415-p7drbd6uka7udlm4da6eud7fiibp1m5i.apps.googleusercontent.com",
+              "client_id": "663337739716-m8u7gqmtmjsthuhmnv6r28mn3uvombvd.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
