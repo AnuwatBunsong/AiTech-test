@@ -61,5 +61,8 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.firebase:firebase-messaging:<latest_version>'
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
 }
