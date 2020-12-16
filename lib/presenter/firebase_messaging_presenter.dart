@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cremation/presenter/local_notification_presenter.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging;
@@ -27,7 +28,7 @@ class PushNotificationService {
     }*/
 
     String token = await _firebaseMessaging.getToken();
-    //print("FirebaseMessaging token: $token");
+    print("FirebaseMessaging token: $token");
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
