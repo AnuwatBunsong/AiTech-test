@@ -4,6 +4,7 @@ import 'package:cremation/presenter/local_notification_presenter.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging;
+  final LocalNotifications _localNotification = LocalNotifications();
 
   PushNotificationService(this._firebaseMessaging);
 
@@ -33,9 +34,11 @@ class PushNotificationService {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        return;
+        _localNotification.initNotifications();
+        _localNotification.pushNotification(
+            message['notification']['title'], message['notification']['body']);
       },
-      /*onBackgroundMessage: myBackgroundMessageHandler,*/
+      onBackgroundMessage: myBackgroundMessageHandler,
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
         return;
@@ -46,5 +49,11 @@ class PushNotificationService {
       },
       /*onBackgroundMessage: myBackgroundMessageHandler*/
     );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
   }
 }

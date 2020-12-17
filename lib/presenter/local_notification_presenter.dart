@@ -18,8 +18,8 @@ class LocalNotifications {
             android: initializationSettingsAndroid,
             iOS: initializationSettingsIOS,
             macOS: initializationSettingsMacOS);
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
+    /*await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);*/
   }
 
   Future<void> scheduleNotification() async {
@@ -30,17 +30,6 @@ class LocalNotifications {
     int year = dateParse.year;
     int month = dateParse.month;
     int id = 0;
-
-    /*const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      'push_messages: 0',
-      'push_messages: push_messages test timezone',
-      'push_messages: A new Flutter project',
-      importance: Importance.max,
-      priority: Priority.high,
-      showWhen: false,
-      enableVibration: true,
-    );*/
 
     for (var i = year; i <= (year + 10); i++) {
       for (var t = month; t <= 12; t++) {
@@ -61,8 +50,25 @@ class LocalNotifications {
     }
   }
 
-  Future selectNotification(String payload) async {
+  Future pushNotification(String title, String body) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'push_messages: 0',
+      'push_messages: push_messages',
+      'push_messages: A new Flutter project',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+      enableVibration: true,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin
+        .show(1, title, body, platformChannelSpecifics, payload: 'item x');
+  }
+
+  /*Future selectNotification(String payload) async {
     // some action...
     print(payload);
-  }
+  }*/
 }
