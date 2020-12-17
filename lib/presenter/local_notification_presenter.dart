@@ -18,8 +18,8 @@ class LocalNotifications {
             android: initializationSettingsAndroid,
             iOS: initializationSettingsIOS,
             macOS: initializationSettingsMacOS);
-    /*await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);*/
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
   }
 
   Future<void> scheduleNotification() async {
@@ -67,8 +67,8 @@ class LocalNotifications {
         .show(1, title, body, platformChannelSpecifics, payload: 'item x');
   }
 
-  /*Future selectNotification(String payload) async {
+  Future selectNotification(String payload) async {
     // some action...
     print(payload);
-  }*/
+  }
 }
