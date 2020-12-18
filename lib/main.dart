@@ -16,9 +16,14 @@ class _MyAppState extends State<MyApp> {
   static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     final pushNotificationService = PushNotificationService(_firebaseMessaging);
     pushNotificationService.initialise();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'cmph',
       theme: ThemeData(

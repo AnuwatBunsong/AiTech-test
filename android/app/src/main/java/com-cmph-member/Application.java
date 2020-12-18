@@ -6,7 +6,6 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin;
 import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService;
 
-
 public class Application extends FlutterApplication implements PluginRegistrantCallback {
   @Override
   public void onCreate() {
@@ -16,6 +15,7 @@ public class Application extends FlutterApplication implements PluginRegistrantC
 
   @Override
   public void registerWith(PluginRegistry registry) {
+    FirebaseCloudMessagingPluginRegistrant.registerWith(registry);
     FirebaseMessagingPlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"));
   }
 }
