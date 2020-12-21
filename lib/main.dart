@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     final pushNotificationService = PushNotificationService(_firebaseMessaging);
     pushNotificationService.initialise();
+    pushNotificationService.fcmSubscribe();
   }
 
   @override

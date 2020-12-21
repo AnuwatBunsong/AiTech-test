@@ -5,6 +5,8 @@ import 'package:cremation/presenter/invoice_presenter.dart';
 import 'package:cremation/model/invoice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:cremation/presenter/local_notification_presenter.dart';
+
 class InvoiceHistoryPage extends StatefulWidget {
   @override
   _InvoiceHistoryPageState createState() => _InvoiceHistoryPageState();
@@ -20,6 +22,8 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
   int paidStatus = 2;
   int selectYear = 0;
   List<int> yearList;
+
+  final LocalNotifications _localNotification = LocalNotifications();
 
   List newsData = [
     {
@@ -133,6 +137,12 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
         ));
   }
 
+  void testNotification() {
+    _localNotification.initNotifications();
+    _localNotification.pushNotification('ข่าวสารสมาชิก ณกส.สาธารณะสุข',
+        'ข่าวสารและข้อมูล ประจำวันที่ 20 ธันวาคม');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,12 +159,16 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                         child: Icon(Icons.description,
                             size: 20, color: Color(0xFFFFFFFF))),
                     Expanded(
-                        child: Text('Share Document',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFFFFFFFF),
-                                fontFamily: 'SukhumvitText',
-                                fontSize: 14))),
+                        child: GestureDetector(
+                            onTap: () {
+                              testNotification();
+                            },
+                            child: Text('Share Document',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFFFFFFFF),
+                                    fontFamily: 'SukhumvitText',
+                                    fontSize: 14)))),
                     Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 5, top: 2, bottom: 2),

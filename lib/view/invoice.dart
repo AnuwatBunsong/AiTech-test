@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/invoice_presenter.dart';
 import 'package:cremation/model/invoice_model.dart';
+import 'package:cremation/presenter/profile_presenter.dart';
+import 'package:cremation/model/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InvoicePage extends StatefulWidget {
@@ -11,13 +13,16 @@ class InvoicePage extends StatefulWidget {
 
 class _InvoicePageState extends State<InvoicePage>
     with AutomaticKeepAliveClientMixin<InvoicePage>
-    implements InvoiceContract {
+    implements InvoiceContract, ProfileContract {
   InvoicePresenter _presenter;
+  ProfilePresenter _profilePresenter;
   List<Invoice> invoiceData;
   bool _isLoading = true;
+  bool _isProfileLoading = true;
   int page = 0;
   int size = 0;
-  int paidStatus = 2;
+  int paidStatus = 0;
+  var profileData;
 
   List newsData = [
     {
@@ -39,11 +44,13 @@ class _InvoicePageState extends State<InvoicePage>
 
   _InvoicePageState() {
     _presenter = InvoicePresenter(this);
+    _profilePresenter = ProfilePresenter(this);
   }
 
   @override
   void initState() {
     super.initState();
+    getProfile();
     _getInvoiceList();
   }
 
@@ -66,6 +73,28 @@ class _InvoicePageState extends State<InvoicePage>
 
   @override
   void onLoadInvoiceError() {}
+
+  void getProfile() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
+
+    if (token != null) {
+      _profilePresenter.getProfile(token);
+    } else {
+      Navigator.pushNamed(context, '/login');
+    }
+  }
+
+  @override
+  void getProfileSuccess(Profile items) {
+    setState(() {
+      profileData = items;
+      _isProfileLoading = false;
+    });
+  }
+
+  @override
+  void getProfileError(error) {}
 
   @override
   Widget build(BuildContext context) {
@@ -95,66 +124,79 @@ class _InvoicePageState extends State<InvoicePage>
                     tileMode: TileMode.clamp),
               ),
               child: Column(children: [
-                Container(
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/profile');
-                        },
-                        child: Column(children: [
-                          Container(
-                              padding: EdgeInsets.only(
-                                  left: 11, right: 11, bottom: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  color: Colors.white),
-                              child: Row(children: <Widget>[
-                                Container(
-                                    margin: EdgeInsets.only(right: 13),
-                                    width: 60.0,
-                                    height: 60.0,
-                                    decoration: new BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: new DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: new AssetImage(
-                                                "assets/images/mockup2.png")))),
-                                Expanded(
-                                    child: new Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                      Text('สวัสดี',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              color: Color(0xFFEFA746),
-                                              fontFamily: 'SukhumvitText',
-                                              fontSize: 18,
-                                              height: 1.4)),
-                                      Text('คุณ สมชาย',
-                                          style: TextStyle(
-                                              color: Color(0xFF000000),
-                                              fontFamily: 'SukhumvitText',
-                                              fontSize: 18,
-                                              height: 1)),
-                                      Text('เลขสมาชิก : 1124112567357',
-                                          style: TextStyle(
-                                              color: Color(0xFFACB3BF),
-                                              fontFamily: 'SukhumvitText',
-                                              fontSize: 12,
-                                              height: 1.3))
-                                    ])),
-                                Container(
-                                    child: Icon(
-                                  Icons.navigate_next,
-                                  color: Color(0xFFC4C4C4),
-                                  size: 35.0,
-                                  semanticLabel:
-                                      'Text to announce in accessibility modes',
-                                ))
-                              ]))
-                        ]))),
+                if (_isProfileLoading)
+                  Center(
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                          child: CircularProgressIndicator()))
+                else
+                  Container(
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/profile');
+                          },
+                          child: Column(children: [
+                            Container(
+                                padding: EdgeInsets.only(
+                                    left: 11, right: 11, bottom: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    color: Colors.white),
+                                child: Row(children: <Widget>[
+                                  Container(
+                                      margin: EdgeInsets.only(right: 13),
+                                      width: 60.0,
+                                      height: 60.0,
+                                      decoration: new BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: new DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: new AssetImage(
+                                                  "assets/images/mockup2.png")))),
+                                  Expanded(
+                                      child: new Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                        Text('สวัสดี',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                color: Color(0xFFEFA746),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 18,
+                                                height: 1.4)),
+                                        Text(
+                                            'คุณ ' +
+                                                profileData.firstName
+                                                    .toString() +
+                                                ' ' +
+                                                profileData.lastName.toString(),
+                                            style: TextStyle(
+                                                color: Color(0xFF000000),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 18,
+                                                height: 1)),
+                                        Text(
+                                            'เลขสมาชิก :  ' +
+                                                profileData.memberId.toString(),
+                                            style: TextStyle(
+                                                color: Color(0xFFACB3BF),
+                                                fontFamily: 'SukhumvitText',
+                                                fontSize: 12,
+                                                height: 1.3))
+                                      ])),
+                                  Container(
+                                      child: Icon(
+                                    Icons.navigate_next,
+                                    color: Color(0xFFC4C4C4),
+                                    size: 35.0,
+                                    semanticLabel:
+                                        'Text to announce in accessibility modes',
+                                  ))
+                                ]))
+                          ]))),
                 Container(
                     margin: EdgeInsets.only(bottom: 5),
                     child: Container(

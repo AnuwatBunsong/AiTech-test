@@ -3,6 +3,9 @@ import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/home_presenter.dart';
 import 'package:cremation/model/news_model.dart';
 import 'package:cremation/view/news_detail.dart';
+import 'package:cremation/presenter/profile_presenter.dart';
+import 'package:cremation/model/profile_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,31 +14,58 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin<HomePage>
-    implements HomeListViewContract {
+    implements HomeListViewContract, ProfileContract {
   HomePresenter _presenter;
+  ProfilePresenter _profilePresenter;
   bool _isLoading = true;
+  bool _isProfileLoading = true;
   List<News> newsData;
+  var profileData;
 
   _HomePageState() {
     _presenter = HomePresenter(this);
+    _profilePresenter = ProfilePresenter(this);
   }
 
   @override
   void initState() {
     super.initState();
+    getProfile();
     _presenter.newsList();
   }
 
   @override
   void onLoadNewsComplete(List<News> items) {
     setState(() {
-      _isLoading = false;
       newsData = items;
+      _isLoading = false;
     });
   }
 
   @override
   void onLoadNewsError() {}
+
+  void getProfile() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
+
+    if (token != null) {
+      _profilePresenter.getProfile(token);
+    } else {
+      Navigator.pushNamed(context, '/login');
+    }
+  }
+
+  @override
+  void getProfileSuccess(Profile items) {
+    setState(() {
+      profileData = items;
+      _isProfileLoading = false;
+    });
+  }
+
+  @override
+  void getProfileError(error) {}
 
   @override
   Widget build(BuildContext context) {
@@ -49,54 +79,73 @@ class _HomePageState extends State<HomePage>
         ),
         backgroundColor: Color(0xFFFFFFFF),
         body: ListView(children: [
-          Container(
-              padding:
-                  EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
-              decoration: BoxDecoration(
-                color: Color(0xFFFE5E5E5),
-              ),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                  child: Container(
-                      padding: EdgeInsets.only(
-                          top: 28, left: 11, right: 11, bottom: 28),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          color: Colors.white),
-                      child: Row(children: <Widget>[
-                        Container(
-                            margin: EdgeInsets.only(right: 13),
-                            width: 60.0,
-                            height: 60.0,
-                            decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: new DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: new AssetImage(
-                                        "assets/images/mockup2.png")))),
-                        Expanded(
-                            child: new Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                              textWidget('สวัสดี', 18.0, 0xFFEFA746, 1.4,
-                                  FontWeight.w800),
-                              textWidget('คุณ xxx', 18.0, 0xFF000000, 1.0,
-                                  FontWeight.w400),
-                              textWidget('เลขสมาชิก : 1124112567357', 12.0,
-                                  0xFFACB3BF, 1.3, FontWeight.w400),
-                            ])),
-                        Container(
-                            child: Icon(
-                          Icons.navigate_next,
-                          color: Color(0xFFC4C4C4),
-                          size: 35.0,
-                          semanticLabel:
-                              'Text to announce in accessibility modes',
-                        ))
-                      ])))),
+          if (_isProfileLoading)
+            Center(
+                child: Padding(
+                    padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: CircularProgressIndicator()))
+          else
+            Container(
+                padding:
+                    EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFE5E5E5),
+                ),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                    child: Container(
+                        padding: EdgeInsets.only(
+                            top: 28, left: 11, right: 11, bottom: 28),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            color: Colors.white),
+                        child: Row(children: <Widget>[
+                          Container(
+                              margin: EdgeInsets.only(right: 13),
+                              width: 60.0,
+                              height: 60.0,
+                              decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: new AssetImage(
+                                          "assets/images/mockup2.png")))),
+                          Expanded(
+                              child: new Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                textWidget('สวัสดี', 18.0, 0xFFEFA746, 1.4,
+                                    FontWeight.w800),
+                                textWidget(
+                                    'คุณ ' +
+                                        profileData.firstName.toString() +
+                                        ' ' +
+                                        profileData.lastName.toString(),
+                                    18.0,
+                                    0xFF000000,
+                                    1.0,
+                                    FontWeight.w400),
+                                textWidget(
+                                    'เลขสมาชิก : ' +
+                                        profileData.memberId.toString(),
+                                    12.0,
+                                    0xFFACB3BF,
+                                    1.3,
+                                    FontWeight.w400),
+                              ])),
+                          Container(
+                              child: Icon(
+                            Icons.navigate_next,
+                            color: Color(0xFFC4C4C4),
+                            size: 35.0,
+                            semanticLabel:
+                                'Text to announce in accessibility modes',
+                          ))
+                        ])))),
           Container(
               child: Container(
                   padding:

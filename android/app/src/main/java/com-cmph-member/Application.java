@@ -1,4 +1,5 @@
 package com.cmph.member;
+
 import io.flutter.app.FlutterApplication;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback;
@@ -16,6 +17,5 @@ public class Application extends FlutterApplication implements PluginRegistrantC
   @Override
   public void registerWith(PluginRegistry registry) {
     FirebaseCloudMessagingPluginRegistrant.registerWith(registry);
-    FirebaseMessagingPlugin.registerWith(registry.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"));
   }
 }
