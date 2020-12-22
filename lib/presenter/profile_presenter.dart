@@ -18,4 +18,10 @@ class ProfilePresenter {
       _view.getProfileError('error');
     });
   }
+
+  updateImageProfile(image) {
+    api.updateImageProfile(image).then((response) {
+    }).catchError((e) {
+    });
+  }
 }

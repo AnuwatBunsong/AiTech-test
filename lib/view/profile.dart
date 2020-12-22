@@ -1,5 +1,6 @@
 import 'package:cremation/model/profile_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
   ProfilePresenter _presenter;
+  final picker = ImagePicker();
   bool _isLoading = true;
   var profileData;
 
@@ -22,6 +24,18 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
   void initState() {
     super.initState();
     getProfile();
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _presenter.updateImageProfile(pickedFile);
+      } else {
+        print('No image selected.');
+      }
+    });
   }
 
   void getProfile() async {
@@ -74,12 +88,17 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                           margin: EdgeInsets.only(right: 13, bottom: 20),
                           width: 80.0,
                           height: 80.0,
-                          decoration: new BoxDecoration(
+                          child: GestureDetector(
+                                    onTap: () {
+                                      getImage();
+                                    },
+                          child: Container(
+                            decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               image: new DecorationImage(
                                   fit: BoxFit.fill,
                                   image: new AssetImage(
-                                      "assets/images/mockup2.png")))),
+                                      "assets/images/mockup2.png")))))),
                       profileDetail(
                           'เลขทะเบียน :', profileData.memberId.toString()),
                       profileDetail(
