@@ -8,6 +8,7 @@ class Profile {
   final String birthDate;
   final String address;
   final String telephone;
+  final String image;
   final String approve;
   final DateTime updatedAt;
 
@@ -19,6 +20,7 @@ class Profile {
       this.birthDate,
       this.address,
       this.telephone,
+      this.image,
       this.approve,
       this.updatedAt});
 
@@ -31,6 +33,7 @@ class Profile {
         address =
             "${map['member']['address'].trim()} ${map['member']['tambon'].trim()} ${map['member']['amphur'].trim()} ${map['member']['changwat'].trim()}",
         telephone = map['member']['telephone'],
+        image = map['image']['thumbnail_url'],
         approve = convertDate(map['member']['approve_date']),
         updatedAt = map['update_at'];
 }
