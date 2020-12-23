@@ -19,9 +19,7 @@ class ProfilePresenter {
     });
   }
 
-  updateImageProfile(image) {
-    api.updateImageProfile(image).then((response) {
-    }).catchError((e) {
-    });
+  updateImageProfile(String token, image) {
+    api.updateImageProfile(token, image).then((response) {}).catchError((e) {});
   }
 }

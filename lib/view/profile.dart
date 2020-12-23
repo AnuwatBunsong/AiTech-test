@@ -27,11 +27,13 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
   }
 
   Future getImage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.getString('token');
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
-        _presenter.updateImageProfile(pickedFile);
+        _presenter.updateImageProfile(token, pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -89,16 +91,16 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                           width: 80.0,
                           height: 80.0,
                           child: GestureDetector(
-                                    onTap: () {
-                                      getImage();
-                                    },
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: new DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: new AssetImage(
-                                      "assets/images/mockup2.png")))))),
+                              onTap: () {
+                                getImage();
+                              },
+                              child: Container(
+                                  decoration: new BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: new DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: new AssetImage(
+                                              "assets/images/mockup2.png")))))),
                       profileDetail(
                           'เลขทะเบียน :', profileData.memberId.toString()),
                       profileDetail(
