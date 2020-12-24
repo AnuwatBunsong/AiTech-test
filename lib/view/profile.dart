@@ -99,8 +99,8 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
                                           fit: BoxFit.fill,
-                                          image: new AssetImage(
-                                              "assets/images/mockup2.png")))))),
+                                          image: NetworkImage(profileData.image
+                                              .toString())))))),
                       profileDetail(
                           'เลขทะเบียน :', profileData.memberId.toString()),
                       profileDetail(
