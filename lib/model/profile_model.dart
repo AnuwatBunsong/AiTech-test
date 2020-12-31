@@ -8,6 +8,8 @@ class Profile {
   final String birthDate;
   final String address;
   final String telephone;
+  final String status;
+  final String completeDate;
   final String image;
   final String approve;
   final DateTime updatedAt;
@@ -20,6 +22,8 @@ class Profile {
       this.birthDate,
       this.address,
       this.telephone,
+      this.status,
+      this.completeDate,
       this.image,
       this.approve,
       this.updatedAt});
@@ -33,6 +37,8 @@ class Profile {
         address =
             "${map['member']['address'].trim()} ${map['member']['tambon'].trim()} ${map['member']['amphur'].trim()} ${map['member']['changwat'].trim()}",
         telephone = map['member']['telephone'],
+        status = translateStatus(map['member']['status']),
+        completeDate = convertDate(map['member']['complete_date']),
         image = map['image']['thumbnail_url'],
         approve = convertDate(map['member']['approve_date']),
         updatedAt = map['update_at'];
@@ -49,6 +55,20 @@ class FetchDataException implements Exception {
 
   String toString() {
     return "Exception: $_message";
+  }
+}
+
+translateStatus(status) {
+  status = int.parse(status);
+  switch (status) {
+    case 0:
+      return 'ไม่ได้เป็นสมาชิก';
+      break;
+    case 1:
+      return 'เป็นสมาชิก';
+      break;
+    default:
+      return 'ไม่พบสถานะ';
   }
 }
 

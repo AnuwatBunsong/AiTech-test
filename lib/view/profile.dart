@@ -115,9 +115,10 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                           profileData.address.toString()),
                       profileDetail(
                           'เบอร์โทรศัพท์ :', profileData.telephone.toString()),
-                      profileDetail('สถานะสมาชิก :', 'เป็นสมาชิก'),
+                      profileDetail(
+                          'สถานะสมาชิก :', profileData.status.toString()),
                       profileDetail('เป็นสมาชิกตั้งแต่ :',
-                          profileData.approve.toString()),
+                          profileData.completeDate.toString()),
                       profileDetail('วิธีชำระเงิน :', 'หน่วยงานต้นสังกัด'),
                       profileDetail(
                           'สถานที่เรียกเก็บเงิน :', 'รพร.สระบุรี (พิเศษ)'),
