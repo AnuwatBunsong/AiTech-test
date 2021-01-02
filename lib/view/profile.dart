@@ -10,14 +10,18 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
-  ProfilePresenter _presenter;
+class _ProfilePageState extends State<ProfilePage>
+    implements ProfileContract, UpdateProfileContract {
+  ProfilePresenter _profilePresenter;
+  UpdateProfilePresenter _updateProfilePresenter;
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   final picker = ImagePicker();
   bool _isLoading = true;
   var profileData;
 
   _ProfilePageState() {
-    _presenter = ProfilePresenter(this);
+    _profilePresenter = ProfilePresenter(this);
+    _updateProfilePresenter = UpdateProfilePresenter(this);
   }
 
   @override
@@ -31,13 +35,12 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
     final String token = prefs.getString('token');
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _presenter.updateImageProfile(token, pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    if (pickedFile != null) {
+      Dialogs.showLoadingDialog(context, _keyLoader);
+      _updateProfilePresenter.updateImageProfile(token, pickedFile.path);
+    } else {
+      print('No image selected.');
+    }
   }
 
   void getProfile() async {
@@ -45,14 +48,25 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
     final String token = prefs.getString('token');
 
     if (token != null) {
-      _presenter.getProfile(token);
+      _profilePresenter.getProfile(token);
     } else {
       Navigator.pushNamed(context, '/login');
     }
   }
 
   @override
-  void getProfileSuccess(Profile items) {
+  void updateProfileSuccess(response) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    Navigator.of(_keyLoader.currentContext, rootNavigator: true).pop();
+    prefs.remove('userData');
+    Navigator.pushNamed(context, '/main_page');
+  }
+
+  @override
+  void updateProfileError(error) {}
+
+  @override
+  void getProfileSuccess(Profile items) async {
     setState(() {
       _isLoading = false;
       profileData = items;
@@ -61,6 +75,7 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
 
   @override
   void getProfileError(error) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -207,5 +222,38 @@ class _ProfilePageState extends State<ProfilePage> implements ProfileContract {
                           fontFamily: 'SukhumvitText',
                           fontSize: 14))))
         ]));
+  }
+}
+
+class Dialogs {
+  static Future<void> showLoadingDialog(
+      BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleDialog(
+                  key: key,
+                  backgroundColor: Colors.black54,
+                  children: <Widget>[
+                    Center(
+                      child: Column(children: [
+                        CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Color(0xFFEFA746)),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Please Wait....",
+                          style: TextStyle(color: Color(0xFFEFA746)),
+                        )
+                      ]),
+                    )
+                  ]));
+        });
   }
 }

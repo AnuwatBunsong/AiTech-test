@@ -61,7 +61,8 @@ class _LoginPageState extends State<LoginPage>
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', user.token);
     prefs.setString('refreshToken', user.refreshToken);
-    getProfile();
+    prefs.remove('userData');
+    //getProfile();
     Navigator.pushNamed(context, '/main_page');
   }
 
@@ -90,6 +91,7 @@ class _LoginPageState extends State<LoginPage>
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     prefs.remove('refreshToken');
+    prefs.remove('userData');
   }
 
   @override

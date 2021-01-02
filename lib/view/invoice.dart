@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/invoice_presenter.dart';
@@ -77,18 +78,31 @@ class _InvoicePageState extends State<InvoicePage>
   void getProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
-
-    if (token != null) {
-      _profilePresenter.getProfile(token);
+    final String userData = prefs.getString('userData');
+    if (userData == null) {
+      if (token != null) {
+        _profilePresenter.getProfile(token);
+      } else {
+        Navigator.pushNamed(context, '/login');
+      }
     } else {
-      Navigator.pushNamed(context, '/login');
+      profileData = json.decode(userData);
+      _isProfileLoading = false;
     }
   }
 
   @override
-  void getProfileSuccess(Profile items) {
+  void getProfileSuccess(Profile items) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = {
+      'memberId': items.memberId,
+      'firstName': items.firstName,
+      'lastName': items.lastName,
+      'image': items.image
+    };
+    prefs.setString('userData', json.encode(data));
     setState(() {
-      profileData = items;
+      profileData = data;
       _isProfileLoading = false;
     });
   }
@@ -152,8 +166,9 @@ class _InvoicePageState extends State<InvoicePage>
                                           shape: BoxShape.circle,
                                           image: new DecorationImage(
                                               fit: BoxFit.fill,
-                                              image: new AssetImage(
-                                                  "assets/images/mockup2.png")))),
+                                              image: NetworkImage(
+                                                  profileData['image']
+                                                      .toString())))),
                                   Expanded(
                                       child: new Column(
                                           crossAxisAlignment:
@@ -169,10 +184,11 @@ class _InvoicePageState extends State<InvoicePage>
                                                 height: 1.4)),
                                         Text(
                                             'คุณ ' +
-                                                profileData.firstName
+                                                profileData['firstName']
                                                     .toString() +
                                                 ' ' +
-                                                profileData.lastName.toString(),
+                                                profileData['lastName']
+                                                    .toString(),
                                             style: TextStyle(
                                                 color: Color(0xFF000000),
                                                 fontFamily: 'SukhumvitText',
@@ -180,7 +196,8 @@ class _InvoicePageState extends State<InvoicePage>
                                                 height: 1)),
                                         Text(
                                             'เลขสมาชิก :  ' +
-                                                profileData.memberId.toString(),
+                                                profileData['memberId']
+                                                    .toString(),
                                             style: TextStyle(
                                                 color: Color(0xFFACB3BF),
                                                 fontFamily: 'SukhumvitText',

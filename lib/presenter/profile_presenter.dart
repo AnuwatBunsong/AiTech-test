@@ -18,8 +18,23 @@ class ProfilePresenter {
       _view.getProfileError('error');
     });
   }
+}
+
+abstract class UpdateProfileContract {
+  void updateProfileSuccess(response);
+  void updateProfileError(String errorTxt);
+}
+
+class UpdateProfilePresenter {
+  UpdateProfileContract _view;
+  GetProfile api = new GetProfile();
+  UpdateProfilePresenter(this._view);
 
   updateImageProfile(String token, image) {
-    api.updateImageProfile(token, image).then((response) {}).catchError((e) {});
+    api.updateImageProfile(token, image).then((response) {
+      _view.updateProfileSuccess(response);
+    }).catchError((e) {
+      _view.updateProfileError('error');
+    });
   }
 }

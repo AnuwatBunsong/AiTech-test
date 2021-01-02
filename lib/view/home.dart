@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/home_presenter.dart';
@@ -48,18 +49,31 @@ class _HomePageState extends State<HomePage>
   void getProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
-
-    if (token != null) {
-      _profilePresenter.getProfile(token);
+    final String userData = prefs.getString('userData');
+    if (userData == null) {
+      if (token != null) {
+        _profilePresenter.getProfile(token);
+      } else {
+        Navigator.pushNamed(context, '/login');
+      }
     } else {
-      Navigator.pushNamed(context, '/login');
+      profileData = json.decode(userData);
+      _isProfileLoading = false;
     }
   }
 
   @override
-  void getProfileSuccess(Profile items) {
+  void getProfileSuccess(Profile items) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = {
+      'memberId': items.memberId,
+      'firstName': items.firstName,
+      'lastName': items.lastName,
+      'image': items.image
+    };
+    prefs.setString('userData', json.encode(data));
     setState(() {
-      profileData = items;
+      profileData = data;
       _isProfileLoading = false;
     });
   }
@@ -111,8 +125,8 @@ class _HomePageState extends State<HomePage>
                                   shape: BoxShape.circle,
                                   image: new DecorationImage(
                                       fit: BoxFit.fill,
-                                      image: new AssetImage(
-                                          "assets/images/mockup2.png")))),
+                                      image: NetworkImage(
+                                          profileData['image'].toString())))),
                           Expanded(
                               child: new Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,16 +136,16 @@ class _HomePageState extends State<HomePage>
                                     FontWeight.w800),
                                 textWidget(
                                     'คุณ ' +
-                                        profileData.firstName.toString() +
+                                        profileData['firstName'].toString() +
                                         ' ' +
-                                        profileData.lastName.toString(),
+                                        profileData['lastName'].toString(),
                                     18.0,
                                     0xFF000000,
                                     1.0,
                                     FontWeight.w400),
                                 textWidget(
                                     'เลขสมาชิก : ' +
-                                        profileData.memberId.toString(),
+                                        profileData['memberId'].toString(),
                                     12.0,
                                     0xFFACB3BF,
                                     1.3,

@@ -40,8 +40,6 @@ class GetProfile {
     request.files.add(await http.MultipartFile.fromPath('image', image));
     var response = await request.send();
     final respStr = await response.stream.bytesToString();
-    print(response.statusCode);
-    print(respStr);
-    return response.reasonPhrase;
+    return respStr;
   }
 }
