@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cremation/presenter/local_notification_presenter.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:cremation/presenter/notification_presenter.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _firebaseMessaging;
   final LocalNotifications _localNotification = LocalNotifications();
+  final CreateNotification _createNotification = CreateNotification();
 
   PushNotificationService(this._firebaseMessaging);
 
@@ -31,6 +33,8 @@ class PushNotificationService {
           print("onMessage: $message");
           _localNotification.initNotifications();
           _localNotification.pushNotification(
+              message['data']['title'], message['data']['body']);
+          _createNotification.createNotification(
               message['data']['title'], message['data']['body']);
         },
         onBackgroundMessage: Platform.isIOS ? null : myBackgroundMessageHandler,

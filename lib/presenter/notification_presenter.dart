@@ -16,6 +16,7 @@ class NotificationPresenter {
     dbNotification.getData().then((data) {
       _view.onLoadNotificationComplete(data);
     }).catchError((e) {
+      print(e);
       _view.onLoadNotificationError();
     });
   }
@@ -42,6 +43,27 @@ class NotificationPresenter {
       ///print(data);
     }).catchError((e) {
       ///print(e);
+    });
+  }
+}
+
+class CreateNotification {
+  NotificationDataRepository dbNotification = new NotificationDataRepository();
+
+  void createNotification(title, description) {
+    final now = new DateTime.now();
+    String formatDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
+    dynamic item = {
+      'title': title,
+      'description': description,
+      'created_date': formatDate
+    };
+
+    dbNotification.insert(item).then((data) {
+      print(data);
+    }).catchError((e) {
+      print(e);
     });
   }
 }
