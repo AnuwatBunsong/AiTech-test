@@ -15,6 +15,7 @@ class ProfilePresenter {
     api.getProfile(token).then((Profile profile) {
       _view.getProfileSuccess(profile);
     }).catchError((e) {
+      print(e);
       _view.getProfileError('error');
     });
   }

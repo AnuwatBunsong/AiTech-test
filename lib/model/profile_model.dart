@@ -39,7 +39,7 @@ class Profile {
         telephone = map['member']['telephone'],
         status = translateStatus(map['member']['status']),
         completeDate = convertDate(map['member']['complete_date']),
-        image = map['image']['thumbnail_url'],
+        image = (map.containsKey('image')) ? map['image']['thumbnail_url'] : '',
         approve = convertDate(map['member']['approve_date']),
         updatedAt = map['update_at'];
 }
