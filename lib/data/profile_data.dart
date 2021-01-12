@@ -19,7 +19,7 @@ class GetProfile {
 
     if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
       throw new FetchDataException(
-          "Error while getting contacts [StatusCode:$statusCode, Error:${response.reasonPhrase}]");
+          "Error while getting Profile [StatusCode:$statusCode, Error:${response.reasonPhrase}]");
     }
 
     final object = _decoder.convert(jsonBody);

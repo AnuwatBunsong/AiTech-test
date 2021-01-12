@@ -10,7 +10,7 @@ class InvoiceListRepository {
   Future<List<Invoice>> fetch(
       int status, String token, int page, int size) async {
     final response = await http.get(
-        'https://chapanakij.karpools.co/api/v1/c/me/invoices?size=$size&page=$page&paid_status=$status&reverse=true&sort=invmonyear',
+        'https://chapanakij.karpools.co/api/v1/c/me/invoices?size=$size&page=$page&paid_status=$status&reverse=true&sort=invmonyear&last_year=false',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -21,7 +21,7 @@ class InvoiceListRepository {
 
     if (statusCode < 200 || statusCode >= 300 || jsonBody == null) {
       throw new FetchDataException(
-          "Error while getting contacts [StatusCode:$statusCode, Error:${response.reasonPhrase}]");
+          "Error while getting invoice [StatusCode:$statusCode, Error:${response.reasonPhrase}]");
     }
 
     final contactsContainer = _decoder.convert(jsonBody);
