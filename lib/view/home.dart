@@ -44,7 +44,13 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
-  void onLoadNewsError() {}
+  void onLoadNewsError() {
+    setState(() {
+      newsData = [];
+      _isLoading = false;
+    });
+    //ไม่พบข้อมูลกรุณาลองใหม่อีกครั้ง
+  }
 
   void getProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
