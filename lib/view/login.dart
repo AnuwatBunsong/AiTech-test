@@ -325,7 +325,7 @@ class _LoginPageState extends State<LoginPage>
                                             fontSize: 14,
                                           ))),
                                 ]))),
-                        Container(
+                        /*Container(
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(top: 30.0),
                             child: GestureDetector(
@@ -337,7 +337,7 @@ class _LoginPageState extends State<LoginPage>
                                       color: Color(0xFFFFFFFF),
                                       fontFamily: 'SukhumvitText',
                                       fontSize: 20,
-                                    )))),
+                                    )))),*/
                       ])))
                 ]))));
   }
