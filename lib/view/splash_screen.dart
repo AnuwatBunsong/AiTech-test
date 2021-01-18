@@ -36,14 +36,14 @@ class _SplashScreenState extends State<SplashScreen> {
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'SukhumvitText',
-                              fontSize: 24,
+                              fontSize: 26,
                             )),
                         Text('กระทรวงสาธารณสุข',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'SukhumvitText',
-                              fontSize: 24,
+                              fontSize: 26,
                             ))
                       ],
                     ),

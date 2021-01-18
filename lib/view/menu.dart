@@ -54,7 +54,7 @@ class _MenuState extends State<Menu> {
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 16,
+                                    fontSize: 20,
                                   ))
                             ]))),
                 Container(
@@ -77,7 +77,7 @@ class _MenuState extends State<Menu> {
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 16,
+                                    fontSize: 20,
                                   ))
                             ]))),
                 Container(
@@ -98,7 +98,7 @@ class _MenuState extends State<Menu> {
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 16,
+                                    fontSize: 20,
                                   ))
                             ]))),
                 Container(
@@ -119,7 +119,7 @@ class _MenuState extends State<Menu> {
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 16,
+                                    fontSize: 20,
                                   ))
                             ]))),
               ])),
@@ -154,7 +154,7 @@ class _MenuState extends State<Menu> {
                                     style: TextStyle(
                                       color: Color(0xFFFFFFFF),
                                       fontFamily: 'SukhumvitText',
-                                      fontSize: 20,
+                                      fontSize: 24,
                                     ))
                               ])))))
         ]));

@@ -31,7 +31,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF000000),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 18)),
+                              fontSize: 22)),
                     ),
                     Container(
                       child: Text('จำนวนเงิน',
@@ -39,7 +39,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF50555C),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 18)),
+                              fontSize: 22)),
                     ),
                     Container(
                       child: Text('2,000.00',
@@ -47,7 +47,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               fontWeight: FontWeight.w700,
                               color: Color(0xFFEFA746),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 35)),
+                              fontSize: 37)),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 10),
@@ -66,7 +66,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF50555C),
                                           fontFamily: 'SukhumvitText',
-                                          fontSize: 18)))),
+                                          fontSize: 22)))),
                           Expanded(
                               flex: 6,
                               child: Text('ชำระเงินสงเคราะห์',
@@ -74,7 +74,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                       fontWeight: FontWeight.w600,
                                       color: Color(0xFF000000),
                                       fontFamily: 'SukhumvitText',
-                                      fontSize: 18)))
+                                      fontSize: 22)))
                         ])),
                     Container(
                         margin: EdgeInsets.only(bottom: 20),
@@ -88,7 +88,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF50555C),
                                           fontFamily: 'SukhumvitText',
-                                          fontSize: 18)))),
+                                          fontSize: 22)))),
                           Expanded(
                               flex: 6,
                               child: Text('บัตรเครดิต',
@@ -96,7 +96,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                       fontWeight: FontWeight.w600,
                                       color: Color(0xFF000000),
                                       fontFamily: 'SukhumvitText',
-                                      fontSize: 18)))
+                                      fontSize: 22)))
                         ])),
                     Container(
                       margin: EdgeInsets.only(top: 10),
@@ -110,7 +110,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF50555C),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 18)),
+                              fontSize: 22)),
                     ),
                     Container(
                         child: Image.asset('assets/images/no_image_01.png'))

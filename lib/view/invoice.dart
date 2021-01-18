@@ -180,7 +180,7 @@ class _InvoicePageState extends State<InvoicePage>
                                                 fontWeight: FontWeight.w800,
                                                 color: Color(0xFFEFA746),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 18,
+                                                fontSize: 22,
                                                 height: 1.4)),
                                         Text(
                                             'คุณ ' +
@@ -192,7 +192,7 @@ class _InvoicePageState extends State<InvoicePage>
                                             style: TextStyle(
                                                 color: Color(0xFF000000),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 18,
+                                                fontSize: 22,
                                                 height: 1)),
                                         Text(
                                             'เลขสมาชิก :  ' +
@@ -201,7 +201,7 @@ class _InvoicePageState extends State<InvoicePage>
                                             style: TextStyle(
                                                 color: Color(0xFFACB3BF),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 12,
+                                                fontSize: 20,
                                                 height: 1.3))
                                       ])),
                                   Container(
@@ -223,7 +223,7 @@ class _InvoicePageState extends State<InvoicePage>
                               fontWeight: FontWeight.w700,
                               color: Color(0xFFEFA746),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 16)),
+                              fontSize: 20)),
                     )),
                 Container(
                     width: MediaQuery.of(context).size.width,
@@ -255,7 +255,7 @@ class _InvoicePageState extends State<InvoicePage>
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xFF50555C),
                                         fontFamily: 'SukhumvitText',
-                                        fontSize: 18))))
+                                        fontSize: 22))))
                       ])),
                       Container(
                         margin: EdgeInsets.only(top: 10),
@@ -274,7 +274,7 @@ class _InvoicePageState extends State<InvoicePage>
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF000000),
                                   fontFamily: 'SukhumvitText',
-                                  fontSize: 34,
+                                  fontSize: 38,
                                   height: 0.1))),
                       Container(
                           margin: EdgeInsets.only(top: 25),
@@ -299,7 +299,7 @@ class _InvoicePageState extends State<InvoicePage>
                                                 fontWeight: FontWeight.w600,
                                                 color: Color(0xFFACB3BF),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 14,
+                                                fontSize: 18,
                                                 height: 1))))
                               ]))
                     ]))
@@ -320,7 +320,7 @@ class _InvoicePageState extends State<InvoicePage>
                                         fontWeight: FontWeight.w700,
                                         color: Color(0xFFEFA746),
                                         fontFamily: 'SukhumvitText',
-                                        fontSize: 16)),
+                                        fontSize: 20)),
                               )),
                           if (_isLoading)
                             Center(
@@ -377,7 +377,7 @@ class _InvoicePageState extends State<InvoicePage>
                                                 fontWeight: FontWeight.w700,
                                                 color: Color(0xFF000000),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 18)),
+                                                fontSize: 22)),
                                         Text(
                                             'กรุณาชำระภายในวันที่ ' +
                                                 item.pay.toString(),
@@ -385,7 +385,7 @@ class _InvoicePageState extends State<InvoicePage>
                                                 fontWeight: FontWeight.w500,
                                                 color: Color(0xFF50555C),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 12)),
+                                                fontSize: 16)),
                                       ]))),
                           Container(
                               child: Container(
@@ -400,7 +400,7 @@ class _InvoicePageState extends State<InvoicePage>
                                                 fontWeight: FontWeight.w700,
                                                 color: Color(0xFFFF0000),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 20)),
+                                                fontSize: 24)),
                                       ])))
                         ])))))
             .toList());

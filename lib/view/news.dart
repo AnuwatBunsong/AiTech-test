@@ -133,12 +133,12 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                textWidget(item.title.toString(), 16.0,
+                                textWidget(item.title.toString(), 18.0,
                                     0xFF000000, 0, FontWeight.w700),
-                                textWidget(item.date.toString(), 10.0,
+                                textWidget(item.date.toString(), 16.0,
                                     0xFFEFA746, 0, FontWeight.w500),
-                                textWidget(item.shortDescription.toString(),
-                                    12.0, 0xFF626262, 0, FontWeight.w400),
+                                /*textWidget(item.shortDescription.toString(),
+                                    12.0, 0xFF626262, 0, FontWeight.w400),*/
                               ])))
                 ])));
   }

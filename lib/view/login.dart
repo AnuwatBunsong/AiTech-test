@@ -138,14 +138,14 @@ class _LoginPageState extends State<LoginPage>
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 24,
+                                    fontSize: 28,
                                   )),
                               Text('กระทรวงสาธารณสุข',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 24,
+                                    fontSize: 28,
                                   ))
                             ],
                           ),
@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage>
                                           style: TextStyle(
                                             color: Color(0xFF000000),
                                             fontFamily: 'SukhumvitText',
-                                            fontSize: 15,
+                                            fontSize: 19,
                                           ))),
                                   Container(
                                       width:
@@ -226,7 +226,7 @@ class _LoginPageState extends State<LoginPage>
                                           style: TextStyle(
                                             color: Color(0xFF000000),
                                             fontFamily: 'SukhumvitText',
-                                            fontSize: 15,
+                                            fontSize: 19,
                                           ))),
                                   Container(
                                       width:
@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage>
                                           obscureText: true,
                                           obscuringCharacter: "*",
                                           style: TextStyle(
-                                              fontSize: 15.0,
+                                              fontSize: 19.0,
                                               height: 0.8,
                                               color: Color(0xFF000000)))),
                                   Container(
@@ -275,7 +275,7 @@ class _LoginPageState extends State<LoginPage>
                                                 TextDecoration.underline,
                                             color: Color(0xFF000000),
                                             fontFamily: 'SukhumvitText',
-                                            fontSize: 15,
+                                            fontSize: 19,
                                           ))),
                                   Container(
                                       height: 50.0,
@@ -322,7 +322,7 @@ class _LoginPageState extends State<LoginPage>
                                                 TextDecoration.underline,
                                             color: Color(0xFF626262),
                                             fontFamily: 'SukhumvitText',
-                                            fontSize: 14,
+                                            fontSize: 18,
                                           ))),
                                 ]))),
                         /*Container(

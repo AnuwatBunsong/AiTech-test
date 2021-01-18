@@ -209,7 +209,7 @@ class _ProfilePageState extends State<ProfilePage>
                           fontWeight: FontWeight.w500,
                           color: Color(0xFF50555C),
                           fontFamily: 'SukhumvitText',
-                          fontSize: 14)))),
+                          fontSize: 18)))),
           Expanded(
               flex: 6,
               child: Container(
@@ -220,7 +220,7 @@ class _ProfilePageState extends State<ProfilePage>
                           fontWeight: FontWeight.w600,
                           color: Color(0xFFEFA746),
                           fontFamily: 'SukhumvitText',
-                          fontSize: 14))))
+                          fontSize: 18))))
         ]));
   }
 }

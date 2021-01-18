@@ -168,7 +168,7 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFFFFFFFF),
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 14)))),
+                                    fontSize: 18)))),
                     Container(
                         padding: EdgeInsets.only(
                             left: 10, right: 5, top: 2, bottom: 2),
@@ -189,7 +189,7 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                                       fontWeight: FontWeight.w700,
                                       color: Color(0xFFEFA746),
                                       fontFamily: 'SukhumvitText',
-                                      fontSize: 14)),
+                                      fontSize: 18)),
                             ]))),
                   ])),
               preferredSize: Size.fromHeight(30.0)),
@@ -245,13 +245,13 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                                                 fontWeight: FontWeight.w700,
                                                 color: Color(0xFF000000),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 18)),
+                                                fontSize: 22)),
                                         Text('ชำระเงินสงเคราะห์',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: Color(0xFF50555C),
                                                 fontFamily: 'SukhumvitText',
-                                                fontSize: 18)),
+                                                fontSize: 22)),
                                         /*Text(item['time'].toString(),
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -266,7 +266,7 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFFEFA746),
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 18)),
+                                    fontSize: 22)),
                             Container(
                                 child: Icon(Icons.keyboard_arrow_right,
                                     size: 30, color: Color(0xFFC4C4C4))),

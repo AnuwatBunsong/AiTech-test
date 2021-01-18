@@ -138,21 +138,21 @@ class _HomePageState extends State<HomePage>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                textWidget('สวัสดี', 18.0, 0xFFEFA746, 1.4,
+                                textWidget('สวัสดี', 22.0, 0xFFEFA746, 1.4,
                                     FontWeight.w800),
                                 textWidget(
                                     'คุณ ' +
                                         profileData['firstName'].toString() +
                                         ' ' +
                                         profileData['lastName'].toString(),
-                                    18.0,
+                                    22.0,
                                     0xFF000000,
                                     1.0,
                                     FontWeight.w400),
                                 textWidget(
                                     'เลขสมาชิก : ' +
                                         profileData['memberId'].toString(),
-                                    12.0,
+                                    20.0,
                                     0xFFACB3BF,
                                     1.3,
                                     FontWeight.w400),
@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage>
                               child: Icon(
                             Icons.navigate_next,
                             color: Color(0xFFC4C4C4),
-                            size: 35.0,
+                            size: 39.0,
                             semanticLabel:
                                 'Text to announce in accessibility modes',
                           ))
@@ -175,14 +175,14 @@ class _HomePageState extends State<HomePage>
                         margin: EdgeInsets.only(bottom: 15),
                         child: Row(children: <Widget>[
                           Expanded(
-                              child: textWidget('ข่าวสารและกิจกรรม', 16.0,
+                              child: textWidget('ข่าวสารและกิจกรรม', 20.0,
                                   0xFFEFA746, 0, FontWeight.w700)),
                           Container(
                               child: GestureDetector(
                                   onTap: () {
                                     Navigator.pushNamed(context, '/news');
                                   },
-                                  child: textWidget('ดูข่าวสารทั้งหมด >', 12.0,
+                                  child: textWidget('ดูข่าวสารทั้งหมด >', 16.0,
                                       0xFFACB3BF, 0, FontWeight.w400)))
                         ])),
                     if (_isLoading)
@@ -241,9 +241,9 @@ class _HomePageState extends State<HomePage>
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        textWidget(item.title.toString(), 16.0,
+                                        textWidget(item.title.toString(), 18.0,
                                             0xFF000000, 0, FontWeight.w700),
-                                        textWidget(item.date.toString(), 10.0,
+                                        textWidget(item.date.toString(), 16.0,
                                             0xFFEFA746, 0, FontWeight.w500),
                                         /*textWidget(
                                             item.shortDescription.toString(),

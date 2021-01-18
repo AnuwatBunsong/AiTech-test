@@ -111,7 +111,7 @@ class _NotificationPageState extends State<NotificationPage>
                               fontWeight: FontWeight.w700,
                               color: Color(0xFFFFFFFF),
                               fontFamily: 'SukhumvitText',
-                              fontSize: 16))))
+                              fontSize: 18))))
           ],
         ),
         backgroundColor: Color(0xFFFFFFFF),
@@ -145,7 +145,7 @@ class _NotificationPageState extends State<NotificationPage>
                                           fontWeight: FontWeight.w700,
                                           color: Color(0xFF000000),
                                           fontFamily: 'SukhumvitText',
-                                          fontSize: 16))
+                                          fontSize: 18))
                                 ]))))),
               if (_isLoading)
                 Center(
@@ -226,13 +226,13 @@ class _NotificationPageState extends State<NotificationPage>
                                       fontWeight: FontWeight.w700,
                                       color: Color(0xFF000000),
                                       fontFamily: 'SukhumvitText',
-                                      fontSize: 16)),
+                                      fontSize: 20)),
                               Text(item.createDate.toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Color(0xFF50555C),
                                       fontFamily: 'SukhumvitText',
-                                      fontSize: 12))
+                                      fontSize: 16))
                             ])))
               ])))
     ]);

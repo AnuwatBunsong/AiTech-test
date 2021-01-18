@@ -41,7 +41,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontFamily: 'SukhumvitText',
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700))),
                 Container(
                     margin: EdgeInsets.only(bottom: 13),
@@ -50,7 +50,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontFamily: 'SukhumvitText',
-                            fontSize: 12,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500))),
                 /*new Flex(
                   direction: Axis.vertical,
