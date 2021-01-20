@@ -12,6 +12,7 @@ class Profile {
   final String completeDate;
   final String image;
   final String approve;
+  final String lastheir;
   final DateTime updatedAt;
 
   const Profile(
@@ -26,6 +27,7 @@ class Profile {
       this.completeDate,
       this.image,
       this.approve,
+      this.lastheir,
       this.updatedAt});
 
   Profile.fromMap(Map<String, dynamic> map)
@@ -41,6 +43,9 @@ class Profile {
         completeDate = convertDate(map['member']['complete_date']),
         image = (map.containsKey('image')) ? map['image']['thumbnail_url'] : '',
         approve = convertDate(map['member']['approve_date']),
+        lastheir = (map['member']['updated_lastheir_at'])
+            ? convertDateLastheir(map['member']['updated_lastheir_at'])
+            : '',
         updatedAt = map['update_at'];
 }
 
@@ -77,6 +82,14 @@ convertDate(date) {
   final convertLocal = strToDateTime.toLocal();
   final dateTime =
       "${convertLocal.day.toString()} ${monthThai(convertLocal.month)} ${convertLocal.year + 543}";
+  return dateTime;
+}
+
+convertDateLastheir(date) {
+  var strToDateTime = DateTime.parse(date);
+  final convertLocal = strToDateTime.toLocal();
+  final dateTime =
+      "${convertLocal.day.toString()} / ${monthThai(convertLocal.month)} / ${convertLocal.year + 543}";
   return dateTime;
 }
 

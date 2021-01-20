@@ -185,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         height: 1.3))),
                             Container(
                                 margin: EdgeInsets.only(top: 10),
-                                child: Text('วว/ดด/ปป',
+                                child: Text(profileData.lastheir.toString(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xFFEFA746),
