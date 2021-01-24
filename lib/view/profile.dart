@@ -80,10 +80,16 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: appBarTitle('ข้อมูลส่วนตัวสมาชิก'),
-          flexibleSpace: appBarBackground(),
-        ),
+            centerTitle: true,
+            title: appBarTitle('ข้อมูลส่วนตัวสมาชิก'),
+            flexibleSpace: appBarBackground(),
+            actions: <Widget>[
+              IconButton(
+                  icon: new Icon(
+                    Icons.edit_outlined,
+                  ),
+                  onPressed: () {})
+            ]),
         backgroundColor: Color(0xFFE5E5E5),
         body: ListView(children: [
           if (_isLoading)

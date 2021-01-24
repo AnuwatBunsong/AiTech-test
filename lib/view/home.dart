@@ -7,6 +7,7 @@ import 'package:cremation/view/news_detail.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -123,7 +124,27 @@ class _HomePageState extends State<HomePage>
                                 BorderRadius.all(Radius.circular(10.0)),
                             color: Colors.white),
                         child: Row(children: <Widget>[
-                          Container(
+                          CachedNetworkImage(
+                            imageUrl: profileData['image'].toString(),
+                            imageBuilder: (context, imageProvider) => Container(
+                              margin: EdgeInsets.only(right: 13),
+                              width: 60.0,
+                              height: 60.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.fill),
+                              ),
+                            ),
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Container(
+                                margin: EdgeInsets.only(right: 13),
+                                width: 60.0,
+                                height: 60.0,
+                                child: Image.asset('assets/images/logo.png')),
+                          ),
+                          /*Container(
                               margin: EdgeInsets.only(right: 13),
                               width: 60.0,
                               height: 60.0,
@@ -132,7 +153,7 @@ class _HomePageState extends State<HomePage>
                                   image: new DecorationImage(
                                       fit: BoxFit.fill,
                                       image: NetworkImage(
-                                          profileData['image'].toString())))),
+                                          profileData['image'].toString())))),*/
                           Expanded(
                               child: new Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

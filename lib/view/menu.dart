@@ -91,9 +91,9 @@ class _MenuState extends State<Menu> {
                               Container(
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.only(right: 20),
-                                  child: Icon(Icons.settings,
+                                  child: Icon(Icons.source,
                                       size: 30, color: Color(0xFFEFA746))),
-                              Text("ตั้งค่า",
+                              Text("เอกสารต่างๆ",
                                   style: TextStyle(
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,

@@ -28,7 +28,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'cmph',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: routes,
