@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cremation/utils/widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Menu extends StatefulWidget {
   @override
@@ -18,6 +19,15 @@ class _MenuState extends State<Menu> {
     prefs.remove('token');
 
     Navigator.pushNamed(context, '/login');
+  }
+
+  _launchURL() async {
+    const url = 'https://chapanakij.or.th/mophsc/member/form/';
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -84,7 +94,7 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: () {},
+                        onPressed: () => _launchURL(),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [

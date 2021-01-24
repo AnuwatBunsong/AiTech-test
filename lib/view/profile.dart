@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -76,6 +77,15 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   void getProfileError(error) {}
 
+  _launchURL() async {
+    const url = 'https://chapanakij.karpool.s.co/#/checkmember';
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage>
                   icon: new Icon(
                     Icons.edit_outlined,
                   ),
-                  onPressed: () {})
+                  onPressed: () => _launchURL())
             ]),
         backgroundColor: Color(0xFFE5E5E5),
         body: ListView(children: [
@@ -129,7 +139,8 @@ class _ProfilePageState extends State<ProfilePage>
                           profileData.firstName.toString() +
                               ' ' +
                               profileData.lastName.toString()),
-                      profileDetail('เลขบัตรประชาชน :', '0000000000000'),
+                      profileDetail('เลขบัตรประชาชน :',
+                          profileData.personalId.toString()),
                       profileDetail(
                           'วันเกิด :', profileData.birthDate.toString()),
                       profileDetail('ที่อยู่สำหรับติดต่อ :',
@@ -141,63 +152,65 @@ class _ProfilePageState extends State<ProfilePage>
                       profileDetail('เป็นสมาชิกตั้งแต่ :',
                           profileData.completeDate.toString()),
                       profileDetail('วิธีชำระเงิน :', 'หน่วยงานต้นสังกัด'),
-                      profileDetail(
-                          'สถานที่เรียกเก็บเงิน :', 'รพร.สระบุรี (พิเศษ)'),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: dotWidget(
-                            (MediaQuery.of(context).size.width - 50),
-                            10,
-                            5,
-                            2,
-                            0xFFACB3BF),
-                      ),
-                      Container(
-                          margin: EdgeInsets.only(top: 25),
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xFFEDEDED),
-                                width: 1,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  offset: Offset(0.0, 2.0),
-                                  blurRadius: 2.0,
-                                )
-                              ],
-                              color: Colors.white),
-                          child: Column(children: [
-                            Container(
-                                child: Text(
-                                    'เปลี่ยนผู้มีสิทธิ์รับเงินครั้งแรกล่าสุด',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFF50555C),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 16,
-                                        height: 1.3))),
-                            Container(
-                                child: Text('อัพเดต ณ วันที่',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xFF50555C),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 16,
-                                        height: 1.3))),
-                            Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: Text(profileData.lastheir.toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFFEFA746),
-                                        fontFamily: 'SukhumvitText',
-                                        fontSize: 16)))
-                          ]))
+                      profileDetail('สถานที่เรียกเก็บเงิน :',
+                          profileData.payOffice.toString()),
+                      if (profileData.lastheir != '')
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: dotWidget(
+                              (MediaQuery.of(context).size.width - 50),
+                              10,
+                              5,
+                              2,
+                              0xFFACB3BF),
+                        ),
+                      if (profileData.lastheir != '')
+                        Container(
+                            margin: EdgeInsets.only(top: 25),
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color(0xFFEDEDED),
+                                  width: 1,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.5),
+                                    offset: Offset(0.0, 2.0),
+                                    blurRadius: 2.0,
+                                  )
+                                ],
+                                color: Colors.white),
+                            child: Column(children: [
+                              Container(
+                                  child: Text(
+                                      'เปลี่ยนผู้มีสิทธิ์รับเงินครั้งแรกล่าสุด',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xFF50555C),
+                                          fontFamily: 'SukhumvitText',
+                                          fontSize: 16,
+                                          height: 1.3))),
+                              Container(
+                                  child: Text('อัพเดต ณ วันที่',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xFF50555C),
+                                          fontFamily: 'SukhumvitText',
+                                          fontSize: 16,
+                                          height: 1.3))),
+                              Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Text(profileData.lastheir.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFFEFA746),
+                                          fontFamily: 'SukhumvitText',
+                                          fontSize: 16)))
+                            ]))
                     ]))),
         ]));
   }

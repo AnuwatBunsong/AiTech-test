@@ -5,10 +5,12 @@ class Profile {
   final String memberId;
   final String firstName;
   final String lastName;
+  final String personalId;
   final String birthDate;
   final String address;
   final String telephone;
   final String status;
+  final String payOffice;
   final String completeDate;
   final String image;
   final String approve;
@@ -20,10 +22,12 @@ class Profile {
       this.memberId,
       this.firstName,
       this.lastName,
+      this.personalId,
       this.birthDate,
       this.address,
       this.telephone,
       this.status,
+      this.payOffice,
       this.completeDate,
       this.image,
       this.approve,
@@ -35,15 +39,18 @@ class Profile {
         memberId = map['member']['member_id'],
         firstName = map['member']['first_name'],
         lastName = map['member']['last_name'],
+        personalId = map['member']['personal_id'],
         birthDate = convertDate(map['member']['birthdate']),
         address =
             "${map['member']['address'].trim()} ${map['member']['tambon'].trim()} ${map['member']['amphur'].trim()} ${map['member']['changwat'].trim()}",
         telephone = map['member']['telephone'],
         status = translateStatus(map['member']['status']),
+        payOffice =
+            (map.containsKey('pay_office')) ? map['pay_office']['office'] : '',
         completeDate = convertDate(map['member']['complete_date']),
         image = (map.containsKey('image')) ? map['image']['thumbnail_url'] : '',
         approve = convertDate(map['member']['approve_date']),
-        lastheir = (map['member']['updated_lastheir_at'])
+        lastheir = (map['member'].containsKey('updated_lastheir_at'))
             ? convertDateLastheir(map['member']['updated_lastheir_at'])
             : '',
         updatedAt = map['update_at'];
