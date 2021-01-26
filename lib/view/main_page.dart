@@ -110,7 +110,7 @@ class _MainPageState extends State<MainPage> {
                                 color: _selectedIndex == 1
                                     ? Color(activePage)
                                     : Color(inActivePage)),
-                            label: 'เงินสงเคราะห์สะสม',
+                            label: 'เรียกเก็บเงินสงเคราะห์',
                           ),
                           BottomNavigationBarItem(
                             icon: Icon(Icons.notifications,
