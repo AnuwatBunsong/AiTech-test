@@ -10,7 +10,7 @@ class InvoiceListRepository {
   Future<List<Invoice>> fetch(
       int status, String token, int page, int size) async {
     final response = await http.get(
-        'https://chapanakij.karpools.co/api/v1/c/me/invoices?size=$size&page=$page&paid_status=$status&reverse=true&sort=invmonyear&last_year=false',
+        'https://chapanakij.karpools.co/api/v1/c/me/invoices?size=$size&page=$page&paid=$status&reverse=true&sort=invmonyear&last_year=false',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

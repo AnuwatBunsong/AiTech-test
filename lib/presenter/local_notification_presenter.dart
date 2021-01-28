@@ -51,6 +51,7 @@ class LocalNotifications {
   }
 
   Future pushNotification(String title, String body) async {
+    print(title);
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'push_messages: 0',
@@ -61,6 +62,8 @@ class LocalNotifications {
       showWhen: false,
       enableVibration: true,
     );
+    print(title);
+    print(body);
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin

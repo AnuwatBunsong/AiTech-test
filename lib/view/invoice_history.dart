@@ -19,7 +19,7 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
   bool _isLoading = true;
   int page = 0;
   int size = 0;
-  int paidStatus = 2;
+  int paidStatus = 1;
   int selectYear = 0;
   List<int> yearList;
 

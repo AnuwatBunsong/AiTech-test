@@ -24,7 +24,7 @@ class _MenuState extends State<Menu> {
   _launchURL() async {
     const url = 'https://chapanakij.or.th/mophsc/member/form/';
     if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
+      await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
       throw 'Could not launch $url';
     }
@@ -137,7 +137,7 @@ class _MenuState extends State<Menu> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               //ติดต่อ Call Center
               child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () => launch("tel:025899105"),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
                   padding: EdgeInsets.all(0.0),

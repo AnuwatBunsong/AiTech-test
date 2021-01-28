@@ -5,6 +5,7 @@ import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -80,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage>
   _launchURL() async {
     const url = 'https://chapanakij.karpool.s.co/#/checkmember';
     if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
+      await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
       throw 'Could not launch $url';
     }
@@ -117,21 +118,45 @@ class _ProfilePageState extends State<ProfilePage>
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     ),
                     child: Column(children: [
-                      Container(
-                          margin: EdgeInsets.only(right: 13, bottom: 20),
-                          width: 80.0,
-                          height: 80.0,
-                          child: GestureDetector(
-                              onTap: () {
-                                getImage();
-                              },
-                              child: Container(
-                                  decoration: new BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: new DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(profileData.image
-                                              .toString())))))),
+                      CachedNetworkImage(
+                        imageUrl: profileData.image.toString(),
+                        imageBuilder: (context, imageProvider) => Container(
+                            margin: EdgeInsets.only(right: 13, bottom: 20),
+                            width: 80.0,
+                            height: 80.0,
+                            child: GestureDetector(
+                                onTap: () {
+                                  getImage();
+                                },
+                                child: Container(
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: new DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: imageProvider))))),
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Container(
+                            margin: EdgeInsets.only(right: 13, bottom: 20),
+                            width: 80.0,
+                            height: 80.0,
+                            child: GestureDetector(
+                                onTap: () {
+                                  getImage();
+                                },
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Color(0xFFC4C4C4))),
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      color: Color(0xFFC4C4C4),
+                                      size: 39.0,
+                                    )))),
+                      ),
                       profileDetail(
                           'เลขทะเบียน :', profileData.memberId.toString()),
                       profileDetail(

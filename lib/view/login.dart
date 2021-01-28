@@ -265,7 +265,7 @@ class _LoginPageState extends State<LoginPage>
                                               fontSize: 19.0,
                                               height: 0.8,
                                               color: Color(0xFF000000)))),
-                                  Container(
+                                  /*Container(
                                       alignment: Alignment.topRight,
                                       margin:
                                           const EdgeInsets.only(bottom: 20.0),
@@ -276,7 +276,7 @@ class _LoginPageState extends State<LoginPage>
                                             color: Color(0xFF000000),
                                             fontFamily: 'SukhumvitText',
                                             fontSize: 19,
-                                          ))),
+                                          ))),*/
                                   Container(
                                       height: 50.0,
                                       margin:

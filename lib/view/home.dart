@@ -56,8 +56,13 @@ class _HomePageState extends State<HomePage>
   void getProfile() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.getString('token');
-    final String userData = prefs.getString('userData');
-    if (userData == null) {
+    //final String userData = prefs.getString('userData');
+    if (token != null) {
+      _profilePresenter.getProfile(token);
+    } else {
+      Navigator.pushNamed(context, '/login');
+    }
+    /*if (userData == null) {
       if (token != null) {
         _profilePresenter.getProfile(token);
       } else {
@@ -66,7 +71,7 @@ class _HomePageState extends State<HomePage>
     } else {
       profileData = json.decode(userData);
       _isProfileLoading = false;
-    }
+    }*/
   }
 
   @override
@@ -138,11 +143,7 @@ class _HomePageState extends State<HomePage>
                             ),
                             placeholder: (context, url) =>
                                 CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Container(
-                                margin: EdgeInsets.only(right: 13),
-                                width: 60.0,
-                                height: 60.0,
-                                child: Image.asset('assets/images/logo.png')),
+                            errorWidget: (context, url, error) => Container(),
                           ),
                           /*Container(
                               margin: EdgeInsets.only(right: 13),
