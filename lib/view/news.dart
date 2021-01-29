@@ -3,6 +3,7 @@ import 'package:cremation/utils/widget.dart';
 import 'package:cremation/presenter/news_presenter.dart';
 import 'package:cremation/model/news_model.dart';
 import 'package:cremation/view/news_detail.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -133,8 +134,20 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                textWidget(item.title.toString(), 18.0,
-                                    0xFF000000, 0, FontWeight.w700),
+                                AutoSizeText(
+                                  item.title.toString(),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFF000000),
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'SukhumvitText',
+                                  ),
+                                  minFontSize: 14,
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                /*textWidget(item.title.toString(), 18.0,
+                                    0xFF000000, 0, FontWeight.w700),*/
                                 textWidget(item.date.toString(), 16.0,
                                     0xFFEFA746, 0, FontWeight.w500),
                                 /*textWidget(item.shortDescription.toString(),

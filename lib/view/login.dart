@@ -9,6 +9,7 @@ import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
 import 'package:cremation/presenter/token_presenter.dart';
 import 'package:cremation/model/token_model.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -126,27 +127,51 @@ class _LoginPageState extends State<LoginPage>
                       child: Align(
                           child: Column(children: <Widget>[
                         Container(
+                          padding:
+                              const EdgeInsets.only(left: 20.0, right: 20.0),
                           child: Column(
                             children: [
                               Padding(
-                                  padding: const EdgeInsets.only(top: 40.0),
+                                  padding: const EdgeInsets.only(top: 30.0),
                                   child: Column(children: [
                                     Image.asset(
                                         'assets/images/logo_120x120.png'),
                                   ])),
-                              Text('สำนักงานการณาปนกิจสงเคราะห์',
+                              AutoSizeText(
+                                'สำนักงานการณาปนกิจสงเคราะห์',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color: Colors.white,
+                                  fontFamily: 'SukhumvitText',
+                                ),
+                                minFontSize: 18,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              /*Text('สำนักงานการณาปนกิจสงเคราะห์',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 28,
-                                  )),
-                              Text('กระทรวงสาธารณสุข',
+                                    fontSize: 40,
+                                  )),*/
+                              AutoSizeText(
+                                'กระทรวงสาธารณสุข',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color: Colors.white,
+                                  fontFamily: 'SukhumvitText',
+                                ),
+                                minFontSize: 18,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              /*Text('กระทรวงสาธารณสุข',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'SukhumvitText',
                                     fontSize: 28,
-                                  ))
+                                  ))*/
                             ],
                           ),
                         ),

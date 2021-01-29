@@ -83,7 +83,7 @@ class PushNotificationService {
             sound: true, badge: true, alert: true, provisional: false));
     _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
+      //print("Settings registered: $settings");
     });
   }
 

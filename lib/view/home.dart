@@ -8,6 +8,7 @@ import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -263,8 +264,20 @@ class _HomePageState extends State<HomePage>
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        textWidget(item.title.toString(), 18.0,
-                                            0xFF000000, 0, FontWeight.w700),
+                                        AutoSizeText(
+                                          item.title.toString(),
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Color(0xFF000000),
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'SukhumvitText',
+                                          ),
+                                          minFontSize: 14,
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        /*textWidget(item.title.toString(), 18.0,
+                                            0xFF000000, 0, FontWeight.w700),*/
                                         textWidget(item.date.toString(), 16.0,
                                             0xFFEFA746, 0, FontWeight.w500),
                                         /*textWidget(
