@@ -32,11 +32,11 @@ class PushNotificationService {
   PushNotificationService(this._firebaseMessaging);
 
   void fcmSubscribe() {
-    _firebaseMessaging.subscribeToTopic('news');
+    _firebaseMessaging.subscribeToTopic('all_dev');
   }
 
   void fcmUnSubscribe() {
-    _firebaseMessaging.unsubscribeFromTopic('news');
+    _firebaseMessaging.unsubscribeFromTopic('all_dev');
   }
 
   Future initialise() async {
