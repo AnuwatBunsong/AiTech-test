@@ -79,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage>
   void getProfileError(error) {}
 
   _launchURL() async {
-    const url = 'https://chapanakij.karpool.s.co/#/checkmember';
+    const url = 'https://next-chapanakij.kar-pool.co/member-status';
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false, forceWebView: false);
     } else {
