@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:ui';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -9,6 +11,8 @@ import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
 import 'package:cremation/presenter/token_presenter.dart';
 import 'package:cremation/model/token_model.dart';
+import 'package:cremation/presenter/version_presenter.dart';
+import 'package:cremation/model/version_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,25 +21,42 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage>
-    implements LoginContract, ProfileContract, TokenContract {
+    implements LoginContract, ProfileContract, TokenContract, VersionContract {
   LoginPresenter _presenter;
   ProfilePresenter _profilePresenter;
   TokenPresenter _tokenPresenter;
+  VersionPresenter _versionPresenter;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password;
   //bool _isLoading = false;
   var profileData;
+  var appVersion = '1.0.0';
+
   @override
   void initState() {
     super.initState();
-    autoLogIn();
+    checkVersion();
   }
 
   _LoginPageState() {
     _presenter = new LoginPresenter(this);
     _profilePresenter = new ProfilePresenter(this);
     _tokenPresenter = new TokenPresenter(this);
+    _versionPresenter = new VersionPresenter(this);
+  }
+
+  void checkVersion() async {
+    _versionPresenter.versionApp();
+  }
+
+  @override
+  void onVersionSuccess(Version version) async {
+    if (appVersion == version.version) {
+      autoLogIn();
+    } else {
+      onVersionError('error');
+    }
   }
 
   void autoLogIn() async {
@@ -350,6 +371,42 @@ class _LoginPageState extends State<LoginPage>
                                             fontSize: 18,
                                           ))),
                                 ]))),
+                        Container(
+                            height: 50.0,
+                            margin:
+                                const EdgeInsets.only(top: 30.0, bottom: 15.0),
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: /*_isLoading ? new CircularProgressIndicator() :*/ RaisedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/news_guest');
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                padding: EdgeInsets.all(0.0),
+                                child: Ink(
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xFFEFA746),
+                                            Color(0xFFF0C984)
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    child: Container(
+                                        constraints:
+                                            BoxConstraints(minHeight: 50.0),
+                                        alignment: Alignment.center,
+                                        child: Text("ไม่ได้เป็นสมาชิก",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFFFFFFFF),
+                                              fontFamily: 'SukhumvitText',
+                                              fontSize: 20,
+                                            )))))),
                         /*Container(
                             alignment: Alignment.center,
                             margin: const EdgeInsets.only(top: 30.0),
@@ -380,13 +437,55 @@ class _LoginPageState extends State<LoginPage>
               color: Colors.red, fontSize: 20, fontFamily: 'SukhumvitText')),
       buttons: [
         DialogButton(
+          child: Ink(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFFEFA746), Color(0xFFF0C984)],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  borderRadius: BorderRadius.circular(30.0)),
+              child: Text(
+                "ตกลง",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: 'SukhumvitText'),
+              )),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
+  }
+
+  @override
+  void onVersionError(String errorTxt) {
+    //_showSnackBar(errorTxt);
+    //setState(() => _isLoading = false);
+    Alert(
+      context: context,
+      title: "ตรวจพบเวอร์ชั่นเก่า" + "\n" + "กรุณาติดตั้งเวอร์ชั่นใหม่",
+      style: AlertStyle(
+          isCloseButton: false,
+          titleStyle: TextStyle(
+              color: Colors.black, fontSize: 20, fontFamily: 'SukhumvitText')),
+      buttons: [
+        DialogButton(
           child: Text(
             "ตกลง",
             style: TextStyle(
                 color: Colors.white, fontSize: 20, fontFamily: 'SukhumvitText'),
           ),
-          onPressed: () => Navigator.pop(context),
-          width: 120,
+          onPressed: () {
+            if (Platform.isAndroid) {
+              SystemNavigator.pop();
+            } else if (Platform.isIOS) {
+              exit(0);
+            }
+          },
+          gradient:
+              LinearGradient(colors: [Color(0xFFEFA746), Color(0xFFF0C984)]),
         )
       ],
     ).show();

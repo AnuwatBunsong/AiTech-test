@@ -6,6 +6,7 @@ import 'package:cremation/model/invoice_model.dart';
 import 'package:cremation/presenter/profile_presenter.dart';
 import 'package:cremation/model/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePage extends StatefulWidget {
   @override
@@ -18,12 +19,57 @@ class _InvoicePageState extends State<InvoicePage>
   InvoicePresenter _presenter;
   ProfilePresenter _profilePresenter;
   List<Invoice> invoiceData;
+  List<Invoice> searchInvoice;
   bool _isLoading = true;
   bool _isProfileLoading = true;
   int page = 0;
   int size = 0;
   int paidStatus = 0;
   var profileData;
+  var titleInvoice = '';
+  var priceTitleInvoice = 0;
+
+  monthThai(int month) {
+    switch (month) {
+      case 1:
+        return 'ม.ค.';
+        break;
+      case 2:
+        return 'ก.พ.';
+        break;
+      case 3:
+        return 'มี.ค.';
+        break;
+      case 4:
+        return 'เม.ย.';
+        break;
+      case 5:
+        return 'พ.ค.';
+        break;
+      case 6:
+        return 'มิ.ย.';
+        break;
+      case 7:
+        return 'ก.ค.';
+        break;
+      case 8:
+        return 'ส.ค.';
+        break;
+      case 9:
+        return 'ก.ย.';
+        break;
+      case 10:
+        return 'ต.ค.';
+        break;
+      case 11:
+        return 'พ.ย.';
+        break;
+      case 12:
+        return 'ธ.ค.';
+        break;
+      default:
+    }
+  }
 
   List newsData = [
     {
@@ -53,6 +99,22 @@ class _InvoicePageState extends State<InvoicePage>
     super.initState();
     getProfile();
     _getInvoiceList();
+    _getMonth();
+  }
+
+  _launchURLLine() async {
+    const url = 'https://line.me/ti/p/%40chapanakij8813';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  void _getMonth() {
+    DateTime now = new DateTime.now();
+
+    titleInvoice = monthThai(now.month);
   }
 
   void _getInvoiceList() async {
@@ -69,6 +131,18 @@ class _InvoicePageState extends State<InvoicePage>
     setState(() {
       _isLoading = false;
       invoiceData = items;
+
+      bool searchValue = true;
+
+      var searchInvoice =
+          items.where((oldValue) => searchValue == (oldValue.showInvoice));
+
+      if (searchInvoice.isNotEmpty) {
+        var map1 = Map.fromIterable(searchInvoice,
+            key: (e) => 0, value: (e) => e.amount);
+
+        priceTitleInvoice = (map1[0] > 0) ? map1[0] : 0;
+      }
     });
   }
 
@@ -250,7 +324,12 @@ class _InvoicePageState extends State<InvoicePage>
                                   Navigator.pushNamed(
                                       context, '/invoice_history');
                                 },
-                                child: Text('ปี 2563 คงเหลือ',
+                                child: Text(
+                                    'เดือน ' +
+                                        titleInvoice +
+                                        ((priceTitleInvoice > 0)
+                                            ? ' คงเหลือ'
+                                            : ''),
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xFF50555C),
@@ -269,7 +348,10 @@ class _InvoicePageState extends State<InvoicePage>
                       Container(
                           margin: EdgeInsets.only(top: 40),
                           alignment: Alignment.topRight,
-                          child: Text('424 บาท',
+                          child: Text(
+                              (priceTitleInvoice > 0)
+                                  ? priceTitleInvoice.toString() + ' บาท'
+                                  : '-',
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF000000),
@@ -305,6 +387,39 @@ class _InvoicePageState extends State<InvoicePage>
                     ]))
               ]),
             ),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                //ติดต่อ Call Center
+                child: RaisedButton(
+                    onPressed: () => _launchURLLine(),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)),
+                    padding: EdgeInsets.all(0.0),
+                    child: Ink(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xFFEFA746), Color(0xFFF0C984)],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Container(
+                            constraints: BoxConstraints(minHeight: 50.0),
+                            alignment: Alignment.center,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                          "อัพโหลดรูปภาพสลิปหลักฐานการโอนเงิน",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Color(0xFFFFFFFF),
+                                            fontFamily: 'SukhumvitText',
+                                            fontSize: 16,
+                                          )))
+                                ]))))),
             Container(
                 child: Container(
                     padding: EdgeInsets.only(

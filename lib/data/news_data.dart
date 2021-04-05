@@ -9,7 +9,7 @@ class NewsListRepository {
 
   Future<List<News>> fetch(int page, int size) async {
     final response = await http.get(
-        'https://chapanakij.karpools.co/api/v1/b/news?size=$size&page=$page');
+        'https://chapanakij.kar-pool.co/api/v1/b/news?size=$size&page=$page');
     final jsonBody = response.body;
     final statusCode = response.statusCode;
 

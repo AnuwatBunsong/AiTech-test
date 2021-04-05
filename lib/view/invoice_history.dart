@@ -155,10 +155,10 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 9),
                   child: Row(children: [
-                    Container(
+                    /*Container(
                         child: Icon(Icons.description,
-                            size: 20, color: Color(0xFFFFFFFF))),
-                    Expanded(
+                            size: 20, color: Color(0xFFFFFFFF))),*/
+                    /*Expanded(
                         child: GestureDetector(
                             onTap: () {
                               testNotification();
@@ -168,29 +168,34 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFFFFFFFF),
                                     fontFamily: 'SukhumvitText',
-                                    fontSize: 18)))),
-                    Container(
-                        padding: EdgeInsets.only(
-                            left: 10, right: 5, top: 2, bottom: 2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.white,
-                        ),
-                        child: GestureDetector(
-                            onTap: () {
-                              filter();
-                            },
-                            child: Row(children: [
-                              Container(
-                                  child: Icon(Icons.sort,
-                                      size: 20, color: Color(0xFFEFA746))),
-                              Text('Filter',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xFFEFA746),
-                                      fontFamily: 'SukhumvitText',
-                                      fontSize: 18)),
-                            ]))),
+                                    fontSize: 18)))),*/
+                    Expanded(
+                        child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                                width: 80,
+                                padding: EdgeInsets.only(
+                                    left: 10, right: 5, top: 2, bottom: 2),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Colors.white,
+                                ),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      filter();
+                                    },
+                                    child: Row(children: [
+                                      Container(
+                                          child: Icon(Icons.sort,
+                                              size: 20,
+                                              color: Color(0xFFEFA746))),
+                                      Text('Filter',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xFFEFA746),
+                                              fontFamily: 'SukhumvitText',
+                                              fontSize: 18)),
+                                    ]))))),
                   ])),
               preferredSize: Size.fromHeight(30.0)),
         ),
@@ -222,7 +227,7 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                     EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 15),
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/invoice_detail');
+                      //Navigator.pushNamed(context, '/invoice_detail');
                     },
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -267,9 +272,9 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage>
                                     color: Color(0xFFEFA746),
                                     fontFamily: 'SukhumvitText',
                                     fontSize: 22)),
-                            Container(
+                            /*Container(
                                 child: Icon(Icons.keyboard_arrow_right,
-                                    size: 30, color: Color(0xFFC4C4C4))),
+                                    size: 30, color: Color(0xFFC4C4C4))),*/
                           ]))
                         ]))))
             .toList());

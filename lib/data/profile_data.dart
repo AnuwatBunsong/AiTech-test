@@ -8,7 +8,7 @@ class GetProfile {
 
   Future<Profile> getProfile(String token) async {
     final response =
-        await http.get('https://chapanakij.karpools.co/api/v1/me', headers: {
+        await http.get('https://chapanakij.kar-pool.co/api/v1/me', headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -34,7 +34,7 @@ class GetProfile {
       'Authorization': 'Bearer $token',
     };
 
-    final url = 'https://chapanakij.karpools.co/api/v1/c/me/profile_picture';
+    final url = 'https://chapanakij.kar-pool.co/api/v1/c/me/profile_picture';
     var request = http.MultipartRequest('POST', Uri.parse(url));
     request.headers.addAll(headers);
     request.files.add(await http.MultipartFile.fromPath('image', image));

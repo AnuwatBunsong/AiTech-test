@@ -8,7 +8,7 @@ class Token {
 
   Future<RequestToken> tokens(String refreshToken) async {
     final response = await http.post(
-        'https://chapanakij.karpools.co/api/v1/tokens',
+        'https://chapanakij.kar-pool.co/api/v1/tokens',
         body: jsonEncode({"refresh_token": refreshToken}),
         headers: {
           'Accept': 'application/json',

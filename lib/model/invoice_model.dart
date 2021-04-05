@@ -7,6 +7,7 @@ class Invoice {
   final String month;
   final String year;
   final String pay;
+  final bool showInvoice;
 
   const Invoice(
       {this.monthYear,
@@ -14,7 +15,8 @@ class Invoice {
       this.paidStatus,
       this.month,
       this.year,
-      this.pay});
+      this.pay,
+      this.showInvoice});
 
   Invoice.fromMap(Map<String, dynamic> map)
       : monthYear = map['monthyear'],
@@ -22,7 +24,8 @@ class Invoice {
         paidStatus = map['paid_status'],
         month = getMonth(map['monthyear']),
         year = yearThai(map['monthyear']),
-        pay = payWithInDay();
+        pay = payWithInDay(),
+        showInvoice = calInvoice(map['monthyear']);
 }
 
 abstract class InvoiceRepository {
@@ -36,6 +39,21 @@ class FetchDataException implements Exception {
 
   String toString() {
     return "Exception: $_message";
+  }
+}
+
+calInvoice(String monthYear) {
+  DateTime now = new DateTime.now();
+  var onMonth = monthYear.substring(0, 2);
+  var month = int.parse(onMonth);
+  var year = int.parse(monthYear.substring(2, 6));
+  var currentMonth = now.month;
+  var currentYear = (now.year + 543);
+
+  if (currentMonth == month && currentYear == year) {
+    return true;
+  } else {
+    return false;
   }
 }
 

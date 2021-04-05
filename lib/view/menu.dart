@@ -30,6 +30,24 @@ class _MenuState extends State<Menu> {
     }
   }
 
+  _launchURLMember() async {
+    const url = 'https://chapanakij.or.th/mophsc/member/manual/';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLLine() async {
+    const url = 'https://line.me/ti/p/%40chapanakij8813';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,9 +119,51 @@ class _MenuState extends State<Menu> {
                               Container(
                                   alignment: Alignment.centerLeft,
                                   padding: EdgeInsets.only(right: 20),
-                                  child: Icon(Icons.source,
+                                  child: Icon(Icons.live_help,
                                       size: 30, color: Color(0xFFEFA746))),
                               Text("เอกสารต่างๆ",
+                                  style: TextStyle(
+                                    color: Color(0xFF50555C),
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'SukhumvitText',
+                                    fontSize: 20,
+                                  ))
+                            ]))),
+                Container(
+                    height: 65,
+                    child: RaisedButton(
+                        color: Color(0xFFFFFFFF),
+                        onPressed: () => _launchURLMember(),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.text_snippet,
+                                      size: 30, color: Color(0xFFEFA746))),
+                              Text("คู่มือสำหรับสมาชิก",
+                                  style: TextStyle(
+                                    color: Color(0xFF50555C),
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'SukhumvitText',
+                                    fontSize: 20,
+                                  ))
+                            ]))),
+                Container(
+                    height: 65,
+                    child: RaisedButton(
+                        color: Color(0xFFFFFFFF),
+                        onPressed: () => _launchURLLine(),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Icon(Icons.mode_comment,
+                                      size: 30, color: Color(0xFFEFA746))),
+                              Text("แสดงความคิดเห็น",
                                   style: TextStyle(
                                     color: Color(0xFF50555C),
                                     fontWeight: FontWeight.w600,
