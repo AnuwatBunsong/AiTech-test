@@ -1,18 +1,9 @@
-import 'dart:io';
 import 'dart:ui';
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cremation/presenter/login_presenter.dart';
 import 'package:cremation/model/user_model.dart';
-import 'package:cremation/presenter/profile_presenter.dart';
-import 'package:cremation/model/profile_model.dart';
-import 'package:cremation/presenter/token_presenter.dart';
-import 'package:cremation/model/token_model.dart';
-import 'package:cremation/presenter/version_presenter.dart';
-import 'package:cremation/model/version_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,12 +11,8 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    implements LoginContract, ProfileContract, TokenContract, VersionContract {
+class _LoginPageState extends State<LoginPage> implements LoginContract {
   LoginPresenter _presenter;
-  ProfilePresenter _profilePresenter;
-  TokenPresenter _tokenPresenter;
-  VersionPresenter _versionPresenter;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   String _username, _password;
@@ -36,37 +23,10 @@ class _LoginPageState extends State<LoginPage>
   @override
   void initState() {
     super.initState();
-    checkVersion();
   }
 
   _LoginPageState() {
     _presenter = new LoginPresenter(this);
-    _profilePresenter = new ProfilePresenter(this);
-    _tokenPresenter = new TokenPresenter(this);
-    _versionPresenter = new VersionPresenter(this);
-  }
-
-  void checkVersion() async {
-    _versionPresenter.versionApp();
-  }
-
-  @override
-  void onVersionSuccess(Version version) async {
-    if (appVersion == version.version) {
-      autoLogIn();
-    } else {
-      onVersionError('error');
-    }
-  }
-
-  void autoLogIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String token = prefs.getString('token');
-    final String refreshToken = prefs.getString('refreshToken');
-
-    if (token != null) {
-      _tokenPresenter.requestToken(refreshToken);
-    }
   }
 
   void _submit() {
@@ -85,42 +45,6 @@ class _LoginPageState extends State<LoginPage>
     prefs.setString('refreshToken', user.refreshToken);
     prefs.remove('userData');
     //getProfile();
-    Navigator.pushNamed(context, '/main_page');
-  }
-
-  void getProfile() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String token = prefs.getString('token');
-
-    if (token != null) {
-      _profilePresenter.getProfile(token);
-    } else {
-      Navigator.pushNamed(context, '/login');
-    }
-  }
-
-  @override
-  void getProfileSuccess(Profile items) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userData', json.encode(items));
-  }
-
-  @override
-  void getProfileError(error) {}
-
-  @override
-  void requestTokenError(String errorTxt) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-    prefs.remove('refreshToken');
-    prefs.remove('userData');
-  }
-
-  @override
-  void requestTokenSuccess(RequestToken response) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', response.token);
-    prefs.setString('refreshToken', response.refreshToken);
     Navigator.pushNamed(context, '/main_page');
   }
 
@@ -437,55 +361,15 @@ class _LoginPageState extends State<LoginPage>
               color: Colors.red, fontSize: 20, fontFamily: 'SukhumvitText')),
       buttons: [
         DialogButton(
-          child: Ink(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFEFA746), Color(0xFFF0C984)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                  borderRadius: BorderRadius.circular(30.0)),
-              child: Text(
-                "ตกลง",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: 'SukhumvitText'),
-              )),
-          onPressed: () => Navigator.pop(context),
-          width: 120,
-        )
-      ],
-    ).show();
-  }
-
-  @override
-  void onVersionError(String errorTxt) {
-    //_showSnackBar(errorTxt);
-    //setState(() => _isLoading = false);
-    Alert(
-      context: context,
-      title: "ตรวจพบเวอร์ชั่นเก่า" + "\n" + "กรุณาติดตั้งเวอร์ชั่นใหม่",
-      style: AlertStyle(
-          isCloseButton: false,
-          titleStyle: TextStyle(
-              color: Colors.black, fontSize: 20, fontFamily: 'SukhumvitText')),
-      buttons: [
-        DialogButton(
           child: Text(
             "ตกลง",
             style: TextStyle(
                 color: Colors.white, fontSize: 20, fontFamily: 'SukhumvitText'),
           ),
-          onPressed: () {
-            if (Platform.isAndroid) {
-              SystemNavigator.pop();
-            } else if (Platform.isIOS) {
-              exit(0);
-            }
-          },
+          onPressed: () => Navigator.pop(context),
           gradient:
               LinearGradient(colors: [Color(0xFFEFA746), Color(0xFFF0C984)]),
+          width: 120,
         )
       ],
     ).show();
