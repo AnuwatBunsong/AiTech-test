@@ -18,7 +18,7 @@ class _MenuState extends State<Menu> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
 
-    Navigator.pushNamed(context, '/login');
+    Navigator.pushNamed(context, '/news_guest');
   }
 
   _launchURL() async {
