@@ -12,7 +12,7 @@ class HomePresenter {
   HomePresenter(this._view);
 
   int _page = 1;
-  int _size = 2;
+  int _size = 5;
 
   void newsList() {
     api.fetch(_page, _size).then((data) {

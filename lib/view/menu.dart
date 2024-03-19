@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cremation/utils/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,6 +13,39 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
+  }
+
+  //ยกเลิก ออกจากระบบ
+  void _confirmLogout() {
+    Alert(
+      context: context,
+      title: "คุณต้องการออกจากระบบหรือไม่",
+      style: AlertStyle(
+          isCloseButton: false,
+          isOverlayTapDismiss: false,
+          titleStyle: TextStyle(
+              color: Colors.black, fontSize: 20, fontFamily: 'SukhumvitText')),
+      buttons: [
+        DialogButton(
+          child: Text(
+            "ออกจากระบบ",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontFamily: 'SukhumvitText'),
+          ),
+          onPressed: () => _logout(),
+          color: Color(0xFFFF0000),
+        ),
+        DialogButton(
+          child: Text(
+            "ยกเลิก",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontFamily: 'SukhumvitText'),
+          ),
+          onPressed: () => Navigator.pop(context),
+          color: Color.fromRGBO(111, 111, 111, 1.0),
+        )
+      ],
+    ).show();
   }
 
   void _logout() async {
@@ -175,7 +209,7 @@ class _MenuState extends State<Menu> {
                     height: 65,
                     child: RaisedButton(
                         color: Color(0xFFFFFFFF),
-                        onPressed: _logout,
+                        onPressed: _confirmLogout,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [

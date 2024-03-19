@@ -5,6 +5,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:cremation/presenter/login_presenter.dart';
 import 'package:cremation/model/user_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -46,6 +47,15 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
     prefs.remove('userData');
     //getProfile();
     Navigator.pushNamed(context, '/main_page');
+  }
+
+  _launchURLLine() async {
+    const url = 'https://line.me/ti/p/%40chapanakij8813';
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false, forceWebView: false);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   /*void _showSnackBar(String text) {
@@ -286,14 +296,19 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
                                                       )))))),
                                   Container(
                                       alignment: Alignment.center,
-                                      child: Text('ติดต่อผู้ดูแลระบบผ่าน Line',
-                                          style: TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            color: Color(0xFF626262),
-                                            fontFamily: 'SukhumvitText',
-                                            fontSize: 18,
-                                          ))),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            _launchURLLine();
+                                          },
+                                          child:
+                                              Text('ติดต่อผู้ดูแลระบบผ่าน Line',
+                                                  style: TextStyle(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    color: Color(0xFF626262),
+                                                    fontFamily: 'SukhumvitText',
+                                                    fontSize: 18,
+                                                  )))),
                                 ]))),
                         Container(
                             height: 50.0,
@@ -357,6 +372,7 @@ class _LoginPageState extends State<LoginPage> implements LoginContract {
       type: AlertType.error,
       title: "username หรือ password ไม่ถูกต้อง",
       style: AlertStyle(
+          isCloseButton: false,
           titleStyle: TextStyle(
               color: Colors.red, fontSize: 20, fontFamily: 'SukhumvitText')),
       buttons: [

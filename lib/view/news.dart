@@ -14,7 +14,7 @@ class _NewsPageState extends State<NewsPage> implements NewsListViewContract {
   NewsPresenter _presenter;
   bool _isLoading = false;
   int page = 1;
-  int size = 1;
+  int size = 5;
   List<News> newsData;
 
   _NewsPageState() {
